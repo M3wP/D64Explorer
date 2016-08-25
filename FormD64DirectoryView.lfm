@@ -1,0 +1,155 @@
+object D64DirectoryViewForm: TD64DirectoryViewForm
+  Left = 638
+  Height = 536
+  Top = 168
+  Width = 836
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsToolWindow
+  Caption = 'Directory View'
+  ClientHeight = 536
+  ClientWidth = 836
+  OnClose = FormClose
+  OnShow = FormShow
+  LCLVersion = '1.6.0.4'
+  Visible = True
+  object LstBxDirectory: TListBox
+    Left = 8
+    Height = 520
+    Top = 8
+    Width = 304
+    Font.Height = -13
+    Font.Name = 'Courier New'
+    ItemHeight = 0
+    OnSelectionChange = LstBxDirectorySelectionChange
+    ParentFont = False
+    TabOrder = 0
+  end
+  object Label1: TLabel
+    Left = 328
+    Height = 15
+    Top = 8
+    Width = 91
+    Caption = 'Dir. Location T/S:'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 328
+    Height = 15
+    Top = 32
+    Width = 50
+    Caption = 'File Type:'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 328
+    Height = 15
+    Top = 56
+    Width = 91
+    Caption = 'File Location T/S:'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 328
+    Height = 15
+    Top = 80
+    Width = 56
+    Caption = 'File Name:'
+    ParentColor = False
+  end
+  object Label5: TLabel
+    Left = 328
+    Height = 15
+    Top = 104
+    Width = 74
+    Caption = 'Side Sect. T/S:'
+    ParentColor = False
+  end
+  object Label6: TLabel
+    Left = 328
+    Height = 15
+    Top = 128
+    Width = 70
+    Caption = 'REL Rec. Size:'
+    ParentColor = False
+  end
+  object Label7: TLabel
+    Left = 328
+    Height = 15
+    Top = 152
+    Width = 27
+    Caption = 'Data:'
+    ParentColor = False
+  end
+  object Label8: TLabel
+    Left = 328
+    Height = 15
+    Top = 176
+    Width = 44
+    Caption = 'File Size:'
+    ParentColor = False
+  end
+  object LblDirLoc: TLabel
+    Left = 440
+    Height = 15
+    Top = 8
+    Width = 50
+    Caption = 'LblDirLoc'
+    ParentColor = False
+  end
+  object LblFileType: TLabel
+    Left = 440
+    Height = 15
+    Top = 32
+    Width = 60
+    Caption = 'LblFileType'
+    ParentColor = False
+  end
+  object LblFileLoc: TLabel
+    Left = 440
+    Height = 15
+    Top = 56
+    Width = 53
+    Caption = 'LblFileLoc'
+    ParentColor = False
+  end
+  object LblFileName: TLabel
+    Left = 440
+    Height = 15
+    Top = 80
+    Width = 66
+    Caption = 'LblFileName'
+    ParentColor = False
+  end
+  object LblSideSect: TLabel
+    Left = 440
+    Height = 15
+    Top = 104
+    Width = 60
+    Caption = 'LblSideSect'
+    ParentColor = False
+  end
+  object LblRELRecSz: TLabel
+    Left = 440
+    Height = 15
+    Top = 128
+    Width = 65
+    Caption = 'LblRELRecSz'
+    ParentColor = False
+  end
+  object LblData: TLabel
+    Left = 440
+    Height = 15
+    Top = 152
+    Width = 40
+    Caption = 'LblData'
+    ParentColor = False
+  end
+  object LblFileSz: TLabel
+    Left = 440
+    Height = 15
+    Top = 176
+    Width = 45
+    Caption = 'LblFileSz'
+    ParentColor = False
+  end
+end

@@ -1,0 +1,88 @@
+object D64ExplorerMainDMod: TD64ExplorerMainDMod
+  OnCreate = DataModuleCreate
+  OnDestroy = DataModuleDestroy
+  OldCreateOrder = False
+  Height = 303
+  HorizontalOffset = 941
+  VerticalOffset = 197
+  Width = 471
+  object MainMenu1: TMainMenu
+    left = 24
+    top = 16
+    object MenuItem1: TMenuItem
+      Caption = '&File'
+      object MenuItem2: TMenuItem
+        Action = ActFileOpen
+      end
+      object MenuItem3: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem4: TMenuItem
+        Action = ActFileExit
+      end
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'View'
+      object MenuItem6: TMenuItem
+        Action = ActViewSecView
+      end
+      object MenuItem7: TMenuItem
+        Action = ActViewBAMView
+      end
+      object MenuItem8: TMenuItem
+        Action = ActViewDirView
+      end
+    end
+    object MenuItem9: TMenuItem
+      Caption = 'Help'
+      object MenuItem10: TMenuItem
+        Action = ActHelpAbout
+      end
+    end
+  end
+  object ActionList1: TActionList
+    OnUpdate = ActionList1Update
+    left = 96
+    top = 17
+    object ActFileOpen: TAction
+      Category = 'File'
+      Caption = '&Open...'
+      OnExecute = ActFileOpenExecute
+      ShortCut = 16463
+    end
+    object ActFileExit: TAction
+      Category = 'File'
+      Caption = 'E&xit'
+      OnExecute = ActFileExitExecute
+      ShortCut = 32883
+    end
+    object ActViewSecView: TAction
+      Category = 'View'
+      Caption = 'Sector Viewer'
+      OnExecute = ActViewSecViewExecute
+    end
+    object ActViewBAMView: TAction
+      Category = 'View'
+      Caption = 'BAM Viewer'
+      OnExecute = ActViewBAMViewExecute
+    end
+    object ActViewDirView: TAction
+      Category = 'View'
+      Caption = 'Directory Viewer'
+      OnExecute = ActViewDirViewExecute
+    end
+    object ActHelpAbout: TAction
+      Category = 'Help'
+      Caption = 'About...'
+      OnExecute = ActHelpAboutExecute
+    end
+  end
+  object OpenDialog1: TOpenDialog
+    Title = 'Open D64 Image File...'
+    DefaultExt = '.d64'
+    Filter = 'Disk Image Files (*.d64;*.d71;*.d81)|*.d64;*.d71;*.d81|D64 Image Files (*.d64)|*.d64|D71 Image Files (*.d71)|*.d71|D81 Image Files (*.d81)|*.d81'
+    Options = [ofReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing, ofViewDetail]
+    left = 176
+    top = 17
+  end
+end

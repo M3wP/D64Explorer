@@ -1,0 +1,116 @@
+object D64ExplorerMainForm: TD64ExplorerMainForm
+  Left = 555
+  Height = 712
+  Top = 128
+  Width = 948
+  Caption = 'D64 Explorer'
+  ClientHeight = 692
+  ClientWidth = 948
+  Menu = D64ExplorerMainDMod.MainMenu1
+  OnClose = FormClose
+  Position = poDefaultPosOnly
+  LCLVersion = '1.6.0.4'
+  object PnlDetails: TPanel
+    Left = 8
+    Height = 39
+    Top = 8
+    Width = 932
+    Align = alTop
+    AutoSize = True
+    BorderSpacing.Around = 8
+    BevelOuter = bvNone
+    ClientHeight = 39
+    ClientWidth = 932
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 0
+      Height = 15
+      Top = 0
+      Width = 68
+      Caption = 'DOS Version:'
+      ParentColor = False
+    end
+    object LblDOSVersion: TLabel
+      Left = 88
+      Height = 1
+      Top = 0
+      Width = 1
+      ParentColor = False
+    end
+    object Label2: TLabel
+      Left = 248
+      Height = 15
+      Top = 0
+      Width = 55
+      Caption = 'DOS Type:'
+      ParentColor = False
+    end
+    object LblDOSType: TLabel
+      Left = 323
+      Height = 1
+      Top = 0
+      Width = 1
+      ParentColor = False
+    end
+    object Label3: TLabel
+      Left = 0
+      Height = 15
+      Top = 24
+      Width = 60
+      Caption = 'Disk Name:'
+      ParentColor = False
+    end
+    object LblDiskName: TLabel
+      Left = 88
+      Height = 1
+      Top = 24
+      Width = 1
+      ParentColor = False
+    end
+    object Label4: TLabel
+      Left = 248
+      Height = 15
+      Top = 24
+      Width = 39
+      Caption = 'Disk ID:'
+      ParentColor = False
+    end
+    object LblDiskID: TLabel
+      Left = 323
+      Height = 1
+      Top = 24
+      Width = 1
+      ParentColor = False
+    end
+    object Label5: TLabel
+      Left = 392
+      Height = 15
+      Top = 24
+      Width = 57
+      Caption = 'GEOS Disk:'
+      ParentColor = False
+    end
+    object LblGEOSVer: TLabel
+      Left = 496
+      Height = 1
+      Top = 24
+      Width = 1
+      ParentColor = False
+    end
+    object Label6: TLabel
+      Left = 392
+      Height = 15
+      Top = 0
+      Width = 70
+      Caption = 'Num. Tracks:'
+      ParentColor = False
+    end
+    object LblNumTracks: TLabel
+      Left = 495
+      Height = 1
+      Top = 0
+      Width = 1
+      ParentColor = False
+    end
+  end
+end

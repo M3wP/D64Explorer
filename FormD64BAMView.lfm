@@ -1,0 +1,28 @@
+object D64BAMViewForm: TD64BAMViewForm
+  Left = 462
+  Height = 577
+  Top = 118
+  Width = 1053
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSizeToolWin
+  Caption = 'BAM Viewer'
+  ClientHeight = 577
+  ClientWidth = 1053
+  OnClose = FormClose
+  OnShow = FormShow
+  LCLVersion = '1.6.0.4'
+  Visible = True
+  object LstBxBAM: TListBox
+    Left = 8
+    Height = 561
+    Top = 8
+    Width = 1037
+    Align = alClient
+    BorderSpacing.Around = 8
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    ItemHeight = 0
+    ParentFont = False
+    TabOrder = 0
+  end
+end
