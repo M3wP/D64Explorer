@@ -37,7 +37,7 @@ interface
 
 uses
     Classes, SysUtils, FileUtil, DividerBevel, Forms, Controls, StdCtrls,
-    ExtCtrls, ComCtrls, C64D64Image;
+    ExtCtrls, ComCtrls, C64D64Image, Types;
 
 type
 
@@ -48,6 +48,7 @@ type
         Button2: TButton;
         Button3: TButton;
         CmbGEOSVLIRRec: TComboBox;
+        CmbDirectory: TComboBox;
         DividerBevel1: TDividerBevel;
         DividerBevel2: TDividerBevel;
         ImgGEOSIcon: TImage;
@@ -72,6 +73,8 @@ type
         Label29: TLabel;
         Label30: TLabel;
         Label31: TLabel;
+        Label32: TLabel;
+        Label33: TLabel;
         LblGEOS4080: TLabel;
         LblGEOSVLIRActual: TLabel;
         LblGEOSClass: TLabel;
@@ -108,10 +111,12 @@ type
         LblFileType: TLabel;
         LblGEOSTypeInf: TLabel;
         LblReplacing: TLabel;
+        LstBxFiles: TListBox;
         LstBxGEOSVLIRRec: TListBox;
         LstBxGEOSData: TListBox;
         LstBxFileData: TListBox;
-        LstBxFiles: TListBox;
+        Panel1: TPanel;
+        PnlDirectory: TPanel;
         PgCtrlFile: TPageControl;
         Splitter1: TSplitter;
         TbShtC64File: TTabSheet;
@@ -121,15 +126,25 @@ type
         procedure Button1Click(Sender: TObject);
         procedure Button2Click(Sender: TObject);
         procedure Button3Click(Sender: TObject);
+        procedure CmbDirectoryChange(Sender: TObject);
+        procedure CmbDirectoryCloseUp(Sender: TObject);
+        procedure CmbDirectoryDrawItem(Control: TWinControl; Index: Integer;
+            ARect: TRect; State: TOwnerDrawState);
+        procedure CmbDirectoryDropDown(Sender: TObject);
         procedure CmbGEOSVLIRRecChange(Sender: TObject);
         procedure LstBxFilesSelectionChange(Sender: TObject; User: boolean);
     private
         FChanging: Boolean;
+        FDropedDown: Boolean;
         FEntries: TD64DirEntries;
+        FDirectories: TD64DirPartitions;
+
         FVLIRRecs: array of Word;
 
         procedure HexDumpStreamToLstBx(const AStream: TStream;
                 const ALstBx: TListBox);
+
+        procedure DoInitialiseFiles;
 
         procedure ClearGEOSInfo;
 
@@ -156,6 +171,7 @@ implementation
 {$R *.lfm}
 
 uses
+    LCLType,
     DateUtils, Graphics, Clipbrd, D64ExplorerStrs, DModD64ExplorerMain;
 
 
@@ -195,6 +211,86 @@ procedure TD64ExplorerMainFrame.Button2Click(Sender: TObject);
 procedure TD64ExplorerMainFrame.Button3Click(Sender: TObject);
     begin
     Clipboard.AsText:= LstBxGEOSVLIRRec.Items.Text;
+    end;
+
+procedure TD64ExplorerMainFrame.CmbDirectoryChange(Sender: TObject);
+    begin
+    if  not FChanging then
+        begin
+        D64ExplorerMainDMod.D64Image.SetCurrentPartition(
+                FDirectories[CmbDirectory.ItemIndex].Info);
+        DoInitialiseFiles;
+        end;
+    end;
+
+procedure TD64ExplorerMainFrame.CmbDirectoryCloseUp(Sender: TObject);
+    begin
+    FDropedDown:= False;
+    end;
+
+procedure TD64ExplorerMainFrame.CmbDirectoryDrawItem(Control: TWinControl;
+        Index: Integer; ARect: TRect; State: TOwnerDrawState);
+    var
+    s: string;
+    i: Integer;
+
+    begin
+    //odSelected, odGrayed, odDisabled, odChecked,
+    //odFocused, odDefault, odHotLight, odInactive, odNoAccel,
+    //odNoFocusRect, odReserved1, odReserved2, odComboBoxEdit,
+    //odPainted  // item already painted
+
+    if  not (odPainted in State) then
+        begin
+        if  odSelected in State then
+            begin
+            CmbDirectory.Canvas.Brush.Color:= clHighlight;
+            CmbDirectory.Canvas.Pen.Color:= clWindow;
+            end
+        else
+            begin
+            CmbDirectory.Canvas.Brush.Color:= clWindow;
+            CmbDirectory.Canvas.Pen.Color:= clWindowText;
+            end;
+
+        CmbDirectory.Canvas.Brush.Style:= bsSolid;
+        CmbDirectory.Canvas.Pen.Style:= psSolid;
+
+        CmbDirectory.Canvas.FillRect(ARect);
+
+        s:= '/' + TrimRight(FDirectories[Index].PartFileName);
+        if  odComboBoxEdit in State then
+            begin
+            i:= FDirectories[Index].Parent;
+            while i > 0 do
+                begin
+                s:= '/' + TrimRight(FDirectories[i].PartFileName) + s;
+                i:= FDirectories[i].Parent;
+                end;
+            end
+        else
+            begin
+            if  FDirectories[Index].HasChildren then
+                s:= '+' + s
+            else
+                s:= '-' + s;
+
+            s:= '-' + s;
+
+            for i:= FDirectories[Index].Depth downto 0 do
+                if  i = 1 then
+                    s:= '|' + s
+                else if i > 0 then
+                    s:= '  |' + s;
+            end;
+
+        CmbDirectory.Canvas.TextOut(ARect.Left, ARect.Top, s);
+        end;
+    end;
+
+procedure TD64ExplorerMainFrame.CmbDirectoryDropDown(Sender: TObject);
+    begin
+    FDropedDown:= True;
     end;
 
 procedure TD64ExplorerMainFrame.HexDumpStreamToLstBx(const AStream: TStream;
@@ -261,6 +357,41 @@ procedure TD64ExplorerMainFrame.HexDumpStreamToLstBx(const AStream: TStream;
             s:= s + ' ';
 
     ALstBx.Items.Add(s);
+    end;
+
+procedure TD64ExplorerMainFrame.DoInitialiseFiles;
+    var
+    i: Integer;
+
+    begin
+    if  D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
+        D64ExplorerMainDMod.D64Image.GetPartitionFiles(FEntries)
+    else
+        D64ExplorerMainDMod.D64Image.GetFileEntries(FEntries);
+
+    FChanging:= True;
+    try
+        LstBxFiles.Items.BeginUpdate;
+        try
+            LstBxFiles.Clear;
+
+            for i:= 0 to High(FEntries) do
+                LstBxFiles.Items.Add(FEntries[i].FileName);
+
+            finally
+            LstBxFiles.Items.EndUpdate;
+            end;
+        finally
+        FChanging:= False;
+        end;
+
+    if  LstBxFiles.Items.Count > 0 then
+        begin
+        LstBxFiles.Selected[0]:= True;
+//dengland This doesnt seem to work.
+//      LstBxFilesSelectionChange(Self, False);
+        InitialiseFileView(0);
+        end;
     end;
 
 procedure TD64ExplorerMainFrame.DoPrepareFileInfo(const AEntry: Integer;
@@ -613,10 +744,13 @@ procedure TD64ExplorerMainFrame.ClearGEOSInfo;
 
 procedure TD64ExplorerMainFrame.InitialiseFileView(const AEntry: Integer);
     var
+    pc: TCursor;
     m: TMemoryStream;
     g: Boolean;
 
     begin
+    pc:= Screen.Cursor;
+    Screen.Cursor:= crHourGlass;
     m:= TMemoryStream.Create;
     try
         DoPrepareFileInfo(AEntry, m, g);
@@ -657,6 +791,7 @@ procedure TD64ExplorerMainFrame.InitialiseFileView(const AEntry: Integer);
 
         finally
         m.Free;
+        Screen.Cursor:= pc;
         end;
     end;
 
@@ -665,29 +800,38 @@ procedure TD64ExplorerMainFrame.InitialiseDisplay;
     i: Integer;
 
     begin
-    D64ExplorerMainDMod.D64Image.GetFileEntries(FEntries);
+    if D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
+        begin
+        D64ExplorerMainDMod.D64Image.GetDirPartitions(FDirectories);
 
-    FChanging:= True;
-    try
-        LstBxFiles.Items.BeginUpdate;
+        PnlDirectory.Visible:= True;
+
+        FChanging:= True;
         try
-            for i:= 0 to High(FEntries) do
-                LstBxFiles.Items.Add(FEntries[i].FileName);
+            CmbDirectory.Items.BeginUpdate;
+            try
+                CmbDirectory.Clear;
+
+                for i:= 0 to High(FDirectories) do
+                    CmbDirectory.Items.Add('/' + FDirectories[i].PartFileName);
+
+                finally
+                CmbDirectory.Items.EndUpdate;
+                end;
+
+            CmbDirectory.ItemIndex:= 0;
 
             finally
-            LstBxFiles.Items.EndUpdate;
+            FChanging:= False;
             end;
-        finally
-        FChanging:= False;
+        end
+    else
+        begin
+        PnlDirectory.Visible:= False;
+        SetLength(FDirectories, 0);
         end;
 
-    if  LstBxFiles.Items.Count > 0 then
-        begin
-        LstBxFiles.Selected[0]:= True;
-//dengland This doesnt seem to work.
-//      LstBxFilesSelectionChange(Self, False);
-        InitialiseFileView(0);
-        end;
+    DoInitialiseFiles;
     end;
 
 end.

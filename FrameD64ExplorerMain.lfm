@@ -8,42 +8,31 @@ object D64ExplorerMainFrame: TD64ExplorerMainFrame
   TabOrder = 0
   DesignLeft = 705
   DesignTop = 306
-  object LstBxFiles: TListBox
-    Left = 4
-    Height = 577
-    Top = 4
-    Width = 216
-    Align = alLeft
-    BorderSpacing.Around = 4
-    ItemHeight = 0
-    OnSelectionChange = LstBxFilesSelectionChange
-    TabOrder = 0
-  end
   object Splitter1: TSplitter
-    Left = 224
+    Left = 221
     Height = 585
     Top = 0
     Width = 5
   end
   object PgCtrlFile: TPageControl
-    Left = 233
+    Left = 230
     Height = 577
     Top = 4
-    Width = 775
+    Width = 778
     ActivePage = TbShtC64File
     Align = alClient
     BorderSpacing.Around = 4
     TabIndex = 0
-    TabOrder = 2
+    TabOrder = 1
     object TbShtC64File: TTabSheet
       Caption = 'File Data'
       ClientHeight = 549
-      ClientWidth = 767
+      ClientWidth = 770
       object LstBxFileData: TListBox
         Left = 8
         Height = 397
         Top = 144
-        Width = 751
+        Width = 754
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderSpacing.Around = 8
         Font.Height = -13
@@ -615,6 +604,77 @@ object D64ExplorerMainFrame: TD64ExplorerMainFrame
         OnClick = Button3Click
         TabOrder = 2
       end
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 585
+    Top = 0
+    Width = 221
+    Align = alLeft
+    BevelOuter = bvNone
+    ClientHeight = 585
+    ClientWidth = 221
+    TabOrder = 2
+    object PnlDirectory: TPanel
+      Left = 0
+      Height = 76
+      Top = 0
+      Width = 221
+      Align = alTop
+      BevelOuter = bvNone
+      ClientHeight = 76
+      ClientWidth = 221
+      TabOrder = 0
+      object Label32: TLabel
+        Left = 4
+        Height = 15
+        Top = 4
+        Width = 213
+        Align = alTop
+        BorderSpacing.Bottom = 4
+        BorderSpacing.Around = 4
+        Caption = 'Directories:'
+        ParentColor = False
+      end
+      object CmbDirectory: TComboBox
+        Left = 4
+        Height = 21
+        Top = 27
+        Width = 213
+        Align = alTop
+        BorderSpacing.Around = 4
+        ItemHeight = 15
+        OnChange = CmbDirectoryChange
+        OnCloseUp = CmbDirectoryCloseUp
+        OnDrawItem = CmbDirectoryDrawItem
+        OnDropDown = CmbDirectoryDropDown
+        ReadOnly = True
+        Style = csOwnerDrawFixed
+        TabOrder = 0
+      end
+      object Label33: TLabel
+        Left = 4
+        Height = 15
+        Top = 56
+        Width = 213
+        Align = alTop
+        BorderSpacing.Top = 4
+        BorderSpacing.Around = 4
+        Caption = 'Files:'
+        ParentColor = False
+      end
+    end
+    object LstBxFiles: TListBox
+      Left = 4
+      Height = 501
+      Top = 80
+      Width = 213
+      Align = alClient
+      BorderSpacing.Around = 4
+      ItemHeight = 0
+      OnSelectionChange = LstBxFilesSelectionChange
+      TabOrder = 1
     end
   end
 end

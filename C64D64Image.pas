@@ -91,6 +91,25 @@ type
     end;
     TD64DirEntries = array of TD64DirEntry;
 
+//  Important directory partition info
+    TD64DirPartitionInfo = record
+        Track: TD64TrackNum;
+        PartSize: Word;
+    end;
+
+//  Directory partition information helper record
+    TD64DirPartition = record
+        Info: TD64DirPartitionInfo;
+        PartFileName,
+        PartDiskName,
+        PartDiskID,
+        PartDOSType: string;
+        HasChildren: Boolean;
+        Depth: Integer;
+        Parent: Integer;
+    end;
+    TD64DirPartitions = array of TD64DirPartition;
+
 //  BAM info for a disk track
     TD64TrackBAM = record
         FreeSectors: Byte;
@@ -118,6 +137,8 @@ type
         FGEOSDisk: Boolean;
         FGEOSVerMajor: Byte;
         FGEOSVerMinor: Byte;
+        FCurrPartTrk: Byte;
+        FCurrPartSiz: Word;
 
         procedure DoLoadFromFile(const AFile: string);
         procedure DoSaveToFile(const AFile: string);
@@ -125,6 +146,12 @@ type
         function  DoValidateTrackSector(const ATrack: TD64TrackNum;
         		const ASector: TD64SectorNum): Word;
         procedure DoGetSector(const ANum: Word; ADest: TStream);
+        procedure DoGetFileEntries(const AStream: TMemoryStream;
+                const ATrack: TD64TrackNum; const ASector: TD64SectorNum;
+                var AEntries: TD64DirEntries);
+        procedure DoGet1581BAM(const AStream: TMemoryStream;
+                const ATrack: TD64TrackNum; const ATrkCnt: Byte;
+                var ABAM: TD64DiskBAM);
         procedure DoWriteTrackSectorNextPointer(const ATrack: TD64TrackNum;
                 const ASector: TD64SectorNum; const ANxtTrack: Byte;
                 const ANxtSector: Byte; out AData: PByte);
@@ -191,6 +218,20 @@ type
         procedure ScratchFileEntry(const ATrack: TD64TrackNum;
                 const ASector: TD64SectorNum; const AEntry: TD64EntryNum);
 
+//      Get a array of directory compatible partitions.
+        procedure GetDirPartitions(var AParts: TD64DirPartitions);
+//      Set the current directory partition.  Use GetDirPartitions to get the
+//          required information.  Returns the previous partition info.
+        procedure SetCurrentPartition(const AInfo: TD64DirPartitionInfo); overload;
+//      Set the current directory partition.  Use GetDirPartitions to get the
+//          required information.
+        procedure SetCurrentPartition(const AInfo: TD64DirPartitionInfo;
+                out APrev: TD64DirPartitionInfo); overload;
+//      Get the file entries for the current directory partition.
+        procedure GetPartitionFiles(var AEntries: TD64DirEntries);
+//      Get the BAM information for the current directory partition.
+        procedure GetPartitionBAM(var ADiskBAM: TD64DiskBAM);
+
 //      The current disk type
         property DiskType: TD64DiskType read FDiskType;
 //      If a d71 image, whether the image is a single or double sided one.
@@ -217,22 +258,24 @@ type
         property GEOSVerMinor: Byte read FGEOSVerMinor;
     end;
 
+//  Base class for D64Image exceptions (for filtering)
+    D64ImageException = class(Exception);
 //  An exception raised when the disk file does not exist.
-    ED64FileDoesNotExist = class(Exception);
+    ED64FileDoesNotExist = class(D64ImageException);
 //  An exception raised when the disk file format cannot be determined.
-    ED64UnknownFormat = class(Exception);
+    ED64UnknownFormat = class(D64ImageException);
 //  An exception raised when an invalid sector is selected.
-    ED64InvalidSector = class(Exception);
+    ED64InvalidSector = class(D64ImageException);
 //  An exception raised when the disk file cannot be opened.
-    ED64UnableToOpen = class(Exception);
+    ED64UnableToOpen = class(D64ImageException);
 //  An exception raised when the disk is full.
-    ED64DiskFull = class(Exception);
+    ED64DiskFull = class(D64ImageException);
 
 
 //Convert the given DOS file type byte to a string (as per BASIC, with or
 //      without splat and read-only markers)
 function  D64FileTypeToStr(const AType: Byte;
-        const APreamble: Boolean = True): string;
+        const AStateFlags: Boolean = True): string;
 //Convert the given GEOS file structure byte into a string.
 function  D64GEOSStructToStr(const AStruct: Byte): string;
 //Convert the given GEOS file type into a string.
@@ -292,7 +335,7 @@ const
     LIT_TOK_D64GEOSAEX = 'Auto-Execute File';
 
 
-function D64FileTypeToStr(const AType: Byte; const APreamble: Boolean): string;
+function D64FileTypeToStr(const AType: Byte; const AStateFlags: Boolean): string;
     begin
     case AType and $0F of
         0:
@@ -311,12 +354,12 @@ function D64FileTypeToStr(const AType: Byte; const APreamble: Boolean): string;
             Result:= LIT_TOK_D64FTYPUNK;
         end;
 
-    if  APreamble then
+    if  AStateFlags then
         begin
         if  (AType and $40) <> 0 then
-            Result:= '>' + Result
+            Result:= Result + '<'
         else
-            Result:= ' ' + Result;
+            Result:= Result + ' ';
 
         if  (AType and $80) = 0 then
             Result:= '*' + Result
@@ -627,6 +670,107 @@ procedure TD64Image.DoGetSector(const ANum: Word; ADest: TStream);
     ADest.CopyFrom(FData, VAL_SIZ_D64SECTRSIZE);
 	end;
 
+procedure TD64Image.DoGetFileEntries(const AStream: TMemoryStream;
+        const ATrack: TD64TrackNum; const ASector: TD64SectorNum;
+        var AEntries: TD64DirEntries);
+    var
+    b,
+    nt,
+    ns: Byte;
+    fs: Word;
+    fn: string;
+    x,
+    i: Integer;
+    e: Byte;
+
+    begin
+    nt:= ATrack;
+    ns:= ASector;
+
+    x:= 0;
+
+    repeat
+        SetLength(AEntries, Length(AEntries) + 8);
+        AStream.Clear;
+        GetRawSector(nt, ns, AStream);
+
+        AStream.Position:= 0;
+        for e:= 0 to 7 do
+            begin
+            AEntries[x].Track:= nt;
+            AEntries[x].Sector:= ns;
+            AEntries[x].EntryNum:= e;
+
+            AStream.Position:= e * $20;
+            for i:= 0 to $1F do
+                AEntries[x].EntryData[i]:= AStream.ReadByte;
+
+            AStream.Position:= e * $20 + 2;
+            AEntries[x].FileType:= AStream.ReadByte;
+
+            AStream.Position:= AStream.Position + 2;
+            fn:= '';
+            for i:= 0 to 15 do
+                begin
+                b:= AStream.ReadByte;
+                if  b in [$20..$7E] then
+                    fn:= fn + string(AnsiChar(b))
+                else
+                    fn:= fn + ' ';
+                end;
+            AEntries[x].FileName:= fn;
+
+            AStream.Position:= AStream.Position + 9;
+            b:= AStream.ReadByte;
+            fs:= b;
+            b:= AStream.ReadByte;
+            fs:= fs + b shl 8;
+            AEntries[x].FileSize:= fs;
+
+            Inc(x);
+            end;
+
+        AStream.Position:= 0;
+        nt:= AStream.ReadByte;
+        ns:= AStream.ReadByte;
+
+        until nt = 0;
+    end;
+
+procedure TD64Image.DoGet1581BAM(const AStream: TMemoryStream;
+        const ATrack: TD64TrackNum; const ATrkCnt: Byte; var ABAM: TD64DiskBAM);
+    var
+    x,
+    s,
+    o,
+    i,
+    j: Integer;
+
+    begin
+    x:= 0;
+
+    for s:= 0 to 1 do
+        begin
+        o:= s * 40;
+        AStream.Clear;
+        GetRawSector(ATrack, s + 1, AStream);
+
+        AStream.Position:= $10;
+        for i:= 0 to 39 do
+            begin
+            ABAM[o + i].FreeSectors:= AStream.ReadByte;
+
+            for j:= 0 to 4 do
+                ABAM[o + i].Bitmap[j]:= AStream.ReadByte;
+
+            Inc(x);
+//dengland  This is just as nasty as a darn goto.
+            if  x = ATrkCnt then
+                Exit;
+            end;
+        end;
+    end;
+
 procedure TD64Image.DoAnalyseDOSDetails;
     var
     p: Cardinal;
@@ -635,6 +779,17 @@ procedure TD64Image.DoAnalyseDOSDetails;
     s: string;
 
     begin
+    if  FDiskType in [ddt1541, ddt1571] then
+        begin
+        FCurrPartTrk:= 0;
+        FCurrPartSiz:= 0;
+        end
+    else
+        begin
+        FCurrPartTrk:= 40;
+        FCurrPartSiz:= 3200;
+        end;
+
     FDiskName:= EmptyStr;
     FDiskID:= EmptyStr;
     FDOSType:= EmptyStr;
@@ -1036,11 +1191,15 @@ procedure TD64Image.DoWriteTrackSectorNextPointer(const ATrack: TD64TrackNum;
 
 constructor TD64Image.Create;
 	begin
+    FCurrPartTrk:= $00;
+
     FData:= TMemoryStream.Create;
 	end;
 
 constructor TD64Image.Create(const AFile: string);
 	begin
+    FCurrPartTrk:= $00;
+
     FData:= TMemoryStream.Create;
     try
     	DoLoadFromFile(AFile);
@@ -1428,14 +1587,8 @@ procedure TD64Image.GetDataChain(const ATrack: TD64TrackNum;
 procedure TD64Image.GetFileEntries(var AEntries: TD64DirEntries);
     var
     m: TMemoryStream;
-    b,
     nt,
     ns: Byte;
-    fs: Word;
-    fn: string;
-    x,
-    i: Integer;
-    e: Byte;
 
     begin
     SetLength(AEntries, 0);
@@ -1454,54 +1607,8 @@ procedure TD64Image.GetFileEntries(var AEntries: TD64DirEntries);
             nt:= 18;
             ns:= 1;
             end;
-        x:= 0;
 
-        repeat
-            SetLength(AEntries, Length(AEntries) + 8);
-            m.Clear;
-            GetRawSector(nt, ns, m);
-
-            m.Position:= 0;
-            for e:= 0 to 7 do
-                begin
-                AEntries[x].Track:= nt;
-                AEntries[x].Sector:= ns;
-                AEntries[x].EntryNum:= e;
-
-                m.Position:= e * $20;
-                for i:= 0 to $1F do
-                    AEntries[x].EntryData[i]:= m.ReadByte;
-
-                m.Position:= e * $20 + 2;
-                AEntries[x].FileType:= m.ReadByte;
-
-                m.Position:= m.Position + 2;
-                fn:= '';
-                for i:= 0 to 15 do
-                    begin
-                    b:= m.ReadByte;
-                    if  b in [$20..$7E] then
-                        fn:= fn + string(AnsiChar(b))
-                    else
-                        fn:= fn + ' ';
-                    end;
-                AEntries[x].FileName:= fn;
-
-                m.Position:= m.Position + 9;
-                b:= m.ReadByte;
-                fs:= b;
-                b:= m.ReadByte;
-                fs:= fs + b shl 8;
-                AEntries[x].FileSize:= fs;
-
-                Inc(x);
-                end;
-
-            m.Position:= 0;
-            nt:= m.ReadByte;
-            ns:= m.ReadByte;
-
-            until nt = 0;
+            DoGetFileEntries(m, nt, ns, AEntries);
 
         finally
         m.Free;
@@ -1512,8 +1619,6 @@ procedure TD64Image.GetDiskBAM(var ADiskBAM: TD64DiskBAM);
     var
     h,
     w,
-    s,
-    o,
     i,
     j: Integer;
     m: TMemoryStream;
@@ -1524,35 +1629,20 @@ procedure TD64Image.GetDiskBAM(var ADiskBAM: TD64DiskBAM);
     else
         h:= FTrkCount;
 
-    if  FDiskType = ddt1581 then
-        w:= 5
-    else
-        w:= 3;
-
     SetLength(ADiskBAM, h);
+
+    if  FDiskType in [ddt1541, ddt1571] then
+        w:= 3
+    else
+        w:= 5;
+
     for i:= 0 to h - 1 do
         SetLength(ADiskBAM[i].Bitmap, w);
 
     m:= TMemoryStream.Create;
     try
         if  FDiskType = ddt1581 then
-            begin
-            for s:= 0 to 1 do
-                begin
-                o:= s * 40;
-                m.Clear;
-                GetRawSector(40, s + 1, m);
-
-                m.Position:= $10;
-                for i:= 0 to 39 do
-                    begin
-                    ADiskBAM[o + i].FreeSectors:= m.ReadByte;
-
-                    for j:= 0 to w - 1 do
-                        ADiskBAM[o + i].Bitmap[j]:= m.ReadByte;
-                    end;
-                end;
-            end
+            DoGet1581BAM(m, 40, FTrkCount, ADiskBAM)
         else
             begin
             GetRawSector(18, 0, m);
@@ -1562,7 +1652,7 @@ procedure TD64Image.GetDiskBAM(var ADiskBAM: TD64DiskBAM);
                 begin
                 ADiskBAM[i].FreeSectors:= m.ReadByte;
 
-                for j:= 0 to w - 1 do
+                for j:= 0 to 2 do
                     ADiskBAM[i].Bitmap[j]:= m.ReadByte;
                 end;
 
@@ -1571,15 +1661,15 @@ procedure TD64Image.GetDiskBAM(var ADiskBAM: TD64DiskBAM);
                 begin
                 m.Position:= $DD;
 
-                for i:= 35 to h - 1 do
+                for i:= 35 to FTrkCount - 1 do
                     ADiskBAM[i].FreeSectors:= m.ReadByte;
 
                 m.Clear;
                 GetRawSector(53, 0, m);
 
                 m.Position:= $00;
-                for i:= 35 to h - 1 do
-                    for j:= 0 to w - 1 do
+                for i:= 35 to FTrkCount - 1 do
+                    for j:= 0 to 2 do
                         ADiskBAM[i].Bitmap[j]:= m.ReadByte;
                 end;
             end;
@@ -1693,6 +1783,241 @@ procedure TD64Image.ScratchFileEntry(const ATrack: TD64TrackNum;
             DoValidateTrackSector(ATrack, ASector) * VAL_SIZ_D64SECTRSIZE +
             AEntry * $20 + 2);
     d^:= $00;
+    end;
+
+procedure TD64Image.GetDirPartitions(var AParts: TD64DirPartitions);
+    type
+//dengland Using this so as to fragment memory as little as possible and not
+//      waste so much time in setting the length of the TD64DirPartitions array.
+    PD64DirPartition = ^TD64DirPartition;
+
+    var
+    l: TList;
+    i: Integer;
+    r: PD64DirPartition;
+    m: TMemoryStream;
+
+    function  IsDirectoryPartition(const AEntry: TD64DirEntry;
+            out ADataPos: Cardinal): Boolean; inline;
+        var
+        d: PByte;
+
+        begin
+        ADataPos:= 0;
+
+//      Check the basic structural constraints.
+//          - Must be the CBM file type
+//          - Must be larger than 3 tracks (120 blocks)
+//          - Must allocate whole tracks
+//          - Must start on sector 0
+//          - Must not cross track 40
+        Result:= ((AEntry.FileType and $07) = 5) and (AEntry.FileSize >= 120) and
+                ((AEntry.FileSize mod 40) = 0) and (AEntry.EntryData[4] = 0) and
+                ((AEntry.EntryData[3] > 40) or
+                 (AEntry.EntryData[3] + (AEntry.FileSize div 40) < 40));
+//dengland Whew...
+
+//      Check that it was formatted, too.
+        if  Result then
+            begin
+            ADataPos:= DoValidateTrackSector(AEntry.EntryData[3],
+                    AEntry.EntryData[4]) * VAL_SIZ_D64SECTRSIZE;
+            d:= PByte(FData.Memory + ADataPos + 2);
+            Result:= d^ = $44;
+            end;
+        end;
+
+    procedure DoReadPartDiskDetail(const ADataPos: Cardinal;
+            out ADiskName: string; out ADiskID: string; out ADOSType: string);
+        var
+        d: PByte;
+        b: Byte;
+        i: Integer;
+
+        begin
+        d:= PByte(FData.Memory + ADataPos + $04);
+
+        ADiskName:= EmptyStr;
+        ADiskID:= EmptyStr;
+        ADOSType:= EmptyStr;
+
+        for i:= 0 to 15 do
+            begin
+            b:= d^;
+            Inc(d);
+            if  b in [$20..$7E] then
+                ADiskName:= ADiskName + string(AnsiChar(b))
+            else
+                ADiskName:= ADiskName + ' ';
+            end;
+
+        d:= PByte(FData.Memory + ADataPos + $16);
+
+        for i:= 0 to 1 do
+            begin
+            b:= d^;
+            Inc(d);
+            if  b in [$20..$7E] then
+                ADiskID:= ADiskID + string(AnsiChar(b))
+            else
+                ADiskID:= ADiskID + ' ';
+            end;
+
+        d:= PByte(FData.Memory + ADataPos + $19);
+
+        for i:= 0 to 1 do
+            begin
+            b:= d^;
+            Inc(d);
+            if  b in [$20..$7E] then
+                ADOSType:= ADOSType + string(AnsiChar(b))
+            else
+                ADOSType:= ADOSType + ' ';
+            end;
+        end;
+
+//dengland This will be called recursively and could chew memory...  Well,
+//      comparitively speaking.
+    procedure DoProcessFileEntries(const APart: PD64DirPartition;
+            const ATrack: TD64TrackNum; const ADepth: Integer);
+        var
+        e: TD64DirEntries;
+        i: Integer;
+        p: Cardinal;
+        r: PD64DirPartition;
+
+        begin
+        DoGetFileEntries(m, ATrack, 3, e);
+
+        for  i:= 0 to High(e) do
+            if  IsDirectoryPartition(e[i], p) then
+                begin
+                APart^.HasChildren:= True;
+
+                New(r);
+                r^.Info.Track:= e[i].EntryData[3];
+                r^.Info.PartSize:= e[i].FileSize;
+
+                r^.PartFileName:= e[i].FileName;
+
+                DoReadPartDiskDetail(p, r^.PartDiskName, r^.PartDiskID,
+                        r^.PartDOSType);
+
+                r^.HasChildren:= False;
+                r^.Depth:= ADepth + 1;
+                r^.Parent:= l.IndexOf(APart);
+
+                l.Add(r);
+
+                DoProcessFileEntries(r, r^.Info.Track, ADepth + 1);
+                end;
+        end;
+
+    begin
+    if  FDiskType <> ddt1581 then
+        begin
+        SetLength(AParts, 0);
+        Exit
+        end;
+
+    l:= TList.Create;
+    try
+        New(r);
+
+        r^.Info.Track:= 40;
+        r^.Info.PartSize:= 3200;
+        r^.PartFileName:= '';
+        r^.PartDiskName:= FDiskName;
+        r^.PartDiskID:= FDiskID;
+        r^.PartDOSType:= FDOSType;
+        r^.HasChildren:= False;
+        r^.Depth:= 0;
+        r^.Parent:= -1;
+
+        l.Add(r);
+
+        m:= TMemoryStream.Create;
+        try
+            DoProcessFileEntries(r, 40, 0);
+
+            finally
+            m.Free;
+            end;
+
+        SetLength(AParts, l.Count);
+        for i:= 0 to l.Count - 1 do
+            AParts[i]:= PD64DirPartition(l[i])^;
+
+//dengland This will leave a list of dangling pointers but it doesn't matter
+        for i:= l.Count - 1 downto 0 do
+            Dispose(PD64DirPartition(l[i]));
+
+        finally
+        l.Free;
+        end;
+    end;
+
+procedure TD64Image.SetCurrentPartition(const AInfo: TD64DirPartitionInfo);
+    begin
+    FCurrPartTrk:= AInfo.Track;
+    FCurrPartSiz:= AInfo.PartSize;
+    end;
+
+procedure TD64Image.SetCurrentPartition(const AInfo: TD64DirPartitionInfo; out
+        APrev: TD64DirPartitionInfo);
+    begin
+    APrev.Track:= FCurrPartTrk;
+    APrev.PartSize:= FCurrPartSiz;
+
+    SetCurrentPartition(AInfo);
+    end;
+
+procedure TD64Image.GetPartitionFiles(var AEntries: TD64DirEntries);
+    var
+    m: TMemoryStream;
+
+    begin
+    SetLength(AEntries, 0);
+    if  (not FValidVersion)
+    or  (FDiskType <> ddt1581) then
+        Exit;
+
+    m:= TMemoryStream.Create;
+    try
+        DoGetFileEntries(m, FCurrPartTrk, 3, AEntries);
+
+        finally
+        m.Free;
+        end;
+    end;
+
+procedure TD64Image.GetPartitionBAM(var ADiskBAM: TD64DiskBAM);
+    var
+    h,
+    i: Integer;
+    m: TMemoryStream;
+
+    begin
+    SetLength(ADiskBAM, 0);
+    if  (not FValidVersion)
+    or  (FDiskType <> ddt1581) then
+        Exit;
+
+//  h:= FCurrPartSiz div 40;
+    h:= 80;
+
+    SetLength(ADiskBAM, h);
+
+    for i:= 0 to h - 1 do
+        SetLength(ADiskBAM[i].Bitmap, 5);
+
+    m:= TMemoryStream.Create;
+    try
+        DoGet1581BAM(m, FCurrPartTrk, h, ADiskBAM)
+
+        finally
+        m.Free;
+        end;
     end;
 
 function TD64Image.GetSectorsForTrack(const ATrack: TD64TrackNum): Byte;

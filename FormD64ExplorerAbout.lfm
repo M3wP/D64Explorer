@@ -719,7 +719,7 @@ object D64ExplorerAboutForm: TD64ExplorerAboutForm
     Height = 15
     Top = 49
     Width = 125
-    Caption = 'Version:  0.9.1.0215 beta'
+    Caption = 'Version:  0.9.2.0362 beta'
     ParentColor = False
   end
   object Label3: TLabel

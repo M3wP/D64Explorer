@@ -7,6 +7,8 @@ It presently supports images from the 1541 (.D64), 1571 (.D71) or 1581 (.D81).
 
 It supports reading GEOS format disks and GEOS file details.
 
+Directory partitions in .D81 files are supported.
+
 
 Copyright (C) 2016, Daniel England.
 All Rights Reserved.  Released under the GPL.
@@ -86,13 +88,17 @@ files to the image.  The features were not part of my initial requirements list.
 
 However, internally the class used to perform the handling and manipulation of
 the disk images has grown, through the development of other applications, to
-support simple file allocation and scratching.  It is entirely feasible that the
-next version of the D64 Explorer application will have file modification
+support simple file allocation and scratching.  It is entirely feasible that a
+future version of the D64 Explorer application will have file modification
 support.
 
 The sector viewer does not allow you to copy the sector data to the clipboard
 like the other tools do.  I need to restructure the sector viewer.  This will
 happen soon.
+
+The BAM view for a directory partition is presently not what I would like it to
+be.  In the next version, I will change it such that it displays only those
+tracks relevant to the directory partition.
 
 
 Compiling
@@ -109,11 +115,13 @@ All of the Lazarus supported platforms should be supported.  This includes
 Windows, Linux and MacOSX in 32 or 64 bit flavours.
 
 To compile, simply open the D64Explorer.lpi file in Lazarus and select
-Run | Build.
+Run | Build.  You may want change the "build mode" to "Release" before you build
+the application.  To do this, select Project | Project Options... and then
+Compiler Options on the left.  On the right, change the Build Mode to "Release".
 
 
-Futher Information
-------------------
+Further Information
+-------------------
 
 This application wouldn't have been possible without the excellent resource at:
 

@@ -1,7 +1,7 @@
 object D64BAMViewForm: TD64BAMViewForm
-  Left = 462
+  Left = 623
   Height = 577
-  Top = 118
+  Top = 338
   Width = 1053
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSizeToolWin
@@ -14,8 +14,8 @@ object D64BAMViewForm: TD64BAMViewForm
   Visible = True
   object LstBxBAM: TListBox
     Left = 8
-    Height = 561
-    Top = 8
+    Height = 481
+    Top = 88
     Width = 1037
     Align = alClient
     BorderSpacing.Around = 8
@@ -24,5 +24,48 @@ object D64BAMViewForm: TD64BAMViewForm
     ItemHeight = 0
     ParentFont = False
     TabOrder = 0
+  end
+  object PnlDirectories: TPanel
+    Left = 8
+    Height = 72
+    Top = 8
+    Width = 1037
+    Align = alTop
+    BorderSpacing.Around = 8
+    BevelOuter = bvNone
+    ClientHeight = 72
+    ClientWidth = 1037
+    TabOrder = 1
+    object Label32: TLabel
+      Left = 0
+      Height = 15
+      Top = 0
+      Width = 1037
+      Align = alTop
+      BorderSpacing.Bottom = 8
+      Caption = 'Directories:'
+      ParentColor = False
+    end
+    object CmbDirectory: TComboBox
+      Left = 0
+      Height = 21
+      Top = 23
+      Width = 1037
+      Align = alTop
+      ItemHeight = 15
+      OnChange = CmbDirectoryChange
+      OnDrawItem = CmbDirectoryDrawItem
+      ReadOnly = True
+      Style = csOwnerDrawFixed
+      TabOrder = 0
+    end
+    object Label9: TLabel
+      Left = 0
+      Height = 15
+      Top = 56
+      Width = 29
+      Caption = 'BAM:'
+      ParentColor = False
+    end
   end
 end
