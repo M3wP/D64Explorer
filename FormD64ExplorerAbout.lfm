@@ -9,7 +9,7 @@ object D64ExplorerAboutForm: TD64ExplorerAboutForm
   ClientHeight = 391
   ClientWidth = 461
   Position = poScreenCenter
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '2.2.0.4'
   object Image1: TImage
     Left = 8
     Height = 128
@@ -696,13 +696,12 @@ object D64ExplorerAboutForm: TD64ExplorerAboutForm
   end
   object Label1: TLabel
     Left = 160
-    Height = 30
+    Height = 24
     Top = 8
-    Width = 127
+    Width = 132
     Caption = 'D64 Explorer'
     Font.Height = -21
     Font.Style = [fsBold]
-    ParentColor = False
     ParentFont = False
   end
   object Button1: TButton
@@ -712,39 +711,40 @@ object D64ExplorerAboutForm: TD64ExplorerAboutForm
     Width = 75
     Caption = 'OK'
     ModalResult = 1
+    ParentFont = False
     TabOrder = 0
   end
   object Label2: TLabel
     Left = 160
-    Height = 15
+    Height = 17
     Top = 49
-    Width = 125
-    Caption = 'Version:  0.9.2.0362 beta'
-    ParentColor = False
+    Width = 163
+    Caption = 'Version:  0.9.5.1297 beta'
+    ParentFont = False
   end
   object Label3: TLabel
     Left = 160
-    Height = 15
+    Height = 17
     Top = 73
-    Width = 182
-    Caption = 'Copyright © 2016, Daniel England.'
-    ParentColor = False
+    Width = 263
+    Caption = 'Copyright © 2016, 2022, Daniel England.'
+    ParentFont = False
   end
   object Label4: TLabel
     Left = 160
-    Height = 15
+    Height = 17
     Top = 97
-    Width = 106
+    Width = 135
     Caption = 'All Rights Reserved. '
-    ParentColor = False
+    ParentFont = False
   end
   object Label5: TLabel
     Left = 160
-    Height = 15
+    Height = 17
     Top = 121
-    Width = 194
+    Width = 248
     Caption = 'Released under the terms of the GPL.'
-    ParentColor = False
+    ParentFont = False
   end
   object Label6: TLabel
     Left = 9
@@ -753,7 +753,7 @@ object D64ExplorerAboutForm: TD64ExplorerAboutForm
     Width = 447
     AutoSize = False
     Caption = 'This program is free software:  you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.'#13#10#13#10'This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.'#13#10#13#10'You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.'
-    ParentColor = False
+    ParentFont = False
     WordWrap = True
   end
 end

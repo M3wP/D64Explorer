@@ -28,13 +28,14 @@
 //------------------------------------------------------------------------------
 unit FormD64SectorView;
 
-{$mode objfpc}{$H+}
+{$mode Delphi}
+{$H+}
 
 interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, C64D64Image;
+  StdCtrls, C64D64Image, D64ExplorerTypes;
 
 type
 
@@ -58,6 +59,8 @@ type
 	private
         FChanging: Boolean;
 
+		FD64File: TD64File;
+
         procedure ClearDisplay;
         procedure InitialiseTracks;
         procedure InitialiseSectors;
@@ -66,7 +69,7 @@ type
         		const ASector: TD64SectorNum);
 
   	public
-    	{ public declarations }
+    	property  D64File: TD64File read FD64File write FD64File;
   	end;
 
 var
@@ -109,7 +112,7 @@ procedure TD64SectorViewForm.FormShow(Sender: TObject);
 	begin
     ClearDisplay;
     InitialiseTracks;
-    if  D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
+    if  FD64File.D64Image.DiskType = ddt1581 then
         CmbTrack.ItemIndex:= 39
     else
         CmbTrack.ItemIndex:= 17;
@@ -139,7 +142,7 @@ procedure TD64SectorViewForm.InitialiseTracks;
         CmbTrack.Clear;
         CmbSector.Clear;
 
-        for t:= 1 to D64ExplorerMainDMod.D64Image.TrackCount do
+        for t:= 1 to FD64File.D64Image.TrackCount do
         	CmbTrack.Items.Add(IntToStr(t));
 
     	finally
@@ -159,7 +162,7 @@ procedure TD64SectorViewForm.InitialiseSectors;
     try
         CmbSector.Clear;
 
-        for s:= 0 to D64ExplorerMainDMod.D64Image.GetSectorsForTrack(
+        for s:= 0 to FD64File.D64Image.GetSectorsForTrack(
                 TD64TrackNum(CmbTrack.ItemIndex + 1)) - 1 do
         	CmbSector.Items.Add(IntToStr(s));
 
@@ -193,7 +196,7 @@ procedure TD64SectorViewForm.DisplayTrackSector(const ATrack: TD64TrackNum;
             LstBxOffset.Items.EndUpdate;
             end;
 
-        D64ExplorerMainDMod.D64Image.GetRawSector(ATrack, ASector, m);
+        FD64File.D64Image.GetRawSector(ATrack, ASector, m);
         m.Position:= 0;
 
         LstBxHex.Items.BeginUpdate;

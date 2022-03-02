@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="D64 Explorer"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
+      <Resources Count="1">
+        <Resource_0 FileName="chargen" Type="RCDATA" ResourceName="CHARGEN"/>
+      </Resources>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -87,8 +89,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <GenerateDebugInfo Value="False"/>
-              <StripSymbols Value="True"/>
+              <DebugInfoType Value="dsDwarf2Set"/>
             </Debugging>
             <LinkSmart Value="True"/>
             <Options>
@@ -109,19 +110,23 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
-    <RequiredPackages Count="2">
+    <RequiredPackages Count="3">
       <Item1>
-        <PackageName Value="LazControls"/>
+        <PackageName Value="virtualtreeview_package"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="LazControls"/>
       </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="16">
       <Unit0>
         <Filename Value="D64Explorer.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -141,6 +146,7 @@
         <Filename Value="DModD64ExplorerMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="D64ExplorerMainDMod"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
       </Unit3>
       <Unit4>
@@ -182,6 +188,42 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="D64ExplorerUtils.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="FrameD64ExplorerTask.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="D64ExplorerTaskFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="FrameD64ExplorerLibrary.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="D64ExplorerLibraryFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="FormD64ExplorerNewDisk.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="D64ExplorerNewDiskForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="FrameD64ExplorerManage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="D64ExplorerManageFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="D64ExplorerTypes.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit15>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

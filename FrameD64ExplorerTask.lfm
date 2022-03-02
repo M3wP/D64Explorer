@@ -1,0 +1,12 @@
+object D64ExplorerTaskFrame: TD64ExplorerTaskFrame
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 320
+  LCLVersion = '2.2.0.4'
+  ParentFont = False
+  TabOrder = 0
+  Visible = False
+  DesignLeft = 487
+  DesignTop = 234
+end

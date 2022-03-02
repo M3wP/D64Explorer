@@ -22,7 +22,8 @@
 //------------------------------------------------------------------------------
 unit FormD64ExplorerAbout;
 
-{$mode objfpc}{$H+}
+{$mode Delphi}
+{$H+}
 
 interface
 

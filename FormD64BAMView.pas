@@ -22,13 +22,14 @@
 //------------------------------------------------------------------------------
 unit FormD64BAMView;
 
-{$mode objfpc}{$H+}
+{$mode Delphi}
+{$H+}
 
 interface
 
 uses
     Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-    ExtCtrls, C64D64Image, Types;
+    ExtCtrls, C64D64Image, D64ExplorerTypes, Types;
 
 type
 
@@ -49,11 +50,13 @@ type
         FChanging: Boolean;
         FDirectories: TD64DirPartitions;
 
+		FD64File: TD64File;
+
         procedure ClearDisplay;
         procedure DoInitialiseDisplay;
         procedure InitialiseDisplay;
     public
-        { public declarations }
+        property  D64File: TD64File read FD64File write FD64File;
     end;
 
 var
@@ -64,7 +67,7 @@ implementation
 {$R *.lfm}
 
 uses
-    LCLType, DModD64ExplorerMain;
+    D64ExplorerUtils, DModD64ExplorerMain;
 
 
 { TD64BAMViewForm }
@@ -112,7 +115,7 @@ procedure TD64BAMViewForm.DoInitialiseDisplay;
 
         d:= 1;
         i:= 0;
-        for s:= 0 to D64ExplorerMainDMod.D64Image.MaxSectors - 1 do
+        for s:= 0 to FD64File.D64Image.MaxSectors - 1 do
             begin
             if  s = 0 then
                 o:= 'Sector 00     '
@@ -120,7 +123,7 @@ procedure TD64BAMViewForm.DoInitialiseDisplay;
                 o:= Format('       %2.2d     ', [Ord(s)]);
 
             for t:= AStart to AEnd do
-                if  s < D64ExplorerMainDMod.D64Image.GetSectorsForTrack(t + 1) then
+                if  s < FD64File.D64Image.GetSectorsForTrack(t + 1) then
                     if  (b[t].Bitmap[i] and d) = 0 then
                         o:= o + ' X '
                     else
@@ -149,25 +152,25 @@ procedure TD64BAMViewForm.DoInitialiseDisplay;
 //Sector 00      X  .
 //       nn      X  .
 
-    if  D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
+    if  FD64File.D64Image.DiskType = ddt1581 then
         begin
-        D64ExplorerMainDMod.D64Image.SetCurrentPartition(
+        FD64File.D64Image.SetCurrentPartition(
                 FDirectories[CmbDirectory.ItemIndex].Info, info);
         try
-            D64ExplorerMainDMod.D64Image.GetPartitionBAM(b);
+            FD64File.D64Image.GetPartitionBAM(b);
 
             finally
-            D64ExplorerMainDMod.D64Image.SetCurrentPartition(info);
+            FD64File.D64Image.SetCurrentPartition(info);
             end;
         end
     else
-        D64ExplorerMainDMod.D64Image.GetDiskBAM(b);
+        FD64File.D64Image.GetDiskBAM(b);
 
     LstBxBAM.Items.BeginUpdate;
     try
         LstBxBAM.Clear;
 
-        if  (not D64ExplorerMainDMod.D64Image.SingleSide)
+        if  (not FD64File.D64Image.SingleSide)
         and (Length(b) > 40) then
             m:= Length(b) div 2
         else
@@ -175,7 +178,7 @@ procedure TD64BAMViewForm.DoInitialiseDisplay;
 
         DoOutputTracksBAM(0, m - 1);
 
-        if  (not D64ExplorerMainDMod.D64Image.SingleSide)
+        if  (not FD64File.D64Image.SingleSide)
         and (Length(b) > 40) then
             begin
             LstBxBAM.Items.Add(EmptyStr);
@@ -194,9 +197,9 @@ procedure TD64BAMViewForm.InitialiseDisplay;
     i: Integer;
 
     begin
-    if  D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
+    if  FD64File.D64Image.DiskType = ddt1581 then
         begin
-        D64ExplorerMainDMod.D64Image.GetDirPartitions(FDirectories);
+        FD64File.D64Image.GetDirPartitions(FDirectories);
 
         FChanging:= True;
         CmbDirectory.Items.BeginUpdate;
@@ -234,62 +237,8 @@ procedure TD64BAMViewForm.CmbDirectoryChange(Sender: TObject);
 
 procedure TD64BAMViewForm.CmbDirectoryDrawItem(Control: TWinControl;
         Index: Integer; ARect: TRect; State: TOwnerDrawState);
-    var
-    s: string;
-    i: Integer;
-
     begin
-    //odSelected, odGrayed, odDisabled, odChecked,
-    //odFocused, odDefault, odHotLight, odInactive, odNoAccel,
-    //odNoFocusRect, odReserved1, odReserved2, odComboBoxEdit,
-    //odPainted  // item already painted
-
-    if  not (odPainted in State) then
-        begin
-        if  odSelected in State then
-            begin
-            CmbDirectory.Canvas.Brush.Color:= clHighlight;
-            CmbDirectory.Canvas.Pen.Color:= clWindow;
-            end
-        else
-            begin
-            CmbDirectory.Canvas.Brush.Color:= clWindow;
-            CmbDirectory.Canvas.Pen.Color:= clWindowText;
-            end;
-
-        CmbDirectory.Canvas.Brush.Style:= bsSolid;
-        CmbDirectory.Canvas.Pen.Style:= psSolid;
-
-        CmbDirectory.Canvas.FillRect(ARect);
-
-        s:= '/' + TrimRight(FDirectories[Index].PartFileName);
-        if  odComboBoxEdit in State then
-            begin
-            i:= FDirectories[Index].Parent;
-            while i > 0 do
-                begin
-                s:= '/' + TrimRight(FDirectories[i].PartFileName) + s;
-                i:= FDirectories[i].Parent;
-                end;
-            end
-        else
-            begin
-            if  FDirectories[Index].HasChildren then
-                s:= '+' + s
-            else
-                s:= '-' + s;
-
-            s:= '-' + s;
-
-            for i:= FDirectories[Index].Depth downto 0 do
-                if  i = 1 then
-                    s:= '|' + s
-                else if i > 0 then
-                    s:= '  |' + s;
-            end;
-
-        CmbDirectory.Canvas.TextOut(ARect.Left, ARect.Top, s);
-        end;
+    DirectoryDrawComboItem(CmbDirectory, Index, ARect, State, FDirectories);
     end;
 
 

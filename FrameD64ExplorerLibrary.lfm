@@ -1,0 +1,79 @@
+inherited D64ExplorerLibraryFrame: TD64ExplorerLibraryFrame
+  Height = 611
+  Width = 664
+  ClientHeight = 611
+  ClientWidth = 664
+  DesignLeft = 524
+  DesignTop = 222
+  object Panel1: TPanel[0]
+    Left = 0
+    Height = 48
+    Top = 0
+    Width = 664
+    Align = alTop
+    Caption = 'Panel1'
+    TabOrder = 0
+    Visible = False
+  end
+  object Panel2: TPanel[1]
+    Left = 0
+    Height = 256
+    Top = 76
+    Width = 664
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 256
+    ClientWidth = 664
+    TabOrder = 1
+    object VirtualStringTree1: TVirtualStringTree
+      Left = 8
+      Height = 240
+      Top = 8
+      Width = 648
+      Align = alClient
+      BorderSpacing.Around = 8
+      DefaultNodeHeight = 26
+      Header.AutoSizeIndex = 0
+      Header.Columns = <>
+      Header.MainColumn = -1
+      Images = D64ExplorerMainDMod.ImgLstDisks
+      TabOrder = 0
+      TreeOptions.PaintOptions = [toShowButtons, toShowDropmark, toThemeAware, toUseBlendedImages]
+      TreeOptions.SelectionOptions = [toFullRowSelect]
+      OnDblClick = VirtualStringTree1DblClick
+      OnGetText = VirtualStringTree1GetText
+      OnGetImageIndex = VirtualStringTree1GetImageIndex
+    end
+  end
+  object Panel3: TPanel[2]
+    Left = 0
+    Height = 28
+    Top = 48
+    Width = 664
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 28
+    ClientWidth = 664
+    TabOrder = 2
+    object PaintBox1: TPaintBox
+      Left = 0
+      Height = 28
+      Top = 0
+      Width = 664
+      Align = alClient
+      OnPaint = PaintBox1Paint
+    end
+    object Label1: TLabel
+      Left = 16
+      Height = 17
+      Top = 6
+      Width = 94
+      BorderSpacing.Left = 8
+      BorderSpacing.Top = 8
+      BorderSpacing.Right = 8
+      Caption = 'Recently Used'
+      Font.Color = clCaptionText
+      ParentFont = False
+    end
+  end
+end

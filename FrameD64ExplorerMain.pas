@@ -31,19 +31,21 @@
 //------------------------------------------------------------------------------
 unit FrameD64ExplorerMain;
 
-{$mode objfpc}{$H+}
+{$mode Delphi}
+{$H+}
 
 interface
 
 uses
     Classes, SysUtils, FileUtil, DividerBevel, Forms, Controls, StdCtrls,
-    ExtCtrls, ComCtrls, C64D64Image, Types;
+    ExtCtrls, ComCtrls, D64ExplorerTypes, C64D64Image, Types,
+	FrameD64ExplorerTask;
 
 type
 
 { TD64ExplorerMainFrame }
 
-    TD64ExplorerMainFrame = class(TFrame)
+    TD64ExplorerMainFrame = class(TD64ExplorerTaskFrame)
         Button1: TButton;
         Button2: TButton;
         Button3: TButton;
@@ -75,7 +77,19 @@ type
         Label31: TLabel;
         Label32: TLabel;
         Label33: TLabel;
+        Label34: TLabel;
+        Label35: TLabel;
+        Label36: TLabel;
+        Label37: TLabel;
+        Label38: TLabel;
+        Label39: TLabel;
+		Label40: TLabel;
+        LblDiskID: TLabel;
+        LblDiskName: TLabel;
+        LblDOSType: TLabel;
+        LblDOSVersion: TLabel;
         LblGEOS4080: TLabel;
+        LblGEOSVer: TLabel;
         LblGEOSVLIRActual: TLabel;
         LblGEOSClass: TLabel;
         LblGEOSInfoLoc: TLabel;
@@ -110,12 +124,16 @@ type
         Label7: TLabel;
         LblFileType: TLabel;
         LblGEOSTypeInf: TLabel;
+        LblNumTracks: TLabel;
         LblReplacing: TLabel;
         LstBxFiles: TListBox;
         LstBxGEOSVLIRRec: TListBox;
         LstBxGEOSData: TListBox;
         LstBxFileData: TListBox;
+		PaintBox1: TPaintBox;
         Panel1: TPanel;
+		Panel3: TPanel;
+        PnlDetails: TPanel;
         PnlDirectory: TPanel;
         PgCtrlFile: TPageControl;
         Splitter1: TSplitter;
@@ -127,22 +145,18 @@ type
         procedure Button2Click(Sender: TObject);
         procedure Button3Click(Sender: TObject);
         procedure CmbDirectoryChange(Sender: TObject);
-        procedure CmbDirectoryCloseUp(Sender: TObject);
         procedure CmbDirectoryDrawItem(Control: TWinControl; Index: Integer;
             ARect: TRect; State: TOwnerDrawState);
-        procedure CmbDirectoryDropDown(Sender: TObject);
         procedure CmbGEOSVLIRRecChange(Sender: TObject);
         procedure LstBxFilesSelectionChange(Sender: TObject; User: boolean);
+		procedure PaintBox1Paint(Sender: TObject);
+		procedure PnlDetailsPaint(Sender: TObject);
     private
         FChanging: Boolean;
-        FDropedDown: Boolean;
         FEntries: TD64DirEntries;
         FDirectories: TD64DirPartitions;
 
         FVLIRRecs: array of Word;
-
-        procedure HexDumpStreamToLstBx(const AStream: TStream;
-                const ALstBx: TListBox);
 
         procedure DoInitialiseFiles;
 
@@ -163,7 +177,11 @@ type
         procedure InitialiseFileView(const AEntry: Integer);
 
     public
-        procedure InitialiseDisplay;
+        class function GetDescription: string; override;
+
+        procedure Prepare(const AD64File: TD64File); override;
+        procedure Unprepare; override;
+        procedure Initialise; override;
     end;
 
 implementation
@@ -171,8 +189,8 @@ implementation
 {$R *.lfm}
 
 uses
-    LCLType,
-    DateUtils, Graphics, Clipbrd, D64ExplorerStrs, DModD64ExplorerMain;
+    DateUtils, Graphics, Clipbrd, D64ExplorerStrs, D64ExplorerUtils,
+    DModD64ExplorerMain;
 
 
 { TD64ExplorerMainFrame }
@@ -191,6 +209,21 @@ procedure TD64ExplorerMainFrame.LstBxFilesSelectionChange(Sender: TObject;
                 Break;
                 end;
     end;
+
+procedure TD64ExplorerMainFrame.PaintBox1Paint(Sender: TObject);
+	begin
+    PaintBox1.Canvas.GradientFill(PaintBox1.ClientRect, clInactiveCaption,
+			clBackground, gdHorizontal);
+
+    PaintBox1.Canvas.Brush.Color:= clBackground;
+    PaintBox1.Canvas.FillRect(Rect(0, 0, 8, PaintBox1.ClientRect.Bottom));
+	end;
+
+procedure TD64ExplorerMainFrame.PnlDetailsPaint(Sender: TObject);
+    begin
+    PnlDetails.Canvas.GradientFill(PnlDetails.ClientRect, clMenuBar,
+			clBackground, gdHorizontal);
+	end;
 
 procedure TD64ExplorerMainFrame.CmbGEOSVLIRRecChange(Sender: TObject);
     begin
@@ -217,146 +250,16 @@ procedure TD64ExplorerMainFrame.CmbDirectoryChange(Sender: TObject);
     begin
     if  not FChanging then
         begin
-        D64ExplorerMainDMod.D64Image.SetCurrentPartition(
+        FD64File.D64Image.SetCurrentPartition(
                 FDirectories[CmbDirectory.ItemIndex].Info);
         DoInitialiseFiles;
         end;
     end;
 
-procedure TD64ExplorerMainFrame.CmbDirectoryCloseUp(Sender: TObject);
-    begin
-    FDropedDown:= False;
-    end;
-
 procedure TD64ExplorerMainFrame.CmbDirectoryDrawItem(Control: TWinControl;
         Index: Integer; ARect: TRect; State: TOwnerDrawState);
-    var
-    s: string;
-    i: Integer;
-
     begin
-    //odSelected, odGrayed, odDisabled, odChecked,
-    //odFocused, odDefault, odHotLight, odInactive, odNoAccel,
-    //odNoFocusRect, odReserved1, odReserved2, odComboBoxEdit,
-    //odPainted  // item already painted
-
-    if  not (odPainted in State) then
-        begin
-        if  odSelected in State then
-            begin
-            CmbDirectory.Canvas.Brush.Color:= clHighlight;
-            CmbDirectory.Canvas.Pen.Color:= clWindow;
-            end
-        else
-            begin
-            CmbDirectory.Canvas.Brush.Color:= clWindow;
-            CmbDirectory.Canvas.Pen.Color:= clWindowText;
-            end;
-
-        CmbDirectory.Canvas.Brush.Style:= bsSolid;
-        CmbDirectory.Canvas.Pen.Style:= psSolid;
-
-        CmbDirectory.Canvas.FillRect(ARect);
-
-        s:= '/' + TrimRight(FDirectories[Index].PartFileName);
-        if  odComboBoxEdit in State then
-            begin
-            i:= FDirectories[Index].Parent;
-            while i > 0 do
-                begin
-                s:= '/' + TrimRight(FDirectories[i].PartFileName) + s;
-                i:= FDirectories[i].Parent;
-                end;
-            end
-        else
-            begin
-            if  FDirectories[Index].HasChildren then
-                s:= '+' + s
-            else
-                s:= '-' + s;
-
-            s:= '-' + s;
-
-            for i:= FDirectories[Index].Depth downto 0 do
-                if  i = 1 then
-                    s:= '|' + s
-                else if i > 0 then
-                    s:= '  |' + s;
-            end;
-
-        CmbDirectory.Canvas.TextOut(ARect.Left, ARect.Top, s);
-        end;
-    end;
-
-procedure TD64ExplorerMainFrame.CmbDirectoryDropDown(Sender: TObject);
-    begin
-    FDropedDown:= True;
-    end;
-
-procedure TD64ExplorerMainFrame.HexDumpStreamToLstBx(const AStream: TStream;
-        const ALstBx: TListBox);
-    var
-    i,
-    j,
-    l: Integer;
-    s: string;
-    b: Byte;
-    d: array[0..$0F] of Byte;
-
-    begin
-    i:= 0;
-    l:= 0;
-//dengland      Stop the compiler complaining
-    d[0]:= $00;
-    s:= Format('%6.6x   ', [l]);
-    while AStream.Position < AStream.Size do
-        begin
-        if  (i > 0)
-        and (i mod 16 = 0) then
-            begin
-            s:= s + '  ';
-            for j:= 0 to $0F do
-                if  d[j] in [$20..$7E] then
-                    s:= s + string(AnsiChar(d[j]))
-                else
-                    s:= s + ' ';
-            ALstBx.Items.Add(s);
-
-            Inc(l, i);
-            i:= 0;
-            s:= Format('%6.6x   ', [l]);
-            end
-        else if (i > 0)
-        and (i mod 4 = 0) then
-            s:= s + ' ';
-
-        b:= AStream.ReadByte;
-        s:= s + Format('%2.2x ', [b]);
-
-        d[i]:= b;
-        Inc(i);
-        end;
-
-    while i < 16 do
-        begin
-        if  (i > 0)
-        and (i mod 4 = 0) then
-            s:= s + ' ';
-
-        s:= s + '   ';
-        d[i]:= $00;
-
-        Inc(i);
-        end;
-
-    s:= s + '  ';
-    for j:= 0 to $0F do
-        if  d[j] in [$20..$7E] then
-            s:= s + string(AnsiChar(d[j]))
-        else
-            s:= s + ' ';
-
-    ALstBx.Items.Add(s);
+    DirectoryDrawComboItem(CmbDirectory, Index, ARect, State, FDirectories);
     end;
 
 procedure TD64ExplorerMainFrame.DoInitialiseFiles;
@@ -364,10 +267,10 @@ procedure TD64ExplorerMainFrame.DoInitialiseFiles;
     i: Integer;
 
     begin
-    if  D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
-        D64ExplorerMainDMod.D64Image.GetPartitionFiles(FEntries)
+    if  FD64File.D64Image.DiskType = ddt1581 then
+        FD64File.D64Image.GetPartitionFiles(FEntries)
     else
-        D64ExplorerMainDMod.D64Image.GetFileEntries(FEntries);
+        FD64File.D64Image.GetFileEntries(FEntries);
 
     FChanging:= True;
     try
@@ -376,7 +279,7 @@ procedure TD64ExplorerMainFrame.DoInitialiseFiles;
             LstBxFiles.Clear;
 
             for i:= 0 to High(FEntries) do
-                LstBxFiles.Items.Add(FEntries[i].FileName);
+                LstBxFiles.Items.Add(PetsciiToAsciiString(FEntries[i].FileName));
 
             finally
             LstBxFiles.Items.EndUpdate;
@@ -408,7 +311,7 @@ procedure TD64ExplorerMainFrame.DoPrepareFileInfo(const AEntry: Integer;
             Format('$%2.2x $%2.2x', [FEntries[AEntry].EntryData[$03],
             FEntries[AEntry].EntryData[$04]]);
 
-    AGEOSFile:= D64ExplorerMainDMod.D64Image.GEOSDisk and
+    AGEOSFile:= FD64File.D64Image.GEOSDisk and
             ((FEntries[AEntry].FileType and $07) in [1..3]) and
             (FEntries[AEntry].EntryData[$18] <> 0);
 
@@ -441,7 +344,7 @@ procedure TD64ExplorerMainFrame.DoPrepareFileData(const AEntry: Integer;
             AStream.Clear;
 
             if  (FEntries[AEntry].FileType and $7) <> 5 then
-                D64ExplorerMainDMod.D64Image.GetDataChain(
+                FD64File.D64Image.GetDataChain(
                         FEntries[AEntry].EntryData[$03],
                         FEntries[AEntry].EntryData[$04], AStream, sz)
             else
@@ -452,11 +355,11 @@ procedure TD64ExplorerMainFrame.DoPrepareFileData(const AEntry: Integer;
 
                 while i < FEntries[AEntry].FileSize do
                     begin
-                    D64ExplorerMainDMod.D64Image.GetRawSector(nt, ns, AStream);
+                    FD64File.D64Image.GetRawSector(nt, ns, AStream);
 
                     Inc(i);
                     Inc(ns);
-                    if  ns = D64ExplorerMainDMod.D64Image.GetSectorsForTrack(nt) then
+                    if  ns = FD64File.D64Image.GetSectorsForTrack(nt) then
                         begin
                         Inc(nt);
                         ns:= 0;
@@ -576,7 +479,7 @@ procedure TD64ExplorerMainFrame.DoPrepareGEOSInfo(const AEntry: Integer;
     if  FEntries[AEntry].EntryData[$15] > 0 then
         begin
         AStream.Clear;
-        D64ExplorerMainDMod.D64Image.GetRawSector(
+        FD64File.D64Image.GetRawSector(
                 FEntries[AEntry].EntryData[$15],
                 FEntries[AEntry].EntryData[$16], AStream);
 
@@ -634,7 +537,7 @@ procedure TD64ExplorerMainFrame.DoPrepareGEOSVLIR(const AEntry: Integer;
     FChanging:= True;
     try
         AStream.Clear;
-        D64ExplorerMainDMod.D64Image.GetRawSector(
+        FD64File.D64Image.GetRawSector(
                 FEntries[AEntry].EntryData[$03],
                 FEntries[AEntry].EntryData[$04], AStream);
 
@@ -696,7 +599,7 @@ procedure TD64ExplorerMainFrame.DoPrepareGEOSVLIRRec(const ARecord: Integer);
 
     m:= TMemoryStream.Create;
     try
-        D64ExplorerMainDMod.D64Image.GetDataChain(t, s, m, sz);
+        FD64File.D64Image.GetDataChain(t, s, m, sz);
 
         m.Position:= 0;
         HexDumpStreamToLstBx(m, LstBxGEOSVLIRRec);
@@ -795,14 +698,67 @@ procedure TD64ExplorerMainFrame.InitialiseFileView(const AEntry: Integer);
         end;
     end;
 
-procedure TD64ExplorerMainFrame.InitialiseDisplay;
+class function TD64ExplorerMainFrame.GetDescription: string;
+	begin
+    Result:= 'File Inspector';
+	end;
+
+procedure TD64ExplorerMainFrame.Prepare(const AD64File: TD64File);
+	begin
+	FD64File:= AD64File;
+    D64ExplorerMainDMod.BindToCoolbar(PnlDetails);
+
+	inherited;
+	end;
+
+procedure TD64ExplorerMainFrame.Unprepare;
+	begin
+	if  not Prepared then
+		Exit;
+
+    D64ExplorerMainDMod.UnbindToCoolbar(PnlDetails, Self);
+    PnlDetails.Parent:= Self;
+    PnlDetails.Visible:= False;
+
+	inherited;
+	end;
+
+procedure TD64ExplorerMainFrame.Initialise;
     var
     i: Integer;
 
     begin
-    if D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
+    LblDOSVersion.Caption:= EmptyStr;
+    LblDOSType.Caption:= EmptyStr;
+    LblDiskName.Caption:= EmptyStr;
+    LblDiskID.Caption:= EmptyStr;
+    LblNumTracks.Caption:= EmptyStr;
+    LblGEOSVer.Caption:= EmptyStr;
+
+    if  FD64File.D64Image.ValidVersion then
+        LblDOSVersion.Caption:= Format('$%2.2x',
+        		[FD64File.D64Image.DOSVersion])
+    else
+        LblDOSVersion.Caption:= STR_LBL_D64DOSINVALID;
+
+    LblDOSType.Caption:= FD64File.D64Image.DOSType;
+    LblDiskName.Caption:= PetsciiToAsciiString(FD64File.D64Image.DiskName);
+    LblDiskID.Caption:= PetsciiToAsciiString(FD64File.D64Image.DiskID);
+    LblNumTracks.Caption:= IntToStr(FD64File.D64Image.TrackCount);
+
+    if  FD64File.D64Image.GEOSDisk then
+        LblGEOSVer.Caption:= STR_LBL_D64YES + ' (' +
+                STR_LBL_D64VERSION + ' ' +
+                IntToStr(FD64File.D64Image.GEOSVerMajor) + '.' +
+                IntToStr(FD64File.D64Image.GEOSVerMinor) + ')'
+    else
+        LblGEOSVer.Caption:= STR_LBL_D64NO;
+
+    PnlDetails.Visible:= True;
+
+    if FD64File.D64Image.DiskType = ddt1581 then
         begin
-        D64ExplorerMainDMod.D64Image.GetDirPartitions(FDirectories);
+        FD64File.D64Image.GetDirPartitions(FDirectories);
 
         PnlDirectory.Visible:= True;
 
@@ -813,7 +769,8 @@ procedure TD64ExplorerMainFrame.InitialiseDisplay;
                 CmbDirectory.Clear;
 
                 for i:= 0 to High(FDirectories) do
-                    CmbDirectory.Items.Add('/' + FDirectories[i].PartFileName);
+                    CmbDirectory.Items.Add('/' +
+							PetsciiToAsciiString(FDirectories[i].PartFileName));
 
                 finally
                 CmbDirectory.Items.EndUpdate;
