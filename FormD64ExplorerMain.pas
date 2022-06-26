@@ -66,10 +66,12 @@ type
             const FileNames: array of String);
 		procedure FormResize(Sender: TObject);
         procedure PaintBox1Paint(Sender: TObject);
+        procedure Panel1Paint(Sender: TObject);
 		procedure Panel5Paint(Sender: TObject);
         procedure SpeedButton1Paint(Sender: TObject);
   	private
-    	FBarBmp: TBitmap;
+    	FBarBmp,
+        FTskBmp: TBitmap;
     public
     	{ public declarations }
   	end;
@@ -82,7 +84,7 @@ implementation
 {$R *.lfm}
 
 uses
-    GraphType, DModD64ExplorerMain;
+    GraphType, D64ExplorerConsts, DModD64ExplorerMain;
 
 { TD64ExplorerMainForm }
 
@@ -108,6 +110,7 @@ procedure TD64ExplorerMainForm.FormCloseQuery(Sender: TObject;
 procedure TD64ExplorerMainForm.FormCreate(Sender: TObject);
 	begin
     FBarBmp:= TBitmap.Create;
+    FTskBmp:= TBitmap.Create;
 	end;
 
 procedure TD64ExplorerMainForm.FormDropFiles(Sender: TObject;
@@ -117,28 +120,68 @@ procedure TD64ExplorerMainForm.FormDropFiles(Sender: TObject;
 	end;
 
 procedure TD64ExplorerMainForm.FormResize(Sender: TObject);
-	begin
+    var
+    r: TRect;
+
+    begin
     Panel5.Height:= ClientHeight - (CoolBar1.GrabWidth + 52 * 3 + 4);
 
 	FBarBmp.Width:= ClientWidth;
 	FBarBmp.Height:= 16;
-    FBarBmp.Canvas.GradientFill(Coolbar3.ClientRect, clMenuBar,
-			clBackground, gdHorizontal);
+    FBarBmp.Canvas.GradientFill(Coolbar3.ClientRect,
+    		ARR_D64_CLR_IDX[dciOptsGrad0], ARR_D64_CLR_IDX[dciOptsGrad1],
+			gdHorizontal);
 	CoolBar1.Bitmap:= FBarBmp;
 
 	CoolBar3.Bitmap:= FBarBmp;
+
+    FTskBmp.Height:= ClientHeight;
+    FTskBmp.Width:= 16;
+
+    r:= Coolbar2.ClientRect;
+//  r.Top:= r.Top + Coolbar2.GrabWidth + 8;
+
+   	FTskBmp.Canvas.GradientFill(r,
+//    		ARR_D64_CLR_IDX[dciHdrGrad0], ARR_D64_CLR_IDX[dciHdrGrad1],
+    		ARR_D64_CLR_IDX[dciOptsGrad0], ARR_D64_CLR_IDX[dciOptsGrad1],
+    	   	gdVertical);
+
+//  r:= Rect(0, 0, r.Right, Coolbar2.GrabWidth + 8);
+//  FTskBmp.Canvas.Brush.Style:= bsSolid;
+//  FTskBmp.Canvas.Brush.Color:= ARR_D64_CLR_IDX[dciHdrGrad1];
+//  FTskBmp.Canvas.FillRect(r);
+
+    Coolbar2.Bitmap:= FTskBmp;
+
+    Panel1.ParentBackground:= False;
+    Panel1.ParentBackground:= True;
+
+    Panel5.ParentBackground:= False;
+    Panel5.ParentBackground:= True;
 	end;
 
 procedure TD64ExplorerMainForm.PaintBox1Paint(Sender: TObject);
 	begin
-    PaintBox1.Canvas.GradientFill(PaintBox1.ClientRect, clInactiveCaption,
-			clBackground,gdHorizontal);
+    PaintBox1.Canvas.GradientFill(PaintBox1.ClientRect,
+    		ARR_D64_CLR_IDX[dciHdrGrad0], ARR_D64_CLR_IDX[dciHdrGrad1],
+			gdHorizontal);
+
+    Label1.Font.Color:= ARR_D64_CLR_IDX[dciHdrText0];
+    Label1.Font.Style:= [fsBold];
+	end;
+
+procedure TD64ExplorerMainForm.Panel1Paint(Sender: TObject);
+	begin
+	//Panel1.Canvas.GradientFill(Panel5.ClientRect,
+	//		ARR_D64_CLR_IDX[dciHdrGrad0], ARR_D64_CLR_IDX[dciHdrGrad1],
+ //       	gdVertical);
 	end;
 
 procedure TD64ExplorerMainForm.Panel5Paint(Sender: TObject);
 	begin
-    Panel5.Canvas.GradientFill(Panel5.ClientRect, clInactiveCaption,
-			clBackground, gdVertical);
+    //Panel5.Canvas.GradientFill(Panel5.ClientRect,
+    //		ARR_D64_CLR_IDX[dciHdrGrad0], ARR_D64_CLR_IDX[dciHdrGrad1],
+    //        gdVertical);
 	end;
 
 procedure TD64ExplorerMainForm.SpeedButton1Paint(Sender: TObject);
@@ -152,33 +195,53 @@ procedure TD64ExplorerMainForm.SpeedButton1Paint(Sender: TObject);
 
     if  sb.Down then
     	begin
-        if  sb.Enabled then
-        	sb.Canvas.Brush.Color:= clMenuBar
-        else
-            sb.Canvas.Brush.Color:= clInactiveCaption;
-
 		sb.Canvas.Brush.Style:= bsSolid;
-		sb.Canvas.GradientFill(sb.ClientRect, clMenuHighlight,
-				sb.Canvas.Brush.Color, gdVertical);
+
+        if  sb.Enabled then
+            begin
+//          sb.Canvas.Brush.Color:= clMenuBar
+            sb.Canvas.Brush.Color:= clMenuHighlight;
+//          sb.Canvas.FillRect(sb.ClientRect);
+			sb.Canvas.GradientFill(sb.ClientRect,
+            		ARR_D64_CLR_IDX[dciItmActvGrad0], ARR_D64_CLR_IDX[dciItmActvGrad1],
+                    gdVertical);
+            end
+        else
+        	begin
+            sb.Canvas.Brush.Color:= clInactiveCaption;
+            sb.Canvas.FillRect(sb.ClientRect);
+            end;
+
+//		sb.Canvas.GradientFill(sb.ClientRect, clMenuHighlight,
+//				sb.Canvas.Brush.Color, gdVertical);
 
 		pt.x:= 4;
 		pt.y:= 4;
-
         end
 	else
 		begin
         if  sb.MouseInClient then
-        	sb.Canvas.Brush.Color:= clMenuHighlight
-		else
-        	sb.Canvas.Brush.Color:= clInactiveCaption;
+            begin
+//        	sb.Canvas.Brush.Color:= clMenuHighlight;
+        	sb.Canvas.Brush.Color:= clActiveCaption;
+			sb.Canvas.Brush.Style:= bsSolid;
+            end
+        else
+        	begin
+//        	sb.Canvas.Brush.Color:= clInactiveCaption;
+        	sb.Canvas.Brush.Color:= clNone;
+            sb.Canvas.Brush.Style:= bsClear;
+            end;
 //        else
 //            sb.Canvas.Brush.Color:= clBtnShadow;
 
-		sb.Canvas.Brush.Style:= bsSolid;
-		sb.Canvas.FillRect(sb.ClientRect);
+		sb.Canvas.Clear;
 
-			pt.x:= 2;
-			pt.y:= 2;
+//		sb.Canvas.Brush.Style:= bsSolid;
+//		sb.Canvas.FillRect(sb.ClientRect);
+
+		pt.x:= 2;
+		pt.y:= 2;
 		end;
 
 	if  not sb.Enabled then

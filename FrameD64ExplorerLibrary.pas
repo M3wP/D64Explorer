@@ -56,7 +56,7 @@ implementation
 {$R *.lfm}
 
 uses
-    DModD64ExplorerMain;
+    D64ExplorerConsts, DModD64ExplorerMain;
 
 { TD64ExplorerLibraryFrame }
 
@@ -95,11 +95,15 @@ procedure TD64ExplorerLibraryFrame.VirtualStringTree1DblClick(Sender: TObject);
 
 procedure TD64ExplorerLibraryFrame.PaintBox1Paint(Sender: TObject);
 	begin
-    PaintBox1.Canvas.GradientFill(PaintBox1.ClientRect, clInactiveCaption,
-			clBackground, gdHorizontal);
+    PaintBox1.Canvas.GradientFill(PaintBox1.ClientRect,
+    		ARR_D64_CLR_IDX[dciHdrGrad0], ARR_D64_CLR_IDX[dciHdrGrad1],
+            gdHorizontal);
 
-    PaintBox1.Canvas.Brush.Color:= clBackground;
+    PaintBox1.Canvas.Brush.Color:= ARR_D64_CLR_IDX[dciHdrGrad1];
     PaintBox1.Canvas.FillRect(Rect(0, 0, 8, PaintBox1.ClientRect.Bottom));
+
+    Label1.Font.Color:= ARR_D64_CLR_IDX[dciHdrText0];
+    Label1.Font.Style:= [fsBold];
 	end;
 
 procedure TD64ExplorerLibraryFrame.RebuildRecentUsed;

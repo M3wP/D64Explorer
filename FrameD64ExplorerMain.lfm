@@ -7,14 +7,15 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
   DesignTop = 177
   object Splitter1: TSplitter[0]
     Left = 186
-    Height = 636
-    Top = 95
+    Height = 638
+    Top = 93
     Width = 6
+    ParentColor = False
   end
   object PgCtrlFile: TPageControl[1]
     Left = 197
-    Height = 626
-    Top = 100
+    Height = 628
+    Top = 98
     Width = 1063
     ActivePage = TbShtC64File
     Align = alClient
@@ -24,14 +25,14 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
     TabOrder = 1
     object TbShtC64File: TTabSheet
       Caption = 'File Data'
-      ClientHeight = 595
-      ClientWidth = 1053
+      ClientHeight = 600
+      ClientWidth = 1055
       ParentFont = False
       object LstBxFileData: TListBox
         Left = 10
-        Height = 405
+        Height = 410
         Top = 180
-        Width = 1033
+        Width = 1035
         Anchors = [akTop, akLeft, akRight, akBottom]
         BorderSpacing.Around = 10
         Font.Height = -13
@@ -39,142 +40,158 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         ItemHeight = 0
         ParentFont = False
         TabOrder = 0
-        TopIndex = -1
       end
       object Label1: TLabel
         Left = 10
-        Height = 17
+        Height = 15
         Top = 10
-        Width = 98
+        Width = 76
         Caption = 'File Type Desc:'
+        ParentColor = False
         ParentFont = False
       end
       object Label2: TLabel
         Left = 350
-        Height = 17
+        Height = 15
         Top = 10
-        Width = 108
+        Width = 84
         Caption = 'Replacing State:'
+        ParentColor = False
         ParentFont = False
       end
       object Label3: TLabel
         Left = 350
-        Height = 17
+        Height = 15
         Top = 40
-        Width = 78
+        Width = 62
         Caption = 'File Locked:'
+        ParentColor = False
         ParentFont = False
       end
       object Label4: TLabel
         Left = 350
-        Height = 17
+        Height = 15
         Top = 70
-        Width = 77
+        Width = 60
         Caption = 'File Closed:'
+        ParentColor = False
         ParentFont = False
       end
       object Label5: TLabel
         Left = 10
-        Height = 17
+        Height = 15
         Top = 40
-        Width = 134
+        Width = 103
         Caption = 'File Data Start (T/S):'
+        ParentColor = False
         ParentFont = False
       end
       object Label6: TLabel
         Left = 10
-        Height = 17
+        Height = 15
         Top = 70
-        Width = 68
+        Width = 53
         Caption = 'GEOS File:'
+        ParentColor = False
         ParentFont = False
       end
       object Label7: TLabel
         Left = 10
-        Height = 17
+        Height = 15
         Top = 100
-        Width = 98
+        Width = 76
         Caption = 'File Block Size:'
+        ParentColor = False
         ParentFont = False
       end
       object LblFileType: TLabel
         Left = 179
-        Height = 17
+        Height = 15
         Top = 10
-        Width = 77
+        Width = 58
         Caption = 'LblFileType'
+        ParentColor = False
         ParentFont = False
       end
       object LblReplacing: TLabel
         Left = 490
-        Height = 17
+        Height = 15
         Top = 10
-        Width = 86
+        Width = 68
         Caption = 'LblReplacing'
+        ParentColor = False
         ParentFont = False
       end
       object LblFileLocked: TLabel
         Left = 490
-        Height = 17
+        Height = 15
         Top = 40
-        Width = 92
+        Width = 72
         Caption = 'LblFileLocked'
+        ParentColor = False
         ParentFont = False
       end
       object LblFileClosed: TLabel
         Left = 490
-        Height = 17
+        Height = 15
         Top = 70
-        Width = 91
+        Width = 70
         Caption = 'LblFileClosed'
+        ParentColor = False
         ParentFont = False
       end
       object LblFileData: TLabel
         Left = 179
-        Height = 17
+        Height = 15
         Top = 40
-        Width = 77
+        Width = 58
         Caption = 'LblFileData'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSFile: TLabel
         Left = 179
-        Height = 17
+        Height = 15
         Top = 70
-        Width = 82
+        Width = 63
         Caption = 'LblGEOSFile'
+        ParentColor = False
         ParentFont = False
       end
       object LblFileSize: TLabel
         Left = 179
-        Height = 17
+        Height = 15
         Top = 100
-        Width = 72
+        Width = 54
         Caption = 'LblFileSize'
+        ParentColor = False
         ParentFont = False
       end
       object Label8: TLabel
         Left = 350
-        Height = 17
+        Height = 15
         Top = 100
-        Width = 104
+        Width = 81
         Caption = 'File Actual Size:'
+        ParentColor = False
         ParentFont = False
       end
       object LblFileActual: TLabel
         Left = 490
-        Height = 17
+        Height = 15
         Top = 100
-        Width = 88
+        Width = 68
         Caption = 'LblFileActual'
+        ParentColor = False
         ParentFont = False
       end
       object Label9: TLabel
         Left = 10
-        Height = 17
+        Height = 15
         Top = 155
-        Width = 70
+        Width = 53
         Caption = 'Data Fork:'
+        ParentColor = False
         ParentFont = False
       end
       object Button1: TButton
@@ -203,6 +220,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 40
         Width = 107
         Caption = 'GEOS Structure:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSStruct: TLabel
@@ -211,6 +229,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 40
         Width = 99
         Caption = 'LblGEOSStruct'
+        ParentColor = False
         ParentFont = False
       end
       object Label11: TLabel
@@ -219,6 +238,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 70
         Width = 103
         Caption = 'GEOS File Type:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSType: TLabel
@@ -227,6 +247,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 70
         Width = 90
         Caption = 'LblGEOSType'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSDate: TLabel
@@ -235,6 +256,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 70
         Width = 90
         Caption = 'LblGEOSDate'
+        ParentColor = False
         ParentFont = False
       end
       object Label13: TLabel
@@ -243,6 +265,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 70
         Width = 97
         Caption = 'Last Modified:'
+        ParentColor = False
         ParentFont = False
       end
       object DividerBevel1: TDividerBevel
@@ -271,6 +294,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 210
         Width = 107
         Caption = 'GEOS Structure:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSStructInf: TLabel
@@ -279,6 +303,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 210
         Width = 117
         Caption = 'LblGEOSStructInf'
+        ParentColor = False
         ParentFont = False
       end
       object Label14: TLabel
@@ -287,6 +312,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 180
         Width = 103
         Caption = 'GEOS File Type:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSTypeInf: TLabel
@@ -295,6 +321,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 180
         Width = 108
         Caption = 'LblGEOSTypeInf'
+        ParentColor = False
         ParentFont = False
       end
       object Label15: TLabel
@@ -303,6 +330,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 150
         Width = 91
         Caption = 'C64 File Type:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSC64Type: TLabel
@@ -311,6 +339,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 150
         Width = 115
         Caption = 'LblGEOSC64Type'
+        ParentColor = False
         ParentFont = False
       end
       object Label16: TLabel
@@ -319,6 +348,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 150
         Width = 58
         Caption = 'ID Bytes:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSIDBytes: TLabel
@@ -327,6 +357,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 150
         Width = 109
         Caption = 'LblGEOSIDBytes'
+        ParentColor = False
         ParentFont = False
       end
       object Label18: TLabel
@@ -335,6 +366,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 150
         Width = 32
         Caption = 'Icon:'
+        ParentColor = False
         ParentFont = False
       end
       object ImgGEOSIcon: TImage
@@ -354,6 +386,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 240
         Width = 96
         Caption = 'Load Address:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSLoad: TLabel
@@ -362,6 +395,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 240
         Width = 91
         Caption = 'LblGEOSLoad'
+        ParentColor = False
         ParentFont = False
       end
       object Label20: TLabel
@@ -370,6 +404,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 240
         Width = 88
         Caption = 'End Address:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSEnd: TLabel
@@ -378,6 +413,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 240
         Width = 83
         Caption = 'LblGEOSEnd'
+        ParentColor = False
         ParentFont = False
       end
       object Label21: TLabel
@@ -386,6 +422,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 240
         Width = 89
         Caption = 'Init. Address:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSInit: TLabel
@@ -394,6 +431,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 240
         Width = 80
         Caption = 'LblGEOSInit'
+        ParentColor = False
         ParentFont = False
       end
       object Label22: TLabel
@@ -402,6 +440,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 300
         Width = 133
         Caption = 'Author/Application:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSAuthor: TLabel
@@ -410,6 +449,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 300
         Width = 105
         Caption = 'LblGEOSAuthor'
+        ParentColor = False
         ParentFont = False
       end
       object Label24: TLabel
@@ -418,6 +458,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 330
         Width = 130
         Caption = 'Parent Application:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSParent: TLabel
@@ -426,6 +467,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 330
         Width = 103
         Caption = 'LblGEOSParent'
+        ParentColor = False
         ParentFont = False
       end
       object Label23: TLabel
@@ -434,6 +476,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 390
         Width = 82
         Caption = 'Description:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSDesc: TLabel
@@ -442,6 +485,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 390
         Width = 90
         Caption = 'LblGEOSDesc'
+        ParentColor = False
         ParentFont = False
       end
       object Label25: TLabel
@@ -450,6 +494,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 360
         Width = 117
         Caption = 'Application Data:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSAppData: TLabel
@@ -458,6 +503,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 360
         Width = 118
         Caption = 'LblGEOSAppData'
+        ParentColor = False
         ParentFont = False
       end
       object Label26: TLabel
@@ -466,6 +512,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 40
         Width = 105
         Caption = 'Info Block (T/S):'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSInfoLoc: TLabel
@@ -474,6 +521,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 40
         Width = 108
         Caption = 'LblGEOSInfoLoc'
+        ParentColor = False
         ParentFont = False
       end
       object Label17: TLabel
@@ -482,6 +530,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 270
         Width = 39
         Caption = 'Class:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSClass: TLabel
@@ -490,6 +539,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 270
         Width = 93
         Caption = 'LblGEOSClass'
+        ParentColor = False
         ParentFont = False
       end
       object LstBxGEOSData: TListBox
@@ -504,7 +554,6 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         ItemHeight = 0
         ParentFont = False
         TabOrder = 0
-        TopIndex = -1
       end
       object Label27: TLabel
         Left = 10
@@ -512,6 +561,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 440
         Width = 188
         Caption = 'Data Block (Offset $4D-$FF):'
+        ParentColor = False
         ParentFont = False
       end
       object Label31: TLabel
@@ -520,6 +570,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 270
         Width = 109
         Caption = '40/80 Col. Flags:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOS4080: TLabel
@@ -528,6 +579,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 270
         Width = 90
         Caption = 'LblGEOS4080'
+        ParentColor = False
         ParentFont = False
       end
       object Button2: TButton
@@ -552,14 +604,15 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 15
         Width = 96
         Caption = 'Record Select:'
+        ParentColor = False
         ParentFont = False
       end
       object CmbGEOSVLIRRec: TComboBox
         Left = 140
-        Height = 33
+        Height = 23
         Top = 10
         Width = 225
-        ItemHeight = 0
+        ItemHeight = 15
         OnChange = CmbGEOSVLIRRecChange
         ParentFont = False
         Style = csDropDownList
@@ -577,7 +630,6 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         ItemHeight = 0
         ParentFont = False
         TabOrder = 1
-        TopIndex = -1
       end
       object Label29: TLabel
         Left = 10
@@ -585,6 +637,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 70
         Width = 87
         Caption = 'Record Data:'
+        ParentColor = False
         ParentFont = False
       end
       object Label30: TLabel
@@ -593,6 +646,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 15
         Width = 95
         Caption = 'Actual Length:'
+        ParentColor = False
         ParentFont = False
       end
       object LblGEOSVLIRActual: TLabel
@@ -601,6 +655,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
         Top = 15
         Width = 133
         Caption = 'LblGEOSVLIRActual'
+        ParentColor = False
         ParentFont = False
       end
       object Button3: TButton
@@ -617,13 +672,13 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
   end
   object Panel1: TPanel[2]
     Left = 8
-    Height = 636
-    Top = 95
+    Height = 638
+    Top = 93
     Width = 178
     Align = alLeft
     BorderSpacing.Left = 8
     BevelOuter = bvNone
-    ClientHeight = 636
+    ClientHeight = 638
     ClientWidth = 178
     ParentFont = False
     TabOrder = 2
@@ -640,19 +695,20 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       TabOrder = 0
       object Label32: TLabel
         Left = 5
-        Height = 17
+        Height = 15
         Top = 5
         Width = 168
         Align = alTop
         BorderSpacing.Bottom = 5
         BorderSpacing.Around = 5
         Caption = 'Directories:'
+        ParentColor = False
         ParentFont = False
       end
       object CmbDirectory: TComboBox
         Left = 5
-        Height = 33
-        Top = 32
+        Height = 25
+        Top = 30
         Width = 168
         Align = alTop
         BorderSpacing.Around = 5
@@ -665,19 +721,20 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       end
       object Label33: TLabel
         Left = 5
-        Height = 17
-        Top = 75
+        Height = 15
+        Top = 65
         Width = 168
         Align = alTop
         BorderSpacing.Top = 5
         BorderSpacing.Around = 5
         Caption = 'Files:'
+        ParentColor = False
         ParentFont = False
       end
     end
     object LstBxFiles: TListBox
       Left = 5
-      Height = 531
+      Height = 533
       Top = 100
       Width = 168
       Align = alClient
@@ -686,29 +743,28 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       OnSelectionChange = LstBxFilesSelectionChange
       ParentFont = False
       TabOrder = 1
-      TopIndex = -1
     end
   end
   object PnlDetails: TPanel[3]
     Left = 10
-    Height = 47
+    Height = 45
     Top = 10
     Width = 1245
     Align = alTop
     AutoSize = True
     BorderSpacing.Around = 10
     BevelOuter = bvNone
-    ClientHeight = 47
+    ClientHeight = 45
     ClientWidth = 1245
-    ParentFont = False
     TabOrder = 3
     OnPaint = PnlDetailsPaint
     object Label34: TLabel
       Left = 0
-      Height = 17
+      Height = 15
       Top = 0
-      Width = 87
+      Width = 67
       Caption = 'DOS Version:'
+      ParentColor = False
       ParentFont = False
     end
     object LblDOSVersion: TLabel
@@ -716,14 +772,16 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       Height = 1
       Top = 0
       Width = 1
+      ParentColor = False
       ParentFont = False
     end
     object Label35: TLabel
       Left = 310
-      Height = 17
+      Height = 15
       Top = 0
-      Width = 68
+      Width = 53
       Caption = 'DOS Type:'
+      ParentColor = False
       ParentFont = False
     end
     object LblDOSType: TLabel
@@ -731,14 +789,16 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       Height = 1
       Top = 0
       Width = 1
+      ParentColor = False
       ParentFont = False
     end
     object Label36: TLabel
       Left = 0
-      Height = 17
+      Height = 15
       Top = 30
-      Width = 76
+      Width = 60
       Caption = 'Disk Name:'
+      ParentColor = False
       ParentFont = False
     end
     object LblDiskName: TLabel
@@ -746,14 +806,16 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       Height = 1
       Top = 30
       Width = 1
+      ParentColor = False
       ParentFont = False
     end
     object Label37: TLabel
       Left = 310
-      Height = 17
+      Height = 15
       Top = 30
-      Width = 50
+      Width = 39
       Caption = 'Disk ID:'
+      ParentColor = False
       ParentFont = False
     end
     object LblDiskID: TLabel
@@ -761,14 +823,16 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       Height = 1
       Top = 30
       Width = 1
+      ParentColor = False
       ParentFont = False
     end
     object Label38: TLabel
       Left = 490
-      Height = 17
+      Height = 15
       Top = 30
-      Width = 73
+      Width = 57
       Caption = 'GEOS Disk:'
+      ParentColor = False
       ParentFont = False
     end
     object LblGEOSVer: TLabel
@@ -776,14 +840,16 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       Height = 1
       Top = 30
       Width = 1
+      ParentColor = False
       ParentFont = False
     end
     object Label39: TLabel
       Left = 490
-      Height = 17
+      Height = 15
       Top = 0
-      Width = 87
+      Width = 68
       Caption = 'Num. Tracks:'
+      ParentColor = False
       ParentFont = False
     end
     object LblNumTracks: TLabel
@@ -791,13 +857,14 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       Height = 1
       Top = 0
       Width = 1
+      ParentColor = False
       ParentFont = False
     end
   end
   object Panel3: TPanel[4]
     Left = 0
     Height = 28
-    Top = 67
+    Top = 65
     Width = 1265
     Align = alTop
     BevelOuter = bvNone
@@ -814,14 +881,15 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
     end
     object Label40: TLabel
       Left = 16
-      Height = 17
+      Height = 15
       Top = 6
-      Width = 47
+      Width = 35
       BorderSpacing.Left = 8
       BorderSpacing.Top = 8
       BorderSpacing.Right = 8
       Caption = 'Details'
       Font.Color = clCaptionText
+      ParentColor = False
       ParentFont = False
     end
   end

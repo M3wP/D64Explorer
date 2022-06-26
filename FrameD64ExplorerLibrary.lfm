@@ -65,14 +65,15 @@ inherited D64ExplorerLibraryFrame: TD64ExplorerLibraryFrame
     end
     object Label1: TLabel
       Left = 16
-      Height = 17
+      Height = 15
       Top = 6
-      Width = 94
+      Width = 74
       BorderSpacing.Left = 8
       BorderSpacing.Top = 8
       BorderSpacing.Right = 8
       Caption = 'Recently Used'
       Font.Color = clCaptionText
+      ParentColor = False
       ParentFont = False
     end
   end

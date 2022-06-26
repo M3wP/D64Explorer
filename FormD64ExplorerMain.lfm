@@ -4,7 +4,7 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
   Top = 200
   Width = 1026
   Caption = 'D64 Explorer'
-  ClientHeight = 724
+  ClientHeight = 729
   ClientWidth = 1026
   Menu = D64ExplorerMainDMod.MainMenu1
   OnClose = FormClose
@@ -13,14 +13,13 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
   OnDropFiles = FormDropFiles
   OnResize = FormResize
   Position = poDefaultPosOnly
-  LCLVersion = '2.2.0.4'
+  LCLVersion = '2.0.10.0'
   object CoolBar2: TCoolBar
     Left = 0
-    Height = 692
+    Height = 697
     Top = 32
     Width = 56
     Align = alLeft
-    BandBorderStyle = bsNone
     Bands = <    
       item
         Control = Panel1
@@ -42,13 +41,13 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
       Top = 20
       Width = 52
       AutoSize = True
+      BorderSpacing.Left = 10
       BorderSpacing.Top = 20
       BevelOuter = bvNone
       ClientHeight = 448
       ClientWidth = 52
-      Color = clInactiveCaption
-      ParentColor = False
       TabOrder = 0
+      OnPaint = Panel1Paint
       object SpeedButton1: TSpeedButton
         Left = 0
         Height = 52
@@ -116,12 +115,12 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
   end
   object Panel3: TPanel
     Left = 56
-    Height = 692
+    Height = 697
     Top = 32
     Width = 970
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 692
+    ClientHeight = 697
     ClientWidth = 970
     ParentBackground = False
     ParentColor = False
@@ -148,13 +147,14 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
       end
       object Label1: TLabel
         Left = 8
-        Height = 17
+        Height = 15
         Top = 5
-        Width = 45
+        Width = 34
         BorderSpacing.Left = 8
         Caption = 'Label1'
         Font.Color = clCaptionText
         Layout = tlCenter
+        ParentColor = False
         ParentFont = False
       end
     end
@@ -176,6 +176,7 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
         Top = 0
         Width = 966
         AutoSize = True
+        BandBorderStyle = bsNone
         BandMaximize = bmDblClick
         Bands = <        
           item
@@ -193,15 +194,13 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
           Left = 18
           Height = 28
           Top = 4
-          Width = 240
+          Width = 160
           BorderSpacing.Left = 16
           BorderSpacing.Top = 2
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 240
-          Color = clMenuBar
+          ClientWidth = 160
           Constraints.MaxHeight = 28
-          ParentColor = False
           TabOrder = 0
           object SpeedButton3: TSpeedButton
             Left = 0

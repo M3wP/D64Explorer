@@ -148,7 +148,8 @@ implementation
 {$R *.lfm}
 
 uses
-    dbugintf, LCLType, Clipbrd, Dialogs, D64ExplorerUtils, DModD64ExplorerMain;
+    dbugintf, LCLType, Clipbrd, Dialogs,
+    D64ExplorerConsts, D64ExplorerUtils, DModD64ExplorerMain;
 
 var
 	FClipFormat: TClipboardFormat;
@@ -169,7 +170,7 @@ procedure TD64ExplorerManageFrame.VirtualDrawTree1DrawNode(
 	if  Sender.Selected[PaintInfo.Node] then
     	c:= clHighlightText
 	else
-    	c:= clWhite;
+    	c:= ARR_D64_CLR_IDX[dciListText0];
 
     c:= TColor(ColorToRGB(c));
 
@@ -292,7 +293,7 @@ procedure TD64ExplorerManageFrame.ActViewToggleCharsExecute(Sender: TObject);
 
     ActManageUpCase.Enabled:= not FAltSet;
     ActManageUpCase.Checked:= FUpCase;
-    SpeedButton5.Down:= FUpCase;
+//  SpeedButton5.Down:= FUpCase;
 
     VirtualDrawTree1.Repaint;
     VirtualStringTree1.Repaint;
@@ -313,7 +314,7 @@ procedure TD64ExplorerManageFrame.ActManageUpCaseExecute(Sender: TObject);
     FUpCase:= not FUpCase;
 
     ActManageUpCase.Checked:= FUpCase;
-    SpeedButton5.Down:= FUpCase;
+//  SpeedButton5.Down:= FUpCase;
 	end;
 
 procedure TD64ExplorerManageFrame.ActManageUpCaseUpdate(Sender: TObject);
@@ -367,12 +368,16 @@ procedure TD64ExplorerManageFrame.VirtualDrawTree1AdvancedHeaderDraw(
 	ts: TTextStyle;
 
 	begin
+    Sender.Font.Color:= ARR_D64_CLR_IDX[dciHdrText0];
+    Sender.Font.Style:= [fsBold];
+
     PaintInfo.TargetCanvas.Pen.Style:= psSolid;
 
 	PaintInfo.TargetCanvas.GradientFill(Rect(0, 0,
 			VirtualDrawTree1.ClientRect.Right,
 			PaintInfo.PaintRectangle.Bottom),
-			clInactiveCaption, clBackground, gdHorizontal);
+			ARR_D64_CLR_IDX[dciHdrGrad0], ARR_D64_CLR_IDX[dciHdrGrad1],
+            gdHorizontal);
 
 	FillChar(ts, SizeOf(TTextStyle), 0);
 	ts.Alignment:= taLeftJustify;
@@ -466,28 +471,49 @@ procedure TD64ExplorerManageFrame.ActManageImportExecute(Sender: TObject);
 
 procedure TD64ExplorerManageFrame.ActManagePasteExecute(Sender: TObject);
     var
-	f: TMemoryStream;
+	f,
+    b: TMemoryStream;
 	fn: AnsiString;
 	ft: Byte;
 	nm: array[0..15] of AnsiChar;
+    i,
+    c: Word;
+    z: Cardinal;
 
 	begin
 	try
     	f:= TMemoryStream.Create;
-		try
+        try
 			if  Clipboard.GetFormat(FClipFormat, f) then
 				begin
 				f.Position:= 0;
+                c:= f.ReadWord;
 
-				ft:= f.ReadByte;
-				f.Read(nm[0], 16);
-				fn:= nm;
+                b:= TMemoryStream.Create;
+                try
+                    for i:= 0 to c - 1 do
+                	    begin
+					    ft:= f.ReadByte;
+					    f.Read(nm[0], 16);
+					    fn:= nm;
 
-				SaveOrReplaceFile(ft, fn, f, PetsciiToAsciiString(fn));
+                        z:= f.ReadDWord;
 
-				DoInitialiseFiles;
-				UpdateNodeVisibility;
-				end;
+                        b.Clear;
+
+                        b.CopyFrom(f, z);
+                        b.Position:= 0;
+
+					    SaveOrReplaceFile(ft, fn, b, PetsciiToAsciiString(fn));
+                	    end;
+
+                	finally
+                    b.Free;
+                    end;
+
+    			DoInitialiseFiles;
+   				UpdateNodeVisibility;
+                end;
 
 			finally
 			f.Free;
@@ -538,43 +564,47 @@ procedure TD64ExplorerManageFrame.ActManageCopyExecute(Sender: TObject);
 	nm: array[0..15] of AnsiChar;
 
 	begin
-	i:= -1;
-    n:= VirtualDrawTree1.GetFirst;
-    while Assigned(n) do
-        begin
-        if  vsSelected in n^.States then
+	f:= TMemoryStream.Create;
+    try
+        f.WriteWord(VirtualDrawTree1.SelectedCount);
+
+//	    i:= -1;
+        n:= VirtualDrawTree1.GetFirst;
+        while Assigned(n) do
             begin
-            i:= n^.Index;
-			Break;
-			end;
+            if  vsSelected in n^.States then
+                begin
+                i:= n^.Index;
 
-        n:= VirtualDrawTree1.GetNext(n);
+    		    d:= TMemoryStream.Create;
+    		    try
+    			    f.WriteByte(FEntries[i].FileType);
+    			    nm:= Copy(FEntries[i].FileName + StringOfChar(#$A0, 16), 1, 16);
+    			    f.WriteBuffer(nm[0], 16);
+
+    			    FD64File.D64Image.GetDataChain(FEntries[i].DataTrack,
+    					    FEntries[i].DataSector, d, z);
+
+                    f.WriteDWord(z);
+
+    			    d.Position:= 0;
+    			    f.CopyFrom(d, z);
+
+    			    finally
+    			    d.Free;
+    			    end;
+                end;
+
+            n:= VirtualDrawTree1.GetNext(n);
+            end;
+
+        f.Position:= 0;
+	    Clipboard.AddFormat(FClipFormat, f);
+
+    	finally
+	    f.Free;
         end;
-
-	if  i > -1 then
-        begin
-		f:= TMemoryStream.Create;
-		d:= TMemoryStream.Create;
-		try
-			f.WriteByte(FEntries[i].FileType);
-			nm:= Copy(FEntries[i].FileName + StringOfChar(#$A0, 16), 1, 16);
-			f.WriteBuffer(nm[0], 16);
-
-			FD64File.D64Image.GetDataChain(FEntries[i].DataTrack,
-					FEntries[i].DataSector, d, z);
-
-			d.Position:= 0;
-			f.CopyFrom(d, z);
-
-			f.Position:= 0;
-			Clipboard.AddFormat(FClipFormat, f);
-
-			finally
-			d.Free;
-			f.Free;
-			end;
-		end;
-	end;
+    end;
 
 procedure TD64ExplorerManageFrame.ActManageCopyUpdate(Sender: TObject);
 	var
@@ -593,31 +623,29 @@ procedure TD64ExplorerManageFrame.ActManageCopyUpdate(Sender: TObject);
 		if  Length(FEntries) = 0 then
 			Exit;
 
-		if  VirtualDrawTree1.SelectedCount = 1 then
-			begin
-			i:= -1;
-		    n:= VirtualDrawTree1.GetFirst;
-		    while Assigned(n) do
-		        begin
-		        if  vsSelected in n^.States then
-		            begin
-		            i:= n^.Index;
-					Break;
-					end;
+		if  VirtualDrawTree1.SelectedCount = 0 then
+			Exit;
 
-		        n:= VirtualDrawTree1.GetNext(n);
-		        end;
+	    n:= VirtualDrawTree1.GetFirst;
+	    while Assigned(n) do
+	        begin
+	        if  vsSelected in n^.States then
+	            begin
+	            i:= n^.Index;
 
-			if  i > -1 then
-				begin
 		        D64DecodeFileType(FEntries[i].FileType, ft, fs);
 
-	    	    if  (ft in [VAL_TYP_D64FTYPE_SEQ..VAL_TYP_D64FTYPE_USR])
-	        	and (fs = [dfsClosed]) then
-	        		ActManageCopy.Enabled:= True;
-				end;
-			end;
-		except
+	    	    if  not ((ft in [VAL_TYP_D64FTYPE_SEQ..VAL_TYP_D64FTYPE_USR])
+	        	and (fs = [dfsClosed])) then
+	        		Exit;
+                end;
+
+	        n:= VirtualDrawTree1.GetNext(n);
+	        end;
+
+	    ActManageCopy.Enabled:= True;
+
+    	except
 		end;
 	end;
 
@@ -830,11 +858,14 @@ procedure TD64ExplorerManageFrame.Unprepare;
 
 procedure TD64ExplorerManageFrame.Initialise;
 	begin
-    FUpCase:= not FUpCase;
-    ActManageUpCase.Execute;
+    ActManageUpCase.Checked:= FUpCase;
+    ActManageAllPrg.Checked:= FAllPRG;
 
-    FTreeView:= not FTreeView;
-    ActViewToggleTree.Execute;
+    ActViewToggleChars.Checked:= FAltSet;
+
+	ActViewToggleTree.Checked:= FTreeView;
+    ActViewScratched.Checked:= FScratched;
+    ActViewToggleDirs.Checked:= FShowDirs;
 
     DoInitialiseFiles;
 
@@ -951,7 +982,7 @@ function TD64ExplorerManageFrame.AcceptFile(const AFile: string): Boolean;
     end;
 
 initialization
-    FClipFormat:= RegisterClipboardFormat('D64EXPLORE.FILE.STREAM');
+    FClipFormat:= RegisterClipboardFormat('D64EXPLORER.FILES.STREAM');
 
 
 end.

@@ -14,7 +14,7 @@ uses
     FormD64SectorView, FormD64BAMView, FormD64DirectoryView,
     FrameD64ExplorerMain, FormD64ExplorerAbout, D64ExplorerUtils,
     FrameD64ExplorerTask, FrameD64ExplorerLibrary,
-    FormD64ExplorerNewDisk, FrameD64ExplorerManage, D64ExplorerTypes;
+    FormD64ExplorerNewDisk, FrameD64ExplorerManage, D64ExplorerTypes, D64ExplorerConsts;
 
 {$R *.res}
 

@@ -41,6 +41,7 @@ type
 		FPanel: TPanel;
 	public
 		property  ActiveTask: TD64ExplorerTaskFrame read FActiveTask write FActiveTask;
+        property  OnDirtyChange;
 	end;
 
    TD64Files = TObjectList<TD64FileInst>;
@@ -134,7 +135,7 @@ type
 
     	procedure ClearMainForm;
         procedure InitialiseMainForm;
-        procedure SetApplicationTitle(const ATitle: string);
+        procedure SetApplicationTitle;
 
         procedure SetDirty(const AValue: Boolean);
 
@@ -148,6 +149,9 @@ type
 		procedure ProcessFreeFrames;
 
 		procedure DoCreateInstBar(const AInst: TD64FileInst);
+        procedure DoSetInstBarCaption(const AInst: TD64FileInst);
+
+        procedure DoInstDirtyChange(ASender: TObject);
 
 		procedure DoBarButtonClick(ASender: TObject);
 		procedure DoBarButtonPaint(ASender: TObject);
@@ -197,7 +201,8 @@ implementation
 {$R *.lfm}
 
 uses
-	Types, D64ExplorerUtils, D64ExplorerStrs,
+	Types, GraphType,
+    D64ExplorerConsts, D64ExplorerUtils, D64ExplorerStrs,
     FormD64ExplorerMain,
     FormD64ExplorerAbout, FormD64ExplorerNewDisk,
 
@@ -302,11 +307,15 @@ procedure TD64ExplorerMainDMod.ActFileOpenExecute(Sender: TObject);
 			inst.D64Image:= img;
 			inst.FileName:= fn;
 
+            inst.OnDirtyChange:= DoInstDirtyChange;
+
 			FD64Files.Add(inst);
 			FCurrD64File:= FD64Files.Count - 1;
 
 			DoCreateInstBar(inst);
 			inst.FPanel.Controls[0].Tag:= FCurrD64File;
+
+            SetApplicationTitle;
 
 //          InitialiseMainForm;
 			ClearMainForm;
@@ -351,7 +360,7 @@ procedure TD64ExplorerMainDMod.ActFileSaveExecute(Sender: TObject);
         end;
 
     FD64Files[FCurrD64File].D64Image.SaveToFile(FD64Files[FCurrD64File].FileName);
-    //FDirty:= False;
+    FD64Files[FCurrD64File].Dirty:= False;
 
     //SetApplicationTitle(QuotedStr(FD64FileName));
 
@@ -592,18 +601,23 @@ procedure TD64ExplorerMainDMod.InitialiseMainForm;
     ActTaskFManager.Execute;
     end;
 
-procedure TD64ExplorerMainDMod.SetApplicationTitle(const ATitle: string);
-    var
-    d: string;
+procedure TD64ExplorerMainDMod.SetApplicationTitle;
+	var
+  	s: string;
 
     begin
-    //if  FDirty then
-    //    d:= '* '
-    //else
-    //    d:= '';
+    if  FD64Files[FCurrD64File].FileName = '' then
+        s:= '[untitled]'
+   	else
+        s:= FD64Files[FCurrD64File].FileName;
 
-    Application.Title:= ATitle + d + STR_CAP_D64EXPLORER;
-    D64ExplorerMainForm.Caption:= ATitle + d + STR_CAP_D64EXPLORER;
+    s:= s + STR_CAP_D64EXPLORER;
+
+    if  FD64Files[FCurrD64File].Dirty then
+        s:= '* ' + s;
+
+    Application.Title:= s;
+    D64ExplorerMainForm.Caption:= s;
     end;
 
 procedure TD64ExplorerMainDMod.SetDirty(const AValue: Boolean);
@@ -612,7 +626,7 @@ procedure TD64ExplorerMainDMod.SetDirty(const AValue: Boolean);
 //  and AValue then
 //      begin
         //FDirty:= AValue;
-        SetApplicationTitle(QuotedStr(FD64Files[FCurrD64File].FileName));
+        //SetApplicationTitle(QuotedStr(FD64Files[FCurrD64File].FileName));
 //      end;
 
 //  FDirty:= AValue;
@@ -622,17 +636,17 @@ procedure TD64ExplorerMainDMod.SetSaveDialogTypes;
 	begin
     if  FD64Files[FCurrD64File].D64Image.DiskType = ddt1541 then
         begin
-        SaveDialog1.Filter:= 'D64 Image Files (*.d64)';
+        SaveDialog1.Filter:= 'D64 Image Files (*.d64)|*.d64';
         SaveDialog1.DefaultExt:= '.d64';
         end
     else if FD64Files[FCurrD64File].D64Image.DiskType = ddt1571 then
         begin
-        SaveDialog1.Filter:= 'D71 Image Files (*.d71)';
+        SaveDialog1.Filter:= 'D71 Image Files (*.d71)|*.d71';
         SaveDialog1.DefaultExt:= '.d71';
         end
     else
 	    begin
-    	SaveDialog1.Filter:= 'D81 Image Files (*.d81)';
+    	SaveDialog1.Filter:= 'D81 Image Files (*.d81)|*.d81';
 	    SaveDialog1.DefaultExt:= '.d81';
     	end
     end;
@@ -696,7 +710,7 @@ procedure TD64ExplorerMainDMod.ProcessFreeFrames;
 
 procedure TD64ExplorerMainDMod.DoCreateInstBar(const AInst: TD64FileInst);
     var
-	btn: TSpeedButton;
+    btn: TSpeedButton;
 
 	begin
 	Ainst.FPanel:=  TPanel.Create(Self);
@@ -713,15 +727,17 @@ procedure TD64ExplorerMainDMod.DoCreateInstBar(const AInst: TD64FileInst);
     btn.Width:= 124;
 	btn.Height:= 24;
 
-	if AInst.FileName = '' then
-		btn.Caption:= 'untitled'
-	else
-		btn.Caption:= ExtractFileName(AInst.FileName);
+    DoSetInstBarCaption(AInst);
+
 	btn.Hint:= AInst.FileName;
 	btn.ShowHint:= True;
 	btn.Color:= clMenuBar;
 	btn.GroupIndex:= -1;
     btn.AllowAllUp:= True;
+
+//  btn.Images:= ImgLstDisks;
+    btn.ImageIndex:= 0;
+
 	btn.OnClick:= DoBarButtonClick;
 	btn.OnPaint:= DoBarButtonPaint;
 
@@ -732,11 +748,33 @@ procedure TD64ExplorerMainDMod.DoCreateInstBar(const AInst: TD64FileInst);
 	ToggleBarDown;
 	end;
 
+procedure TD64ExplorerMainDMod.DoSetInstBarCaption(const AInst: TD64FileInst);
+    var
+    s: string;
+
+    begin
+    if AInst.FileName = '' then
+	    s:= 'untitled'
+    else
+	    s:= ExtractFileName(AInst.FileName);
+    if  AInst.Dirty then
+	    s:= '* ' + s;
+
+    TSpeedButton(AInst.FPanel.Controls[0]).Caption:= s;
+    end;
+
+procedure TD64ExplorerMainDMod.DoInstDirtyChange(ASender: TObject);
+	begin
+    DoSetInstBarCaption(TD64FileInst(ASender));
+	end;
+
 procedure TD64ExplorerMainDMod.DoBarButtonClick(ASender: TObject);
 	begin
 	FCurrD64File:= TSpeedButton(ASender).Tag;
 
 	ToggleBarDown;
+
+    SetApplicationTitle;
 
 	ClearMainForm;
 	ActTaskFManager.Execute;
@@ -755,11 +793,13 @@ procedure TD64ExplorerMainDMod.DoBarButtonPaint(ASender: TObject);
     begin
     sb:= ASender as TSpeedButton;
 
+    sb.Canvas.Font.Style:= [fsBold];
+
     if  sb.Down then
     	begin
-       	cl1:= clMenuHighlight;
-		cl2:= clActiveCaption;
-	    sb.Canvas.Font.Color:= clCaptionText;
+       	cl1:= ARR_D64_CLR_IDX[dciItmActvGrad0];
+		cl2:= ARR_D64_CLR_IDX[dciItmActvGrad1];
+	    sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciItmText1];
 
 		//pt.x:= 4;
 		//pt.y:= 4;
@@ -769,15 +809,15 @@ procedure TD64ExplorerMainDMod.DoBarButtonPaint(ASender: TObject);
 		begin
 		if  sb.MouseInClient then
 			begin
-       		cl1:= clMenuHighlight;
-			cl2:= clMenuBar;
-			sb.Canvas.Font.Color:= clCaptionText;
+       		cl1:= ARR_D64_CLR_IDX[dciItmHotGrad0];
+			cl2:= ARR_D64_CLR_IDX[dciItmHotGrad1];
+			sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciItmText1];
 			end
 		else
 			begin
-       		cl1:= clMenuBar;
-			cl2:= clBackground;
-			sb.Canvas.Font.Color:= clInactiveCaptionText;
+       		cl1:= ARR_D64_CLR_IDX[dciItmGrad0];
+			cl2:= ARR_D64_CLR_IDX[dciItmGrad1];
+			sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciItmText0];
 			end;
 
 		//pt.x:= 2;
@@ -808,8 +848,7 @@ procedure TD64ExplorerMainDMod.DoBarButtonPaint(ASender: TObject);
 //	r.Bottom:= r.Top + sz.cy;
 
     sb.Canvas.TextRect(sb.ClientRect, pt.X, pt.Y, sb.Caption);
-
-//	sb.Images.Draw(sb.Canvas, pt.X, pt.Y, sb.ImageIndex, de);
+	ImgLstDisks.Draw(sb.Canvas, pt.X - 28, 0, sb.ImageIndex, gdeNormal);
 	end;
 
 procedure TD64ExplorerMainDMod.ToggleBarDown;
@@ -839,16 +878,22 @@ procedure TD64ExplorerMainDMod.ApplicationClose;
     end;
 
 procedure TD64ExplorerMainDMod.CloseQuery(var ACanClose: Boolean);
-	begin
+    var
+    d: Boolean;
+    i: Integer;
+
+    begin
     ACanClose:= False;
 
-//!!!FIXME Check all files dirty
+    d:= False;
+    for i:= 0 to FD64Files.Count - 1 do
+        d:= d or FD64Files[i].Dirty;
 
-	//if  FDirty then
- //   	if  MessageDlg('Confirm discard', 'There are unsaved changes.  Are you ' +
- //       		'sure you wish to discard them and exit the application?', mtWarning,
- //               [mbYes, mbNo], 0, mbNo) = mrNo then
- //       	Exit;
+	if  d then
+   	if  MessageDlg('Confirm discard', 'There are unsaved changes.  Are you ' +
+				'sure you wish to discard them and exit the application?', mtWarning,
+                [mbYes, mbNo], 0, mbNo) = mrNo then
+       	Exit;
 
     ACanClose:= True;
     end;
@@ -885,7 +930,15 @@ procedure TD64ExplorerMainDMod.BindToCoolbar(const AControl: TControl;
         		end;
 
     AControl.Visible:= True;
-	end;
+    if  AControl is TPanel then
+        begin
+        TPanel(AControl).ParentColor:= False;
+        TPanel(AControl).ParentBackground:= False;
+
+        TPanel(AControl).ParentColor:= True;
+        TPanel(AControl).ParentBackground:= True;
+		end;
+    end;
 
 procedure TD64ExplorerMainDMod.UnbindToCoolbar(const AControl: TControl;
 		const AParent: TWinControl);
@@ -915,8 +968,8 @@ procedure TD64ExplorerMainDMod.MoveMenuItems(const AItems: array of TMenuItem;
     i,
     j: Integer;
     m: TMenuItem;
-    s1,
-    s2: string;
+//  s1,
+//  s2: string;
 
     begin
     SetLength(AMenus, Length(AItems));
@@ -926,8 +979,8 @@ procedure TD64ExplorerMainDMod.MoveMenuItems(const AItems: array of TMenuItem;
         m:= nil;
         for j:= 0 to MainMenu1.Items.Count - 1 do
             begin
-            s1:= MainMenu1.Items[j].Caption;
-            s2:= AItems[i].Parent.Caption;
+//          s1:= MainMenu1.Items[j].Caption;
+//          s2:= AItems[i].Parent.Caption;
 
            	if  CompareText(MainMenu1.Items[j].Caption, AItems[i].Parent.Caption) = 0 then
                 begin
@@ -985,7 +1038,7 @@ procedure TD64ExplorerMainDMod.EnableFileDrop(const AEnable: Boolean);
 procedure TD64ExplorerMainDMod.CreateActivateTask(
     	const ATaskClass: TD64ExplorerTaskFrameClass; const AInst: TD64FileInst);
     var
-    i: Integer;
+//  i: Integer;
     f: TD64ExplorerTaskFrame;
     c: Boolean;
 
@@ -1095,19 +1148,22 @@ procedure TD64ExplorerMainDMod.RezizeFilesBar(const AAuto: Boolean);
 	l: Integer;
 
 	begin
-    w:= Trunc(D64ExplorerMainForm.CoolBar3.Width / FD64Files.Count) -
-			(D64ExplorerMainForm.CoolBar3.GrabWidth + 20);
+    if  FD64Files.Count > 0 then
+        begin
+    	w:= Trunc(D64ExplorerMainForm.CoolBar3.Width / FD64Files.Count) -
+				(D64ExplorerMainForm.CoolBar3.GrabWidth + 20);
 
-	for i:= 0 to FD64Files.Count - 1 do
-		FD64Files[i].FPanel.Controls[0].Width:= w;
+		for i:= 0 to FD64Files.Count - 1 do
+			FD64Files[i].FPanel.Controls[0].Width:= w;
 
-	l:= 0;
-	for i:= 0 to D64ExplorerMainForm.CoolBar3.Bands.Count - 1 do
-		begin
-		D64ExplorerMainForm.CoolBar3.Bands[i].Width:= w;
-//      D64ExplorerMainForm.CoolBar3.Bands[i].Left:= w;
-        Inc(l, w);
-		end;
+        l:= 0;
+ 		for i:= 0 to D64ExplorerMainForm.CoolBar3.Bands.Count - 1 do
+			begin
+			D64ExplorerMainForm.CoolBar3.Bands[i].Width:= w;
+//  	    D64ExplorerMainForm.CoolBar3.Bands[i].Left:= w;
+        	Inc(l, w);
+			end;
+    	end;
 
 	if  AAuto then
 		D64ExplorerMainForm.CoolBar3.AutosizeBands;
@@ -1186,11 +1242,15 @@ procedure TD64ExplorerMainDMod.ActFileNewExecute(Sender: TObject);
 		inst.FileName:= fn;
 		inst.Dirty:= True;
 
+        inst.OnDirtyChange:= DoInstDirtyChange;
+
 		FD64Files.Add(inst);
 		FCurrD64File:= FD64Files.Count - 1;
 
 		DoCreateInstBar(inst);
 		inst.FPanel.Controls[0].Tag:= FCurrD64File;
+
+        SetApplicationTitle;
 
 //      InitialiseMainForm;
 		ClearMainForm;
@@ -1201,8 +1261,8 @@ procedure TD64ExplorerMainDMod.ActFileNewExecute(Sender: TObject);
 	end;
 
 procedure TD64ExplorerMainDMod.ActFileCloseExecute(Sender: TObject);
-	var
-	i: Integer;
+//	var
+//	i: Integer;
 
 	begin
 	if  (FCurrD64File > -1)

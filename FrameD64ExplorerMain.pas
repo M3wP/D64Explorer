@@ -189,7 +189,8 @@ implementation
 {$R *.lfm}
 
 uses
-    DateUtils, Graphics, Clipbrd, D64ExplorerStrs, D64ExplorerUtils,
+    DateUtils, Graphics, Clipbrd,
+    D64ExplorerConsts, D64ExplorerStrs, D64ExplorerUtils,
     DModD64ExplorerMain;
 
 
@@ -212,17 +213,22 @@ procedure TD64ExplorerMainFrame.LstBxFilesSelectionChange(Sender: TObject;
 
 procedure TD64ExplorerMainFrame.PaintBox1Paint(Sender: TObject);
 	begin
-    PaintBox1.Canvas.GradientFill(PaintBox1.ClientRect, clInactiveCaption,
-			clBackground, gdHorizontal);
+    PaintBox1.Canvas.GradientFill(PaintBox1.ClientRect,
+    		ARR_D64_CLR_IDX[dciHdrGrad0], ARR_D64_CLR_IDX[dciHdrGrad1],
+            gdHorizontal);
 
-    PaintBox1.Canvas.Brush.Color:= clBackground;
+    PaintBox1.Canvas.Brush.Color:= ARR_D64_CLR_IDX[dciHdrGrad1];
     PaintBox1.Canvas.FillRect(Rect(0, 0, 8, PaintBox1.ClientRect.Bottom));
-	end;
+
+    Label40.Font.Color:= ARR_D64_CLR_IDX[dciHdrText0];
+    Label40.Font.Style:= [fsBold];
+    end;
 
 procedure TD64ExplorerMainFrame.PnlDetailsPaint(Sender: TObject);
     begin
-    PnlDetails.Canvas.GradientFill(PnlDetails.ClientRect, clMenuBar,
-			clBackground, gdHorizontal);
+    //PnlDetails.Canvas.GradientFill(PnlDetails.ClientRect,
+    //		ARR_D64_CLR_IDX[dciOptsGrad0], ARR_D64_CLR_IDX[dciOptsGrad1],
+    //        gdHorizontal);
 	end;
 
 procedure TD64ExplorerMainFrame.CmbGEOSVLIRRecChange(Sender: TObject);

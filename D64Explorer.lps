@@ -2,9 +2,9 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="12"/>
+    <Version Value="11"/>
     <BuildModes Active="Release"/>
-    <Units Count="48">
+    <Units Count="19">
       <Unit0>
         <Filename Value="D64Explorer.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -18,9 +18,9 @@
         <ComponentName Value="D64ExplorerMainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="87"/>
-        <CursorPos X="40" Y="97"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="103"/>
+        <CursorPos X="5" Y="107"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -28,8 +28,8 @@
       <Unit2>
         <Filename Value="C64D64Image.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="221"/>
-        <CursorPos X="19" Y="235"/>
+        <TopLine Value="139"/>
+        <CursorPos X="5" Y="143"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit2>
@@ -40,9 +40,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="672"/>
-        <CursorPos Y="706"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="869"/>
+        <CursorPos Y="869"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -86,9 +86,9 @@
         <ComponentName Value="D64ExplorerMainFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="699"/>
-        <CursorPos X="40" Y="717"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="214"/>
+        <CursorPos X="22" Y="229"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
       </Unit7>
@@ -105,9 +105,10 @@
         <ComponentName Value="D64ExplorerAboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="12" Y="25"/>
+        <EditorIndex Value="10"/>
+        <CursorPos X="62" Y="13"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
       </Unit9>
       <Unit10>
         <Filename Value="D64ExplorerUtils.pas"/>
@@ -123,7 +124,7 @@
         <ComponentName Value="D64ExplorerTaskFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="13"/>
         <CursorPos X="24" Y="57"/>
         <UsageCount Value="236"/>
@@ -135,11 +136,12 @@
         <ComponentName Value="D64ExplorerLibraryFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="133"/>
-        <CursorPos X="30" Y="139"/>
+        <EditorIndex Value="11"/>
+        <TopLine Value="85"/>
+        <CursorPos X="76" Y="96"/>
         <UsageCount Value="236"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit12>
       <Unit13>
         <Filename Value="FormD64ExplorerNewDisk.pas"/>
@@ -147,9 +149,12 @@
         <ComponentName Value="D64ExplorerNewDiskForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="26" Y="25"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="29"/>
+        <CursorPos X="79" Y="39"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit13>
       <Unit14>
         <Filename Value="FrameD64ExplorerManage.pas"/>
@@ -157,10 +162,10 @@
         <ComponentName Value="D64ExplorerManageFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="124"/>
-        <CursorPos X="19" Y="141"/>
-        <UsageCount Value="95"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="436"/>
+        <CursorPos X="5" Y="441"/>
+        <UsageCount Value="255"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit14>
@@ -168,379 +173,169 @@
         <Filename Value="D64ExplorerTypes.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="5" Y="12"/>
-        <UsageCount Value="94"/>
+        <CursorPos X="5" Y="14"/>
+        <UsageCount Value="240"/>
         <Loaded Value="True"/>
       </Unit15>
       <Unit16>
-        <Filename Value="framed64explorermanage.pas"/>
-        <ComponentName Value="D64ExplorerManageFrame"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
-        <UnitName Value="FrameD64ExplorerManage"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="220"/>
-        <CursorPos Y="243"/>
-        <UsageCount Value="255"/>
-      </Unit16>
-      <Unit17>
-        <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
-        <UnitName Value="Dialogs"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="688"/>
-        <CursorPos X="10" Y="699"/>
-        <UsageCount Value="4"/>
-      </Unit17>
-      <Unit18>
-        <Filename Value="C:\lazarus\lcl\include\messagedialogs.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="130"/>
-        <CursorPos X="33" Y="135"/>
-        <UsageCount Value="1"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="C:\lazarus\components\virtualtreeview\VirtualTrees.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="25383"/>
-        <CursorPos Y="25399"/>
-        <UsageCount Value="2"/>
-      </Unit19>
-      <Unit20>
-        <Filename Value="C:\lazarus\lcl\graphics.pp"/>
-        <UnitName Value="Graphics"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="2525"/>
-        <CursorPos X="3" Y="2529"/>
-        <UsageCount Value="3"/>
-      </Unit20>
-      <Unit21>
         <Filename Value="C:\lazarus\components\lazutils\graphtype.pp"/>
         <UnitName Value="GraphType"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="31"/>
-        <CursorPos X="3" Y="35"/>
-        <UsageCount Value="3"/>
-      </Unit21>
-      <Unit22>
-        <Filename Value="C:\lazarus\lcl\include\winapih.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="133"/>
-        <CursorPos X="10" Y="145"/>
-        <UsageCount Value="3"/>
-      </Unit22>
-      <Unit23>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\include\application.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1367"/>
-        <CursorPos Y="1385"/>
-        <UsageCount Value="13"/>
-      </Unit23>
-      <Unit24>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\actnlist.pas"/>
-        <UnitName Value="ActnList"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="180"/>
-        <CursorPos X="14" Y="196"/>
+        <TopLine Value="34"/>
         <UsageCount Value="5"/>
-      </Unit24>
-      <Unit25>
-        <Filename Value="..\..\..\..\usr\share\fpcsrc\3.2.2\packages\rtl-generics\src\generics.collections.pas"/>
-        <UnitName Value="Generics.Collections"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1421"/>
-        <CursorPos Y="1443"/>
-        <UsageCount Value="7"/>
-      </Unit25>
-      <Unit26>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\imglist.pp"/>
-        <UnitName Value="ImgList"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="335"/>
-        <CursorPos X="15" Y="352"/>
-        <UsageCount Value="3"/>
-      </Unit26>
-      <Unit27>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\components\lazutils\graphtype.pp"/>
-        <UnitName Value="GraphType"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="42"/>
-        <CursorPos X="5" Y="59"/>
-        <UsageCount Value="3"/>
-      </Unit27>
-      <Unit28>
-        <Filename Value="..\..\3rdparty\VirtualTreeView-Lazarus-lazarus-v5\Source\VirtualTrees.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1441"/>
-        <CursorPos Y="1460"/>
-        <UsageCount Value="4"/>
-      </Unit28>
-      <Unit29>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\graphics.pp"/>
-        <UnitName Value="Graphics"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1120"/>
-        <CursorPos X="14" Y="1135"/>
-        <UsageCount Value="5"/>
-      </Unit29>
-      <Unit30>
-        <Filename Value="..\..\..\..\usr\share\fpcsrc\3.2.2\rtl\objpas\classes\classesh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="74"/>
-        <CursorPos X="30" Y="91"/>
-        <UsageCount Value="3"/>
-      </Unit30>
-      <Unit31>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\include\menuitem.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="973"/>
-        <CursorPos Y="991"/>
-        <UsageCount Value="5"/>
-      </Unit31>
-      <Unit32>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\include\control.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1603"/>
-        <CursorPos Y="1617"/>
-        <UsageCount Value="9"/>
-      </Unit32>
-      <Unit33>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\include\customaction.inc"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="95"/>
-        <CursorPos Y="113"/>
-        <UsageCount Value="13"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="D64ExplorerConsts.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="7"/>
+        <CursorPos X="38" Y="18"/>
+        <UsageCount Value="171"/>
         <Loaded Value="True"/>
-      </Unit33>
-      <Unit34>
-        <Filename Value="..\..\..\..\usr\share\fpcsrc\3.2.2\rtl\inc\typshrdh.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="22"/>
-        <CursorPos X="3" Y="38"/>
-        <UsageCount Value="5"/>
-      </Unit34>
-      <Unit35>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\clipbrd.pp"/>
-        <UnitName Value="Clipbrd"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="108"/>
-        <CursorPos X="19" Y="137"/>
-        <UsageCount Value="7"/>
-      </Unit35>
-      <Unit36>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\lcltype.pp"/>
-        <UnitName Value="LCLType"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="2697"/>
-        <CursorPos X="40" Y="2713"/>
-        <UsageCount Value="9"/>
-      </Unit36>
-      <Unit37>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\include\speedbutton.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="965"/>
-        <CursorPos Y="978"/>
-        <UsageCount Value="9"/>
-      </Unit37>
-      <Unit38>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\include\wincontrol.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="4758"/>
-        <CursorPos Y="4772"/>
-        <UsageCount Value="9"/>
-      </Unit38>
-      <Unit39>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\lclmessageglue.pas"/>
-        <UnitName Value="LCLMessageGlue"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="102"/>
-        <CursorPos Y="112"/>
-        <UsageCount Value="9"/>
-      </Unit39>
-      <Unit40>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\interfaces\gtk2\gtk2proc.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="3761"/>
-        <CursorPos Y="3780"/>
-        <UsageCount Value="7"/>
-      </Unit40>
-      <Unit41>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\interfaces\gtk2\gtk2callback.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="2327"/>
-        <CursorPos X="18" Y="2341"/>
-        <UsageCount Value="7"/>
-      </Unit41>
-      <Unit42>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\controls.pp"/>
-        <UnitName Value="Controls"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="2340"/>
-        <CursorPos X="15" Y="2355"/>
-        <UsageCount Value="7"/>
-      </Unit42>
-      <Unit43>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\include\containedaction.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="77"/>
-        <CursorPos Y="109"/>
-        <UsageCount Value="7"/>
-      </Unit43>
-      <Unit44>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\include\customactionlist.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="149"/>
-        <CursorPos Y="167"/>
-        <UsageCount Value="7"/>
-      </Unit44>
-      <Unit45>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\include\customform.inc"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1694"/>
-        <CursorPos X="25" Y="1713"/>
-        <UsageCount Value="7"/>
-      </Unit45>
-      <Unit46>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\lcl\forms.pp"/>
-        <UnitName Value="Forms"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1629"/>
-        <CursorPos X="14" Y="1644"/>
-        <UsageCount Value="13"/>
-      </Unit46>
-      <Unit47>
-        <Filename Value="..\..\..\..\usr\share\lazarus\2.2.0\components\lazutils\lazdbglog.pas"/>
-        <UnitName Value="LazDbgLog"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="7"/>
-      </Unit47>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\rtl-generics\src\generics.collections.pas"/>
+        <UnitName Value="Generics.Collections"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="1421"/>
+        <CursorPos Y="1442"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit18>
     </Units>
-    <Debugger>
-      <Backend Value="{9D4186E9-BFB0-4A8A-AA88-AA3F2C62F5BE}"/>
-    </Debugger>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="133" Column="20" TopLine="105"/>
+        <Caret Line="357" Column="20" TopLine="341"/>
       </Position1>
       <Position2>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="531" Column="52" TopLine="503"/>
+        <Caret Line="351" Column="31" TopLine="336"/>
       </Position2>
       <Position3>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="533" Column="46" TopLine="505"/>
+        <Caret Line="142" Column="19" TopLine="127"/>
       </Position3>
       <Position4>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="534" Column="46" TopLine="506"/>
+        <Caret Line="104" Column="29" TopLine="89"/>
       </Position4>
       <Position5>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="556" Column="27" TopLine="529"/>
+        <Caret Line="352" TopLine="345"/>
       </Position5>
       <Position6>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="664" Column="53" TopLine="636"/>
+        <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\rtl-generics\src\generics.collections.pas"/>
+        <Caret Line="1438" TopLine="1421"/>
       </Position6>
       <Position7>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="669" Column="39" TopLine="641"/>
+        <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\rtl-generics\src\generics.collections.pas"/>
+        <Caret Line="1441" TopLine="1421"/>
       </Position7>
       <Position8>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="1054" Column="21" TopLine="1026"/>
+        <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\rtl-generics\src\generics.collections.pas"/>
+        <Caret Line="1442" TopLine="1421"/>
       </Position8>
       <Position9>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="42" Column="37" TopLine="23"/>
+        <Caret Line="635" TopLine="618"/>
       </Position9>
       <Position10>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="1055" Column="5" TopLine="1035"/>
+        <Caret Line="642" Column="57" TopLine="618"/>
       </Position10>
       <Position11>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="661" TopLine="643"/>
+        <Caret Line="352" TopLine="335"/>
       </Position11>
       <Position12>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="663" TopLine="643"/>
+        <Caret Line="358" Column="15" TopLine="335"/>
       </Position12>
       <Position13>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="664" TopLine="643"/>
+        <Caret Line="156" Column="13" TopLine="143"/>
       </Position13>
       <Position14>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="666" TopLine="643"/>
+        <Caret Line="766" TopLine="763"/>
       </Position14>
       <Position15>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="667" TopLine="643"/>
+        <Caret Line="101" Column="19" TopLine="97"/>
       </Position15>
       <Position16>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="668" TopLine="643"/>
+        <Caret Line="318" TopLine="295"/>
       </Position16>
       <Position17>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="661" Column="34" TopLine="643"/>
+        <Caret Line="100" Column="19" TopLine="84"/>
       </Position17>
       <Position18>
         <Filename Value="DModD64ExplorerMain.pas"/>
+        <Caret Line="1240" Column="9" TopLine="1223"/>
       </Position18>
       <Position19>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="423" Column="28" TopLine="402"/>
+        <Caret Line="156" Column="13" TopLine="134"/>
       </Position19>
       <Position20>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="545" TopLine="539"/>
+        <Caret Line="772" Column="5" TopLine="765"/>
       </Position20>
       <Position21>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="1001" Column="18" TopLine="982"/>
+        <Caret Line="138" Column="38" TopLine="121"/>
       </Position21>
       <Position22>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="1023" Column="36" TopLine="995"/>
+        <Caret Line="616" Column="5" TopLine="603"/>
       </Position22>
       <Position23>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="1228" TopLine="1202"/>
+        <Caret Line="609" Column="33" TopLine="603"/>
       </Position23>
       <Position24>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="119" Column="19" TopLine="96"/>
+        <Caret Line="610" Column="17" TopLine="592"/>
       </Position24>
       <Position25>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="493" Column="16" TopLine="486"/>
+        <Caret Line="609" Column="32" TopLine="592"/>
       </Position25>
       <Position26>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="221" Column="13" TopLine="192"/>
+        <Caret Line="615" Column="36" TopLine="591"/>
       </Position26>
       <Position27>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="260" TopLine="258"/>
+        <Filename Value="FormD64ExplorerMain.pas"/>
+        <Caret Line="225" Column="67" TopLine="218"/>
       </Position27>
       <Position28>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="218" Column="19" TopLine="202"/>
+        <Filename Value="FormD64ExplorerMain.pas"/>
+        <Caret Line="107" Column="5" TopLine="103"/>
       </Position28>
       <Position29>
         <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="234" Column="10" TopLine="227"/>
+        <Caret Line="162" Column="19" TopLine="146"/>
       </Position29>
-      <Position30>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="148" Column="13" TopLine="130"/>
-      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes ActiveMode="default"/>
+      <Modes Count="0" ActiveMode="default"/>
     </RunParams>
   </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="FrameD64ExplorerManage.pas"/>
+        <Line Value="313"/>
+      </Item1>
+    </BreakPoints>
+  </Debugging>
 </CONFIG>
