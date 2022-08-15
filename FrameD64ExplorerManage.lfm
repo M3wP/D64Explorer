@@ -20,15 +20,15 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
       Left = 8
       Height = 28
       Top = 8
-      Width = 320
+      Width = 416
       BorderSpacing.Left = 200
       BorderSpacing.Top = 2
       BevelOuter = bvNone
       ClientHeight = 28
-      ClientWidth = 320
+      ClientWidth = 416
       TabOrder = 0
       object SpeedButton1: TSpeedButton
-        Left = 190
+        Left = 281
         Height = 28
         Top = 0
         Width = 29
@@ -45,7 +45,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object SpeedButton2: TSpeedButton
-        Left = 252
+        Left = 343
         Height = 28
         Top = 0
         Width = 29
@@ -77,7 +77,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object SpeedButton4: TSpeedButton
-        Left = 33
+        Left = 124
         Height = 28
         Top = 0
         Width = 29
@@ -92,7 +92,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object Bevel1: TBevel
-        Left = 126
+        Left = 217
         Height = 28
         Top = 0
         Width = 2
@@ -101,7 +101,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         Shape = bsLeftLine
       end
       object Bevel2: TBevel
-        Left = 31
+        Left = 122
         Height = 28
         Top = 0
         Width = 2
@@ -110,7 +110,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         Shape = bsLeftLine
       end
       object SpeedButton5: TSpeedButton
-        Left = 128
+        Left = 219
         Height = 28
         Top = 0
         Width = 29
@@ -127,7 +127,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object Bevel4: TBevel
-        Left = 221
+        Left = 312
         Height = 28
         Top = 0
         Width = 2
@@ -136,7 +136,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         Shape = bsLeftLine
       end
       object SpeedButton6: TSpeedButton
-        Left = 223
+        Left = 314
         Height = 28
         Top = 0
         Width = 29
@@ -153,7 +153,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object Bevel5: TBevel
-        Left = 283
+        Left = 374
         Height = 28
         Top = 0
         Width = 2
@@ -162,7 +162,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         Shape = bsLeftLine
       end
       object SpeedButton7: TSpeedButton
-        Left = 285
+        Left = 376
         Height = 28
         Top = 0
         Width = 29
@@ -179,7 +179,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object SpeedButton8: TSpeedButton
-        Left = 157
+        Left = 248
         Height = 28
         Top = 0
         Width = 29
@@ -196,7 +196,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object Bevel6: TBevel
-        Left = 64
+        Left = 155
         Height = 28
         Top = 0
         Width = 2
@@ -205,7 +205,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         Shape = bsLeftLine
       end
       object SpeedButton9: TSpeedButton
-        Left = 95
+        Left = 186
         Height = 28
         Top = 0
         Width = 29
@@ -221,7 +221,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object SpeedButton10: TSpeedButton
-        Left = 66
+        Left = 157
         Height = 28
         Top = 0
         Width = 29
@@ -236,7 +236,61 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object Bevel3: TBevel
-        Left = 188
+        Left = 279
+        Height = 28
+        Top = 0
+        Width = 2
+        Align = alLeft
+        BorderSpacing.Left = 2
+        Shape = bsLeftLine
+      end
+      object SpeedButton11: TSpeedButton
+        Left = 29
+        Height = 28
+        Top = 0
+        Width = 29
+        Action = ActManageExport
+        Align = alLeft
+        Flat = True
+        Images = D64ExplorerMainDMod.ImgLstActionsMed
+        ImageIndex = 16
+        OnPaint = SpeedButton3Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object SpeedButton12: TSpeedButton
+        Left = 91
+        Height = 28
+        Top = 0
+        Width = 29
+        Action = ActManageMvDn
+        Align = alLeft
+        Flat = True
+        Images = D64ExplorerMainDMod.ImgLstActionsMed
+        ImageIndex = 18
+        OnPaint = SpeedButton3Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object SpeedButton13: TSpeedButton
+        Left = 62
+        Height = 28
+        Top = 0
+        Width = 29
+        Action = ActManageMvUp
+        Align = alLeft
+        Flat = True
+        Images = D64ExplorerMainDMod.ImgLstActionsMed
+        ImageIndex = 17
+        OnPaint = SpeedButton3Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object Bevel7: TBevel
+        Left = 60
         Height = 28
         Top = 0
         Width = 2
@@ -248,13 +302,13 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
   end
   object Panel2: TPanel[1]
     Left = 0
-    Height = 449
-    Top = 44
+    Height = 445
+    Top = 48
     Width = 890
     Align = alClient
-    BorderSpacing.Top = 4
+    BorderSpacing.Top = 8
     BevelOuter = bvNone
-    ClientHeight = 449
+    ClientHeight = 445
     ClientWidth = 890
     DoubleBuffered = True
     ParentDoubleBuffered = False
@@ -262,7 +316,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
     object VirtualDrawTree1: TVirtualDrawTree
       Cursor = 63
       Left = 256
-      Height = 441
+      Height = 437
       Top = 0
       Width = 626
       Align = alClient
@@ -324,7 +378,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
     end
     object VirtualStringTree1: TVirtualStringTree
       Left = 8
-      Height = 441
+      Height = 437
       Top = 0
       Width = 240
       Align = alLeft
@@ -345,7 +399,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
     end
     object Splitter1: TSplitter
       Left = 248
-      Height = 449
+      Height = 445
       Top = 0
       Width = 8
     end
@@ -2779,6 +2833,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
     object ActManageCopy: TAction
       Category = 'Manage'
       Caption = 'Copy'
+      Hint = 'Copy Selected Files to Clipboard'
       ImageIndex = 14
       OnExecute = ActManageCopyExecute
       OnUpdate = ActManageCopyUpdate
@@ -2786,9 +2841,34 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
     object ActManagePaste: TAction
       Category = 'Manage'
       Caption = 'Paste'
+      Hint = 'Paste Files From Clipboard'
       ImageIndex = 15
       OnExecute = ActManagePasteExecute
       OnUpdate = ActManagePasteUpdate
+    end
+    object ActManageExport: TAction
+      Category = 'Manage'
+      Caption = 'Export File...'
+      Hint = 'Export Selected File to Host'
+      ImageIndex = 16
+      OnExecute = ActManageExportExecute
+      OnUpdate = ActManageExportUpdate
+    end
+    object ActManageMvUp: TAction
+      Category = 'Manage'
+      Caption = 'Move File Up'
+      Hint = 'Move the Selected File Up'
+      ImageIndex = 17
+      OnExecute = ActManageMvUpExecute
+      OnUpdate = ActManageMvUpUpdate
+    end
+    object ActManageMvDn: TAction
+      Category = 'Manage'
+      Caption = 'Move File Down'
+      Hint = 'Move the Selected File Down'
+      ImageIndex = 18
+      OnExecute = ActManageMvDnExecute
+      OnUpdate = ActManageMvDnUpdate
     end
   end
 end

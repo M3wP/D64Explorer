@@ -29,39 +29,43 @@ interface
 
 uses
  	Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
-    ActnList, ExtCtrls, StdCtrls, Buttons, ComCtrls;
+    ActnList, ExtCtrls, StdCtrls, Buttons, ComCtrls, ButtonPanel;
 
 type
 
 { TD64ExplorerMainForm }
 
    TD64ExplorerMainForm = class(TForm)
-		Bevel1: TBevel;
-		Bevel2: TBevel;
-		Bevel3: TBevel;
+        Bevel1: TBevel;
+        Bevel2: TBevel;
 		CoolBar1: TCoolBar;
         CoolBar2: TCoolBar;
-		CoolBar3: TCoolBar;
+        CoolBar3: TCoolBar;
         Label1: TLabel;
         PaintBox1: TPaintBox;
         Panel1: TPanel;
-		Panel2: TPanel;
+        Panel2: TPanel;
         Panel3: TPanel;
         Panel4: TPanel;
 		Panel5: TPanel;
 		Panel6: TPanel;
+        Panel7: TPanel;
         SpeedButton1: TSpeedButton;
+        SpeedButton10: TSpeedButton;
+        SpeedButton11: TSpeedButton;
         SpeedButton2: TSpeedButton;
-		SpeedButton3: TSpeedButton;
-		SpeedButton4: TSpeedButton;
-		SpeedButton5: TSpeedButton;
-		SpeedButton6: TSpeedButton;
+        SpeedButton3: TSpeedButton;
+        SpeedButton4: TSpeedButton;
+        SpeedButton5: TSpeedButton;
+        SpeedButton6: TSpeedButton;
         SpeedButton7: TSpeedButton;
-		SpeedButton8: TSpeedButton;
-		procedure CoolBar3Resize(Sender: TObject);
+        SpeedButton8: TSpeedButton;
+        SpeedButton9: TSpeedButton;
+        procedure CoolBar3Resize(Sender: TObject);
         procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
         procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 		procedure FormCreate(Sender: TObject);
+        procedure FormDestroy(Sender: TObject);
         procedure FormDropFiles(Sender: TObject;
             const FileNames: array of String);
 		procedure FormResize(Sender: TObject);
@@ -69,6 +73,7 @@ type
         procedure Panel1Paint(Sender: TObject);
 		procedure Panel5Paint(Sender: TObject);
         procedure SpeedButton1Paint(Sender: TObject);
+        procedure SpeedButton3Paint(Sender: TObject);
   	private
     	FBarBmp,
         FTskBmp: TBitmap;
@@ -111,6 +116,12 @@ procedure TD64ExplorerMainForm.FormCreate(Sender: TObject);
 	begin
     FBarBmp:= TBitmap.Create;
     FTskBmp:= TBitmap.Create;
+	end;
+
+procedure TD64ExplorerMainForm.FormDestroy(Sender: TObject);
+	begin
+    FBarBmp.Free;
+    FTskBmp.Free;
 	end;
 
 procedure TD64ExplorerMainForm.FormDropFiles(Sender: TObject;
@@ -158,6 +169,8 @@ procedure TD64ExplorerMainForm.FormResize(Sender: TObject);
 
     Panel5.ParentBackground:= False;
     Panel5.ParentBackground:= True;
+
+    Panel7.Color:= ARR_D64_CLR_IDX[dciOptsGrad1];
 	end;
 
 procedure TD64ExplorerMainForm.PaintBox1Paint(Sender: TObject);
@@ -190,27 +203,94 @@ procedure TD64ExplorerMainForm.SpeedButton1Paint(Sender: TObject);
     sb: TSpeedButton;
 	de: TGraphicsDrawEffect;
 
+    procedure DrawFrameRect(const AClr0, AClr1: TColor);
+        begin
+        sb.Canvas.Pen.Style:= psSolid;
+        sb.Canvas.Pen.Width:= 1;
+        sb.Canvas.Brush.Style:= bsClear;
+
+        sb.Canvas.MoveTo(0, sb.ClientRect.Bottom - 1);
+        sb.Canvas.Pen.Color:= AClr1;
+
+        sb.Canvas.LineTo(0, 0);
+        sb.Canvas.LineTo(sb.ClientRect.Right, 0);
+
+        sb.Canvas.Pen.Color:= AClr0;
+
+        sb.Canvas.MoveTo(sb.ClientRect.Right - 2, 1);
+        sb.Canvas.LineTo(sb.ClientRect.Right - 2, sb.ClientRect.Bottom - 2);
+        sb.Canvas.LineTo(1, sb.ClientRect.Bottom - 2);
+
+        sb.Canvas.MoveTo(0, sb.ClientRect.Bottom - 1);
+        sb.Canvas.Pen.Color:= AClr0;
+
+        sb.Canvas.LineTo(sb.ClientRect.Right - 1, sb.ClientRect.Bottom - 1);
+        sb.Canvas.LineTo(sb.ClientRect.Right - 1, 0);
+
+        sb.Canvas.Pen.Color:= AClr1;
+
+        sb.Canvas.MoveTo(sb.ClientRect.Right - 2, 1);
+        sb.Canvas.LineTo(1, 1);
+        sb.Canvas.LineTo(1, sb.ClientRect.Bottom - 2);
+        end;
+
     begin
     sb:= Sender as TSpeedButton;
 
-    if  sb.Down then
+    if  sb.MouseInClient then
+        begin
+//      sb.Canvas.Brush.Color:= clMenuHighlight;
+//    	sb.Canvas.Brush.Color:= clActiveCaption;
+//		sb.Canvas.Brush.Style:= bsSolid;
+        sb.Canvas.GradientFill(sb.ClientRect,
+        		ARR_D64_CLR_IDX[dciItmHotGrad0], ARR_D64_CLR_IDX[dciItmHotGrad1],
+                gdVertical);
+
+        if  sb.Down then
+        	begin
+//        	sb.Canvas.Pen.Color:= ARR_D64_CLR_IDX[dciItmActvGrad1];
+            DrawFrameRect(ARR_D64_CLR_IDX[dciItmActvGrad1], ARR_D64_CLR_IDX[dciItmActvGrad0]);
+            pt.x:= 4;
+    		pt.y:= 4;
+        	end
+        else
+        	begin
+//        	sb.Canvas.Pen.Color:= ARR_D64_CLR_IDX[dciItmHotGrad1];
+            DrawFrameRect(ARR_D64_CLR_IDX[dciItmHotGrad0], ARR_D64_CLR_IDX[dciItmHotGrad1]);
+	  		pt.x:= 2;
+  			pt.y:= 2;
+            end;
+
+//      sb.Canvas.Pen.Style:= psSolid;
+//      sb.Canvas.Brush.Style:= bsClear;
+//      sb.Canvas.Rectangle(sb.ClientRect);
+        end
+    else if  sb.Down then
     	begin
 		sb.Canvas.Brush.Style:= bsSolid;
 
-        if  sb.Enabled then
-            begin
+//      if  sb.Enabled then
+//          begin
 //          sb.Canvas.Brush.Color:= clMenuBar
-            sb.Canvas.Brush.Color:= clMenuHighlight;
+//          sb.Canvas.Brush.Color:= clMenuHighlight;
 //          sb.Canvas.FillRect(sb.ClientRect);
 			sb.Canvas.GradientFill(sb.ClientRect,
             		ARR_D64_CLR_IDX[dciItmActvGrad0], ARR_D64_CLR_IDX[dciItmActvGrad1],
                     gdVertical);
-            end
-        else
-        	begin
-            sb.Canvas.Brush.Color:= clInactiveCaption;
-            sb.Canvas.FillRect(sb.ClientRect);
-            end;
+
+//          sb.Canvas.Pen.Color:= ARR_D64_CLR_IDX[dciItmActvGrad1];
+//          sb.Canvas.Pen.Style:= psSolid;
+//          sb.Canvas.Brush.Style:= bsClear;
+//          sb.Canvas.Rectangle(sb.ClientRect);
+			DrawFrameRect(ARR_D64_CLR_IDX[dciItmActvGrad0], ARR_D64_CLR_IDX[dciItmActvGrad1]);
+
+            sb.Canvas.Brush.Color:= clMenuHighlight;
+//          end
+//      else
+//       	begin
+//          sb.Canvas.Brush.Color:= clInactiveCaption;
+//          sb.Canvas.FillRect(sb.ClientRect);
+//          end;
 
 //		sb.Canvas.GradientFill(sb.ClientRect, clMenuHighlight,
 //				sb.Canvas.Brush.Color, gdVertical);
@@ -219,23 +299,13 @@ procedure TD64ExplorerMainForm.SpeedButton1Paint(Sender: TObject);
 		pt.y:= 4;
         end
 	else
-		begin
-        if  sb.MouseInClient then
-            begin
-//        	sb.Canvas.Brush.Color:= clMenuHighlight;
-        	sb.Canvas.Brush.Color:= clActiveCaption;
-			sb.Canvas.Brush.Style:= bsSolid;
-            end
-        else
-        	begin
-//        	sb.Canvas.Brush.Color:= clInactiveCaption;
-        	sb.Canvas.Brush.Color:= clNone;
-            sb.Canvas.Brush.Style:= bsClear;
-            end;
-//        else
-//            sb.Canvas.Brush.Color:= clBtnShadow;
+       	begin
+//      sb.Canvas.Brush.Color:= clInactiveCaption;
+        sb.Canvas.Brush.Color:= clNone;
+        sb.Canvas.Brush.Style:= bsClear;
 
-		sb.Canvas.Clear;
+        sb.Canvas.Clear;
+//      end;
 
 //		sb.Canvas.Brush.Style:= bsSolid;
 //		sb.Canvas.FillRect(sb.ClientRect);
@@ -256,6 +326,55 @@ procedure TD64ExplorerMainForm.SpeedButton1Paint(Sender: TObject);
 			de:= gdeNormal;
 
 	sb.Images.Draw(sb.Canvas, pt.X, pt.Y, sb.ImageIndex, de);
+    end;
+
+procedure TD64ExplorerMainForm.SpeedButton3Paint(Sender: TObject);
+    var
+    sb: TSpeedButton;
+
+    begin
+    sb:= Sender as TSpeedButton;
+
+    if  sb.MouseInClient then
+        begin
+        sb.Canvas.GradientFill(sb.ClientRect,
+        		ARR_D64_CLR_IDX[dciItmHotGrad0], ARR_D64_CLR_IDX[dciItmHotGrad1],
+                gdVertical);
+
+        if  sb.Down then
+        	sb.Canvas.Pen.Color:= ARR_D64_CLR_IDX[dciItmActvGrad1]
+        else
+        	sb.Canvas.Pen.Color:= ARR_D64_CLR_IDX[dciItmHotGrad1];
+
+        sb.Canvas.Pen.Style:= psSolid;
+        sb.Canvas.Brush.Style:= bsClear;
+        sb.Canvas.Rectangle(sb.ClientRect);
+        end
+    else if  sb.Down then
+    	begin
+        //if  sb.Enabled then
+        //	sb.Canvas.Brush.Color:= clMenuHighlight
+        //else
+        //    sb.Canvas.Brush.Color:= clBtnShadow;
+        //
+        //sb.Canvas.Brush.Style:= bsSolid;
+        //
+        //sb.Canvas.FillRect(sb.ClientRect);
+
+        sb.Canvas.GradientFill(sb.ClientRect,
+        		ARR_D64_CLR_IDX[dciItmActvGrad0], ARR_D64_CLR_IDX[dciItmActvGrad1],
+                gdVertical);
+
+        sb.Canvas.Pen.Color:= ARR_D64_CLR_IDX[dciItmActvGrad1];
+        sb.Canvas.Pen.Style:= psSolid;
+        sb.Canvas.Brush.Style:= bsClear;
+        sb.Canvas.Rectangle(sb.ClientRect);
+        end;
+
+    if sb.Down then
+    	sb.Images.Draw(sb.Canvas, 3, 3, sb.ImageIndex, sb.Enabled)
+    else if  sb.MouseInClient then
+    	sb.Images.Draw(sb.Canvas, 2, 2, sb.ImageIndex, sb.Enabled);
     end;
 
 

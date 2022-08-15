@@ -3,760 +3,20 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
   Width = 1265
   ClientHeight = 731
   ClientWidth = 1265
-  DesignLeft = 435
-  DesignTop = 177
-  object Splitter1: TSplitter[0]
-    Left = 186
-    Height = 638
-    Top = 93
-    Width = 6
-    ParentColor = False
-  end
-  object PgCtrlFile: TPageControl[1]
-    Left = 197
-    Height = 628
-    Top = 98
-    Width = 1063
-    ActivePage = TbShtC64File
-    Align = alClient
-    BorderSpacing.Around = 5
-    ParentFont = False
-    TabIndex = 0
-    TabOrder = 1
-    object TbShtC64File: TTabSheet
-      Caption = 'File Data'
-      ClientHeight = 600
-      ClientWidth = 1055
-      ParentFont = False
-      object LstBxFileData: TListBox
-        Left = 10
-        Height = 410
-        Top = 180
-        Width = 1035
-        Anchors = [akTop, akLeft, akRight, akBottom]
-        BorderSpacing.Around = 10
-        Font.Height = -13
-        Font.Name = 'Courier New'
-        ItemHeight = 0
-        ParentFont = False
-        TabOrder = 0
-      end
-      object Label1: TLabel
-        Left = 10
-        Height = 15
-        Top = 10
-        Width = 76
-        Caption = 'File Type Desc:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label2: TLabel
-        Left = 350
-        Height = 15
-        Top = 10
-        Width = 84
-        Caption = 'Replacing State:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label3: TLabel
-        Left = 350
-        Height = 15
-        Top = 40
-        Width = 62
-        Caption = 'File Locked:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label4: TLabel
-        Left = 350
-        Height = 15
-        Top = 70
-        Width = 60
-        Caption = 'File Closed:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label5: TLabel
-        Left = 10
-        Height = 15
-        Top = 40
-        Width = 103
-        Caption = 'File Data Start (T/S):'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label6: TLabel
-        Left = 10
-        Height = 15
-        Top = 70
-        Width = 53
-        Caption = 'GEOS File:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label7: TLabel
-        Left = 10
-        Height = 15
-        Top = 100
-        Width = 76
-        Caption = 'File Block Size:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblFileType: TLabel
-        Left = 179
-        Height = 15
-        Top = 10
-        Width = 58
-        Caption = 'LblFileType'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblReplacing: TLabel
-        Left = 490
-        Height = 15
-        Top = 10
-        Width = 68
-        Caption = 'LblReplacing'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblFileLocked: TLabel
-        Left = 490
-        Height = 15
-        Top = 40
-        Width = 72
-        Caption = 'LblFileLocked'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblFileClosed: TLabel
-        Left = 490
-        Height = 15
-        Top = 70
-        Width = 70
-        Caption = 'LblFileClosed'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblFileData: TLabel
-        Left = 179
-        Height = 15
-        Top = 40
-        Width = 58
-        Caption = 'LblFileData'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSFile: TLabel
-        Left = 179
-        Height = 15
-        Top = 70
-        Width = 63
-        Caption = 'LblGEOSFile'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblFileSize: TLabel
-        Left = 179
-        Height = 15
-        Top = 100
-        Width = 54
-        Caption = 'LblFileSize'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label8: TLabel
-        Left = 350
-        Height = 15
-        Top = 100
-        Width = 81
-        Caption = 'File Actual Size:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblFileActual: TLabel
-        Left = 490
-        Height = 15
-        Top = 100
-        Width = 68
-        Caption = 'LblFileActual'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label9: TLabel
-        Left = 10
-        Height = 15
-        Top = 155
-        Width = 53
-        Caption = 'Data Fork:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Button1: TButton
-        Left = 110
-        Height = 31
-        Top = 142
-        Width = 94
-        Caption = 'Copy'
-        OnClick = Button1Click
-        ParentFont = False
-        TabOrder = 1
-      end
-    end
-    object TbShtC64REL: TTabSheet
-      Caption = 'REL File Data'
-      ParentFont = False
-    end
-    object TbShtGEOSInfo: TTabSheet
-      Caption = 'GEOS File Info'
-      ClientHeight = 595
-      ClientWidth = 1053
-      ParentFont = False
-      object Label10: TLabel
-        Left = 10
-        Height = 17
-        Top = 40
-        Width = 107
-        Caption = 'GEOS Structure:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSStruct: TLabel
-        Left = 180
-        Height = 17
-        Top = 40
-        Width = 99
-        Caption = 'LblGEOSStruct'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label11: TLabel
-        Left = 10
-        Height = 17
-        Top = 70
-        Width = 103
-        Caption = 'GEOS File Type:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSType: TLabel
-        Left = 180
-        Height = 17
-        Top = 70
-        Width = 90
-        Caption = 'LblGEOSType'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSDate: TLabel
-        Left = 480
-        Height = 17
-        Top = 70
-        Width = 90
-        Caption = 'LblGEOSDate'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label13: TLabel
-        Left = 340
-        Height = 17
-        Top = 70
-        Width = 97
-        Caption = 'Last Modified:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object DividerBevel1: TDividerBevel
-        Left = 10
-        Height = 17
-        Top = 10
-        Width = 1034
-        Caption = 'Directory Entry Info'
-        Anchors = [akTop, akLeft, akRight]
-        LeftIndent = 0
-        ParentFont = False
-      end
-      object DividerBevel2: TDividerBevel
-        Left = 10
-        Height = 17
-        Top = 120
-        Width = 1034
-        Caption = 'Info Block Info'
-        Anchors = [akTop, akLeft, akRight]
-        LeftIndent = 0
-        ParentFont = False
-      end
-      object Label12: TLabel
-        Left = 10
-        Height = 17
-        Top = 210
-        Width = 107
-        Caption = 'GEOS Structure:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSStructInf: TLabel
-        Left = 180
-        Height = 17
-        Top = 210
-        Width = 117
-        Caption = 'LblGEOSStructInf'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label14: TLabel
-        Left = 10
-        Height = 17
-        Top = 180
-        Width = 103
-        Caption = 'GEOS File Type:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSTypeInf: TLabel
-        Left = 180
-        Height = 17
-        Top = 180
-        Width = 108
-        Caption = 'LblGEOSTypeInf'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label15: TLabel
-        Left = 10
-        Height = 17
-        Top = 150
-        Width = 91
-        Caption = 'C64 File Type:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSC64Type: TLabel
-        Left = 180
-        Height = 17
-        Top = 150
-        Width = 115
-        Caption = 'LblGEOSC64Type'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label16: TLabel
-        Left = 340
-        Height = 17
-        Top = 150
-        Width = 58
-        Caption = 'ID Bytes:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSIDBytes: TLabel
-        Left = 480
-        Height = 17
-        Top = 150
-        Width = 109
-        Caption = 'LblGEOSIDBytes'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label18: TLabel
-        Left = 650
-        Height = 17
-        Top = 150
-        Width = 32
-        Caption = 'Icon:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object ImgGEOSIcon: TImage
-        Left = 780
-        Height = 52
-        Top = 150
-        Width = 60
-        AntialiasingMode = amOff
-        Center = True
-        Proportional = True
-        Stretch = True
-        Transparent = True
-      end
-      object Label19: TLabel
-        Left = 10
-        Height = 17
-        Top = 240
-        Width = 96
-        Caption = 'Load Address:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSLoad: TLabel
-        Left = 180
-        Height = 17
-        Top = 240
-        Width = 91
-        Caption = 'LblGEOSLoad'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label20: TLabel
-        Left = 340
-        Height = 17
-        Top = 240
-        Width = 88
-        Caption = 'End Address:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSEnd: TLabel
-        Left = 480
-        Height = 17
-        Top = 240
-        Width = 83
-        Caption = 'LblGEOSEnd'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label21: TLabel
-        Left = 650
-        Height = 17
-        Top = 240
-        Width = 89
-        Caption = 'Init. Address:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSInit: TLabel
-        Left = 780
-        Height = 17
-        Top = 240
-        Width = 80
-        Caption = 'LblGEOSInit'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label22: TLabel
-        Left = 10
-        Height = 17
-        Top = 300
-        Width = 133
-        Caption = 'Author/Application:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSAuthor: TLabel
-        Left = 180
-        Height = 17
-        Top = 300
-        Width = 105
-        Caption = 'LblGEOSAuthor'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label24: TLabel
-        Left = 10
-        Height = 17
-        Top = 330
-        Width = 130
-        Caption = 'Parent Application:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSParent: TLabel
-        Left = 180
-        Height = 17
-        Top = 330
-        Width = 103
-        Caption = 'LblGEOSParent'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label23: TLabel
-        Left = 10
-        Height = 17
-        Top = 390
-        Width = 82
-        Caption = 'Description:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSDesc: TLabel
-        Left = 180
-        Height = 17
-        Top = 390
-        Width = 90
-        Caption = 'LblGEOSDesc'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label25: TLabel
-        Left = 10
-        Height = 17
-        Top = 360
-        Width = 117
-        Caption = 'Application Data:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSAppData: TLabel
-        Left = 180
-        Height = 17
-        Top = 360
-        Width = 118
-        Caption = 'LblGEOSAppData'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label26: TLabel
-        Left = 340
-        Height = 17
-        Top = 40
-        Width = 105
-        Caption = 'Info Block (T/S):'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSInfoLoc: TLabel
-        Left = 480
-        Height = 17
-        Top = 40
-        Width = 108
-        Caption = 'LblGEOSInfoLoc'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label17: TLabel
-        Left = 10
-        Height = 17
-        Top = 270
-        Width = 39
-        Caption = 'Class:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSClass: TLabel
-        Left = 180
-        Height = 17
-        Top = 270
-        Width = 93
-        Caption = 'LblGEOSClass'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LstBxGEOSData: TListBox
-        Left = 10
-        Height = 115
-        Top = 470
-        Width = 1033
-        Anchors = [akTop, akLeft, akRight, akBottom]
-        BorderSpacing.Around = 10
-        Font.Height = -16
-        Font.Name = 'Courier New'
-        ItemHeight = 0
-        ParentFont = False
-        TabOrder = 0
-      end
-      object Label27: TLabel
-        Left = 10
-        Height = 17
-        Top = 440
-        Width = 188
-        Caption = 'Data Block (Offset $4D-$FF):'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label31: TLabel
-        Left = 650
-        Height = 17
-        Top = 270
-        Width = 109
-        Caption = '40/80 Col. Flags:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOS4080: TLabel
-        Left = 780
-        Height = 17
-        Top = 270
-        Width = 90
-        Caption = 'LblGEOS4080'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Button2: TButton
-        Left = 241
-        Height = 31
-        Top = 428
-        Width = 94
-        Caption = 'Copy'
-        OnClick = Button2Click
-        ParentFont = False
-        TabOrder = 1
-      end
-    end
-    object TbShtGEOSVLIR: TTabSheet
-      Caption = 'GEOS VLIR Data'
-      ClientHeight = 595
-      ClientWidth = 1053
-      ParentFont = False
-      object Label28: TLabel
-        Left = 10
-        Height = 17
-        Top = 15
-        Width = 96
-        Caption = 'Record Select:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object CmbGEOSVLIRRec: TComboBox
-        Left = 140
-        Height = 23
-        Top = 10
-        Width = 225
-        ItemHeight = 15
-        OnChange = CmbGEOSVLIRRecChange
-        ParentFont = False
-        Style = csDropDownList
-        TabOrder = 0
-      end
-      object LstBxGEOSVLIRRec: TListBox
-        Left = 10
-        Height = 485
-        Top = 100
-        Width = 1033
-        Anchors = [akTop, akLeft, akRight, akBottom]
-        BorderSpacing.Around = 10
-        Font.Height = -16
-        Font.Name = 'Courier New'
-        ItemHeight = 0
-        ParentFont = False
-        TabOrder = 1
-      end
-      object Label29: TLabel
-        Left = 10
-        Height = 17
-        Top = 70
-        Width = 87
-        Caption = 'Record Data:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Label30: TLabel
-        Left = 430
-        Height = 17
-        Top = 15
-        Width = 95
-        Caption = 'Actual Length:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object LblGEOSVLIRActual: TLabel
-        Left = 560
-        Height = 17
-        Top = 15
-        Width = 133
-        Caption = 'LblGEOSVLIRActual'
-        ParentColor = False
-        ParentFont = False
-      end
-      object Button3: TButton
-        Left = 125
-        Height = 31
-        Top = 58
-        Width = 94
-        Caption = 'Copy'
-        OnClick = Button3Click
-        ParentFont = False
-        TabOrder = 2
-      end
-    end
-  end
-  object Panel1: TPanel[2]
-    Left = 8
-    Height = 638
-    Top = 93
-    Width = 178
-    Align = alLeft
-    BorderSpacing.Left = 8
-    BevelOuter = bvNone
-    ClientHeight = 638
-    ClientWidth = 178
-    ParentFont = False
-    TabOrder = 2
-    object PnlDirectory: TPanel
-      Left = 0
-      Height = 95
-      Top = 0
-      Width = 178
-      Align = alTop
-      BevelOuter = bvNone
-      ClientHeight = 95
-      ClientWidth = 178
-      ParentFont = False
-      TabOrder = 0
-      object Label32: TLabel
-        Left = 5
-        Height = 15
-        Top = 5
-        Width = 168
-        Align = alTop
-        BorderSpacing.Bottom = 5
-        BorderSpacing.Around = 5
-        Caption = 'Directories:'
-        ParentColor = False
-        ParentFont = False
-      end
-      object CmbDirectory: TComboBox
-        Left = 5
-        Height = 25
-        Top = 30
-        Width = 168
-        Align = alTop
-        BorderSpacing.Around = 5
-        ItemHeight = 19
-        OnChange = CmbDirectoryChange
-        OnDrawItem = CmbDirectoryDrawItem
-        ParentFont = False
-        Style = csOwnerDrawFixed
-        TabOrder = 0
-      end
-      object Label33: TLabel
-        Left = 5
-        Height = 15
-        Top = 65
-        Width = 168
-        Align = alTop
-        BorderSpacing.Top = 5
-        BorderSpacing.Around = 5
-        Caption = 'Files:'
-        ParentColor = False
-        ParentFont = False
-      end
-    end
-    object LstBxFiles: TListBox
-      Left = 5
-      Height = 533
-      Top = 100
-      Width = 168
-      Align = alClient
-      BorderSpacing.Around = 5
-      ItemHeight = 0
-      OnSelectionChange = LstBxFilesSelectionChange
-      ParentFont = False
-      TabOrder = 1
-    end
-  end
-  object PnlDetails: TPanel[3]
+  DesignLeft = 382
+  DesignTop = 258
+  object PnlDetails: TPanel[0]
     Left = 10
     Height = 45
     Top = 10
     Width = 1245
     Align = alTop
-    AutoSize = True
     BorderSpacing.Around = 10
     BevelOuter = bvNone
     ClientHeight = 45
     ClientWidth = 1245
-    TabOrder = 3
+    TabOrder = 0
+    Visible = False
     OnPaint = PnlDetailsPaint
     object Label34: TLabel
       Left = 0
@@ -861,7 +121,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       ParentFont = False
     end
   end
-  object Panel3: TPanel[4]
+  object Panel3: TPanel[1]
     Left = 0
     Height = 28
     Top = 65
@@ -870,7 +130,7 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
     BevelOuter = bvNone
     ClientHeight = 28
     ClientWidth = 1265
-    TabOrder = 4
+    TabOrder = 1
     object PaintBox1: TPaintBox
       Left = 0
       Height = 28
@@ -891,6 +151,761 @@ inherited D64ExplorerMainFrame: TD64ExplorerMainFrame
       Font.Color = clCaptionText
       ParentColor = False
       ParentFont = False
+    end
+  end
+  object Panel1: TPanel[2]
+    Left = 0
+    Height = 638
+    Top = 93
+    Width = 1265
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 638
+    ClientWidth = 1265
+    TabOrder = 2
+    object Panel2: TPanel
+      Left = 8
+      Height = 638
+      Top = 0
+      Width = 178
+      Align = alLeft
+      BorderSpacing.Left = 8
+      BevelOuter = bvNone
+      ClientHeight = 638
+      ClientWidth = 178
+      ParentFont = False
+      TabOrder = 0
+      object PnlDirectory: TPanel
+        Left = 0
+        Height = 95
+        Top = 0
+        Width = 178
+        Align = alTop
+        BevelOuter = bvNone
+        ClientHeight = 95
+        ClientWidth = 178
+        ParentFont = False
+        TabOrder = 0
+        object Label32: TLabel
+          Left = 8
+          Height = 15
+          Top = 8
+          Width = 162
+          Align = alTop
+          BorderSpacing.Bottom = 4
+          BorderSpacing.Around = 8
+          Caption = 'Directories:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object CmbDirectory: TComboBox
+          Left = 8
+          Height = 25
+          Top = 35
+          Width = 170
+          Align = alTop
+          BorderSpacing.Left = 8
+          ItemHeight = 19
+          OnChange = CmbDirectoryChange
+          OnDrawItem = CmbDirectoryDrawItem
+          ParentFont = False
+          Style = csOwnerDrawFixed
+          TabOrder = 0
+        end
+        object Label33: TLabel
+          Left = 8
+          Height = 15
+          Top = 68
+          Width = 170
+          Align = alTop
+          BorderSpacing.Left = 8
+          BorderSpacing.Top = 8
+          Caption = 'Files:'
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object LstBxFiles: TListBox
+        Left = 8
+        Height = 535
+        Top = 95
+        Width = 170
+        Align = alClient
+        BorderSpacing.Left = 8
+        BorderSpacing.Bottom = 8
+        ItemHeight = 0
+        OnSelectionChange = LstBxFilesSelectionChange
+        ParentFont = False
+        TabOrder = 1
+      end
+    end
+    object Splitter1: TSplitter
+      Left = 186
+      Height = 638
+      Top = 0
+      Width = 6
+    end
+    object PgCtrlFile: TPageControl
+      Left = 192
+      Height = 622
+      Top = 8
+      Width = 1065
+      ActivePage = TbShtC64File
+      Align = alClient
+      BorderSpacing.Top = 8
+      BorderSpacing.Right = 8
+      BorderSpacing.Bottom = 8
+      ParentFont = False
+      TabIndex = 0
+      TabOrder = 2
+      object TbShtC64File: TTabSheet
+        Caption = 'File Data'
+        ClientHeight = 594
+        ClientWidth = 1057
+        ParentFont = False
+        object LstBxFileData: TListBox
+          Left = 10
+          Height = 404
+          Top = 180
+          Width = 1037
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Around = 10
+          Font.Height = -13
+          Font.Name = 'Courier New'
+          ItemHeight = 0
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Label1: TLabel
+          Left = 10
+          Height = 15
+          Top = 10
+          Width = 76
+          Caption = 'File Type Desc:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label2: TLabel
+          Left = 350
+          Height = 15
+          Top = 10
+          Width = 84
+          Caption = 'Replacing State:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label3: TLabel
+          Left = 350
+          Height = 15
+          Top = 40
+          Width = 62
+          Caption = 'File Locked:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label4: TLabel
+          Left = 350
+          Height = 15
+          Top = 70
+          Width = 60
+          Caption = 'File Closed:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label5: TLabel
+          Left = 10
+          Height = 15
+          Top = 40
+          Width = 103
+          Caption = 'File Data Start (T/S):'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label6: TLabel
+          Left = 10
+          Height = 15
+          Top = 70
+          Width = 53
+          Caption = 'GEOS File:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label7: TLabel
+          Left = 10
+          Height = 15
+          Top = 100
+          Width = 76
+          Caption = 'File Block Size:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblFileType: TLabel
+          Left = 179
+          Height = 15
+          Top = 10
+          Width = 58
+          Caption = 'LblFileType'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblReplacing: TLabel
+          Left = 490
+          Height = 15
+          Top = 10
+          Width = 68
+          Caption = 'LblReplacing'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblFileLocked: TLabel
+          Left = 490
+          Height = 15
+          Top = 40
+          Width = 72
+          Caption = 'LblFileLocked'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblFileClosed: TLabel
+          Left = 490
+          Height = 15
+          Top = 70
+          Width = 70
+          Caption = 'LblFileClosed'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblFileData: TLabel
+          Left = 179
+          Height = 15
+          Top = 40
+          Width = 58
+          Caption = 'LblFileData'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSFile: TLabel
+          Left = 179
+          Height = 15
+          Top = 70
+          Width = 63
+          Caption = 'LblGEOSFile'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblFileSize: TLabel
+          Left = 179
+          Height = 15
+          Top = 100
+          Width = 54
+          Caption = 'LblFileSize'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label8: TLabel
+          Left = 350
+          Height = 15
+          Top = 100
+          Width = 81
+          Caption = 'File Actual Size:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblFileActual: TLabel
+          Left = 490
+          Height = 15
+          Top = 100
+          Width = 68
+          Caption = 'LblFileActual'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label9: TLabel
+          Left = 10
+          Height = 15
+          Top = 155
+          Width = 53
+          Caption = 'Data Fork:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Button1: TButton
+          Left = 110
+          Height = 31
+          Top = 142
+          Width = 94
+          Caption = 'Copy'
+          OnClick = Button1Click
+          ParentFont = False
+          TabOrder = 1
+        end
+      end
+      object TbShtC64REL: TTabSheet
+        Caption = 'REL File Data'
+        ParentFont = False
+      end
+      object TbShtGEOSInfo: TTabSheet
+        Caption = 'GEOS File Info'
+        ClientHeight = 595
+        ClientWidth = 1053
+        ParentFont = False
+        object Label10: TLabel
+          Left = 10
+          Height = 17
+          Top = 40
+          Width = 107
+          Caption = 'GEOS Structure:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSStruct: TLabel
+          Left = 180
+          Height = 17
+          Top = 40
+          Width = 99
+          Caption = 'LblGEOSStruct'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label11: TLabel
+          Left = 10
+          Height = 17
+          Top = 70
+          Width = 103
+          Caption = 'GEOS File Type:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSType: TLabel
+          Left = 180
+          Height = 17
+          Top = 70
+          Width = 90
+          Caption = 'LblGEOSType'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSDate: TLabel
+          Left = 480
+          Height = 17
+          Top = 70
+          Width = 90
+          Caption = 'LblGEOSDate'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label13: TLabel
+          Left = 340
+          Height = 17
+          Top = 70
+          Width = 97
+          Caption = 'Last Modified:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object DividerBevel1: TDividerBevel
+          Left = 10
+          Height = 17
+          Top = 10
+          Width = 1034
+          Caption = 'Directory Entry Info'
+          Anchors = [akTop, akLeft, akRight]
+          Font.Style = [fsBold]
+          LeftIndent = 0
+          ParentFont = False
+        end
+        object DividerBevel2: TDividerBevel
+          Left = 10
+          Height = 17
+          Top = 120
+          Width = 1034
+          Caption = 'Info Block Info'
+          Anchors = [akTop, akLeft, akRight]
+          Font.Style = [fsBold]
+          LeftIndent = 0
+          ParentFont = False
+        end
+        object Label12: TLabel
+          Left = 10
+          Height = 17
+          Top = 210
+          Width = 107
+          Caption = 'GEOS Structure:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSStructInf: TLabel
+          Left = 180
+          Height = 17
+          Top = 210
+          Width = 117
+          Caption = 'LblGEOSStructInf'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label14: TLabel
+          Left = 10
+          Height = 17
+          Top = 180
+          Width = 103
+          Caption = 'GEOS File Type:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSTypeInf: TLabel
+          Left = 180
+          Height = 17
+          Top = 180
+          Width = 108
+          Caption = 'LblGEOSTypeInf'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label15: TLabel
+          Left = 10
+          Height = 17
+          Top = 150
+          Width = 91
+          Caption = 'C64 File Type:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSC64Type: TLabel
+          Left = 180
+          Height = 17
+          Top = 150
+          Width = 115
+          Caption = 'LblGEOSC64Type'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label16: TLabel
+          Left = 340
+          Height = 17
+          Top = 150
+          Width = 58
+          Caption = 'ID Bytes:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSIDBytes: TLabel
+          Left = 480
+          Height = 17
+          Top = 150
+          Width = 109
+          Caption = 'LblGEOSIDBytes'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label18: TLabel
+          Left = 650
+          Height = 17
+          Top = 150
+          Width = 32
+          Caption = 'Icon:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object ImgGEOSIcon: TImage
+          Left = 780
+          Height = 52
+          Top = 150
+          Width = 60
+          AntialiasingMode = amOff
+          Center = True
+          Proportional = True
+          Stretch = True
+          Transparent = True
+        end
+        object Label19: TLabel
+          Left = 10
+          Height = 17
+          Top = 240
+          Width = 96
+          Caption = 'Load Address:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSLoad: TLabel
+          Left = 180
+          Height = 17
+          Top = 240
+          Width = 91
+          Caption = 'LblGEOSLoad'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label20: TLabel
+          Left = 340
+          Height = 17
+          Top = 240
+          Width = 88
+          Caption = 'End Address:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSEnd: TLabel
+          Left = 480
+          Height = 17
+          Top = 240
+          Width = 83
+          Caption = 'LblGEOSEnd'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label21: TLabel
+          Left = 650
+          Height = 17
+          Top = 240
+          Width = 89
+          Caption = 'Init. Address:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSInit: TLabel
+          Left = 780
+          Height = 17
+          Top = 240
+          Width = 80
+          Caption = 'LblGEOSInit'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label22: TLabel
+          Left = 10
+          Height = 17
+          Top = 300
+          Width = 133
+          Caption = 'Author/Application:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSAuthor: TLabel
+          Left = 180
+          Height = 17
+          Top = 300
+          Width = 105
+          Caption = 'LblGEOSAuthor'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label24: TLabel
+          Left = 10
+          Height = 17
+          Top = 330
+          Width = 130
+          Caption = 'Parent Application:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSParent: TLabel
+          Left = 180
+          Height = 17
+          Top = 330
+          Width = 103
+          Caption = 'LblGEOSParent'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label23: TLabel
+          Left = 10
+          Height = 17
+          Top = 390
+          Width = 82
+          Caption = 'Description:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSDesc: TLabel
+          Left = 180
+          Height = 17
+          Top = 390
+          Width = 90
+          Caption = 'LblGEOSDesc'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label25: TLabel
+          Left = 10
+          Height = 17
+          Top = 360
+          Width = 117
+          Caption = 'Application Data:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSAppData: TLabel
+          Left = 180
+          Height = 17
+          Top = 360
+          Width = 118
+          Caption = 'LblGEOSAppData'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label26: TLabel
+          Left = 340
+          Height = 17
+          Top = 40
+          Width = 105
+          Caption = 'Info Block (T/S):'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSInfoLoc: TLabel
+          Left = 480
+          Height = 17
+          Top = 40
+          Width = 108
+          Caption = 'LblGEOSInfoLoc'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label17: TLabel
+          Left = 10
+          Height = 17
+          Top = 270
+          Width = 39
+          Caption = 'Class:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSClass: TLabel
+          Left = 180
+          Height = 17
+          Top = 270
+          Width = 93
+          Caption = 'LblGEOSClass'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LstBxGEOSData: TListBox
+          Left = 10
+          Height = 115
+          Top = 470
+          Width = 1033
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Around = 10
+          Font.Height = -16
+          Font.Name = 'Courier New'
+          ItemHeight = 0
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Label27: TLabel
+          Left = 10
+          Height = 17
+          Top = 440
+          Width = 188
+          Caption = 'Data Block (Offset $4D-$FF):'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label31: TLabel
+          Left = 650
+          Height = 17
+          Top = 270
+          Width = 109
+          Caption = '40/80 Col. Flags:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOS4080: TLabel
+          Left = 780
+          Height = 17
+          Top = 270
+          Width = 90
+          Caption = 'LblGEOS4080'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Button2: TButton
+          Left = 241
+          Height = 31
+          Top = 428
+          Width = 94
+          Caption = 'Copy'
+          OnClick = Button2Click
+          ParentFont = False
+          TabOrder = 1
+        end
+      end
+      object TbShtGEOSVLIR: TTabSheet
+        Caption = 'GEOS VLIR Data'
+        ClientHeight = 595
+        ClientWidth = 1053
+        ParentFont = False
+        object Label28: TLabel
+          Left = 10
+          Height = 17
+          Top = 15
+          Width = 96
+          Caption = 'Record Select:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object CmbGEOSVLIRRec: TComboBox
+          Left = 140
+          Height = 23
+          Top = 10
+          Width = 225
+          ItemHeight = 15
+          OnChange = CmbGEOSVLIRRecChange
+          ParentFont = False
+          Style = csDropDownList
+          TabOrder = 0
+        end
+        object LstBxGEOSVLIRRec: TListBox
+          Left = 10
+          Height = 485
+          Top = 100
+          Width = 1033
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Around = 10
+          Font.Height = -16
+          Font.Name = 'Courier New'
+          ItemHeight = 0
+          ParentFont = False
+          TabOrder = 1
+        end
+        object Label29: TLabel
+          Left = 10
+          Height = 17
+          Top = 70
+          Width = 87
+          Caption = 'Record Data:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label30: TLabel
+          Left = 430
+          Height = 17
+          Top = 15
+          Width = 95
+          Caption = 'Actual Length:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object LblGEOSVLIRActual: TLabel
+          Left = 560
+          Height = 17
+          Top = 15
+          Width = 133
+          Caption = 'LblGEOSVLIRActual'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Button3: TButton
+          Left = 125
+          Height = 31
+          Top = 58
+          Width = 94
+          Caption = 'Copy'
+          OnClick = Button3Click
+          ParentFont = False
+          TabOrder = 2
+        end
+      end
     end
   end
 end

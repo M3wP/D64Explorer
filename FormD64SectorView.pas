@@ -46,12 +46,7 @@ type
         CmbSector: TComboBox;
         Label1: TLabel;
         Label2: TLabel;
-        Label3: TLabel;
-        Label4: TLabel;
-        Label5: TLabel;
-        LstBxOffset: TListBox;
         LstBxHex: TListBox;
-        LstBxAscii: TListBox;
         procedure CmbSectorChange(Sender: TObject);
         procedure CmbTrackChange(Sender: TObject);
         procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
@@ -80,7 +75,7 @@ implementation
 {$R *.lfm}
 
 uses
-  	DModD64ExplorerMain;
+  	D64ExplorerUtils, DModD64ExplorerMain;
 
 { TD64SectorViewForm }
 
@@ -125,9 +120,7 @@ procedure TD64SectorViewForm.FormShow(Sender: TObject);
 
 procedure TD64SectorViewForm.ClearDisplay;
 	begin
-    LstBxOffset.Clear;
     LstBxHex.Clear;
-    LstBxAscii.Clear;
 	end;
 
 procedure TD64SectorViewForm.InitialiseTracks;
@@ -187,47 +180,14 @@ procedure TD64SectorViewForm.DisplayTrackSector(const ATrack: TD64TrackNum;
     try
        	ClearDisplay;
 
-        LstBxOffset.Items.BeginUpdate;
-        try
-        	for i:= 0 to 15 do
-            	LstBxOffset.Items.Add(Format('%x0', [i]));
-
-            finally
-            LstBxOffset.Items.EndUpdate;
-            end;
-
         FD64File.D64Image.GetRawSector(ATrack, ASector, m);
         m.Position:= 0;
 
         LstBxHex.Items.BeginUpdate;
-        LstBxAscii.Items.BeginUpdate;
         try
-            for i:= 0 to 15 do
-                begin
-            	sh:= EmptyStr;
-            	sa:= EmptyStr;
-
-                for  j:= 0 to 15 do
-                	begin
-                    b:= m.ReadByte;
-                    sh:= sh + Format('%2.2x ', [b]);
-                    if  (j > 1)
-                    and ((j + 1) mod 4 = 0) then
-                        sh:= sh + ' ';
-
-                    if  (b >= $20)
-                    and (b <= $7F) then
-                    	sa:= sa + string(AnsiChar(b))
-                    else
-                      	sa:= sa + ' ';
-                    end;
-
-                LstBxHex.Items.Add(sh);
-                LstBxAscii.Items.Add(sa);
-                end;
+            HexDumpStreamToLstBx(m, LstBxHex, 1);
 
         	finally
-            LstBxAscii.Items.EndUpdate;
             LstBxHex.Items.EndUpdate;
             end;
 

@@ -245,6 +245,11 @@ type
         procedure ScratchFileEntry(const ATrack: TD64TrackNum;
                 const ASector: TD64SectorNum; const AEntry: TD64EntryNum);
 
+//		Replace a given file entry with given data
+		procedure ReplaceFileEntry(const ATrack: TD64TrackNum;
+				const ASector: TD64SectorNum; const AEntry: TD64EntryNum;
+				const AEntryData: TD64EntryData);
+
 //      Get a array of directory compatible partitions.
         procedure GetDirPartitions(var AParts: TD64DirPartitions);
 //      Set the current directory partition.  Use GetDirPartitions to get the
@@ -1947,6 +1952,26 @@ procedure TD64Image.ScratchFileEntry(const ATrack: TD64TrackNum;
             AEntry * $20 + 2);
     d^:= $00;
     end;
+
+procedure TD64Image.ReplaceFileEntry(const ATrack: TD64TrackNum;
+    	const ASector: TD64SectorNum; const AEntry: TD64EntryNum;
+    	const AEntryData: TD64EntryData);
+	var
+	i,
+	p: Integer;
+
+	begin
+	p:= DoValidateTrackSector(ATrack, ASector) * VAL_SIZ_D64SECTRSIZE +
+			AEntry * $20;
+
+//	FData.Position:= p;
+
+	for i:= 0 to SizeOf(TD64EntryData) - 1 do
+		PByte(FData.Memory)[p + i]:= AEntryData[i];
+
+
+//	FData.WriteBuffer(AEntryData[0], SizeOf(TD64EntryData));
+	end;
 
 procedure TD64Image.GetDirPartitions(var AParts: TD64DirPartitions);
     type

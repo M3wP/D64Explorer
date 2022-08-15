@@ -56,6 +56,9 @@ type
         ActFileSaveAs: TAction;
         ActFileClose: TAction;
         ActFileNew: TAction;
+        ActTaskBAMView: TAction;
+        ActTaskDirView: TAction;
+        ActTaskSectView: TAction;
         ActTaskLibrary: TAction;
         ActTaskFInspector: TAction;
         ActTaskFManager: TAction;
@@ -109,11 +112,17 @@ type
 		procedure ActionTest1Execute(Sender: TObject);
 		procedure ActionTest2Execute(Sender: TObject);
         procedure ActMngrToggleSetExecute(Sender: TObject);
+        procedure ActTaskBAMViewExecute(Sender: TObject);
+        procedure ActTaskBAMViewUpdate(Sender: TObject);
+        procedure ActTaskDirViewExecute(Sender: TObject);
+        procedure ActTaskDirViewUpdate(Sender: TObject);
         procedure ActTaskFInspectorExecute(Sender: TObject);
         procedure ActTaskFInspectorUpdate(Sender: TObject);
         procedure ActTaskFManagerExecute(Sender: TObject);
         procedure ActTaskFManagerUpdate(Sender: TObject);
         procedure ActTaskLibraryExecute(Sender: TObject);
+        procedure ActTaskSectViewExecute(Sender: TObject);
+        procedure ActTaskSectViewUpdate(Sender: TObject);
         procedure ActViewBAMViewExecute(Sender: TObject);
         procedure ActViewDirViewExecute(Sender: TObject);
         procedure ActViewSecViewExecute(Sender: TObject);
@@ -132,6 +141,8 @@ type
 		FTaskFrames: TTaskFramesList;
 		FFreeFrames: TTaskFramesList;
 //      FActiveTask: TD64ExplorerTaskFrame;
+
+		FLastAct: TAction;
 
     	procedure ClearMainForm;
         procedure InitialiseMainForm;
@@ -319,7 +330,11 @@ procedure TD64ExplorerMainDMod.ActFileOpenExecute(Sender: TObject);
 
 //          InitialiseMainForm;
 			ClearMainForm;
-            ActTaskFManager.Execute;
+
+//          if  Assigned(FLastAct) then
+//           	FLastAct.Execute
+//          else
+            	ActTaskFManager.Execute;
 
 //          SetApplicationTitle(QuotedStr(FD64FileName));
             AddRecentUsed(fn);
@@ -438,8 +453,30 @@ procedure TD64ExplorerMainDMod.ActMngrToggleSetExecute(Sender: TObject);
 //
 	end;
 
+procedure TD64ExplorerMainDMod.ActTaskBAMViewExecute(Sender: TObject);
+	begin
+//
+	end;
+
+procedure TD64ExplorerMainDMod.ActTaskBAMViewUpdate(Sender: TObject);
+	begin
+    ActTaskBAMView.Enabled:= FCurrD64File > -1;//(FD64Image);
+	end;
+
+procedure TD64ExplorerMainDMod.ActTaskDirViewExecute(Sender: TObject);
+	begin
+//
+	end;
+
+procedure TD64ExplorerMainDMod.ActTaskDirViewUpdate(Sender: TObject);
+	begin
+    ActTaskDirView.Enabled:= FCurrD64File > -1;//(FD64Image);
+	end;
+
 procedure TD64ExplorerMainDMod.ActTaskFInspectorExecute(Sender: TObject);
 	begin
+    FLastAct:= ActTaskFInspector;
+
     CreateActivateTask(TD64ExplorerMainFrame, FD64Files[FCurrD64File]);
     D64ExplorerMainForm.SpeedButton7.Down:= True;
 	end;
@@ -451,6 +488,8 @@ procedure TD64ExplorerMainDMod.ActTaskFInspectorUpdate(Sender: TObject);
 
 procedure TD64ExplorerMainDMod.ActTaskFManagerExecute(Sender: TObject);
 	begin
+    FLastAct:= ActTaskFManager;
+
     CreateActivateTask(TD64ExplorerManageFrame, FD64Files[FCurrD64File]);
     D64ExplorerMainForm.SpeedButton2.Down:= True;
 	end;
@@ -462,8 +501,20 @@ procedure TD64ExplorerMainDMod.ActTaskFManagerUpdate(Sender: TObject);
 
 procedure TD64ExplorerMainDMod.ActTaskLibraryExecute(Sender: TObject);
 	begin
+    FLastAct:= ActTaskLibrary;
+
     CreateActivateTask(TD64ExplorerLibraryFrame, nil);
     D64ExplorerMainForm.SpeedButton1.Down:= True;
+	end;
+
+procedure TD64ExplorerMainDMod.ActTaskSectViewExecute(Sender: TObject);
+	begin
+//
+	end;
+
+procedure TD64ExplorerMainDMod.ActTaskSectViewUpdate(Sender: TObject);
+	begin
+    ActTaskSectView.Enabled:= FCurrD64File > -1;//(FD64Image);
 	end;
 
 procedure TD64ExplorerMainDMod.ActViewBAMViewExecute(Sender: TObject);
@@ -514,7 +565,7 @@ procedure TD64ExplorerMainDMod.DataModuleCreate(Sender: TObject);
 	ActTaskLibrary.Execute;
 
     FUpdThread:= TUpdateThread.Create(True);
-    FUpdThread.FreeOnTerminate:= True;
+    FUpdThread.FreeOnTerminate:= False;
     FUpdThread.Suspended:= False;
 	end;
 
@@ -523,7 +574,22 @@ procedure TD64ExplorerMainDMod.DataModuleDestroy(Sender: TObject);
     //if  Assigned(FD64Image) then
     //	FD64Image.Free;
 
-   	FTaskFrames.Free;
+	FUpdThread.Terminate;
+
+    while FTaskFrames.Count > 0 do
+		begin
+//		FFreeFrames.Add(FTaskFrames[FTaskFrames.Count - 1]);
+		if  FTaskFrames[FTaskFrames.Count - 1].Prepared then
+			FTaskFrames[FTaskFrames.Count - 1].Unprepare;
+
+		FTaskFrames[FTaskFrames.Count - 1].Free;
+		FTaskFrames.Delete(FTaskFrames.Count - 1);
+		end;
+
+	FUpdThread.WaitFor;
+    FUpdThread.Free;
+
+    FTaskFrames.Free;
 	FFreeFrames.Free;
 
     FIniFile.Free;
@@ -534,7 +600,7 @@ procedure TD64ExplorerMainDMod.ClearMainForm;
     i: Integer;
 
     begin
-//	D64ExplorerMainForm.Canvas.LockCanvas;
+	D64ExplorerMainForm.Canvas.LockCanvas;
 	try
 	 //   if  (FCurrD64File > -1)
 		//and Assigned(FD64Files[FCurrD64File].ActiveTask) then
@@ -548,10 +614,11 @@ procedure TD64ExplorerMainDMod.ClearMainForm;
 	            begin
 	            FTaskFrames[i].SaveData(FIniFile);
 
-//				if  FTaskFrames[i].Prepared then
-//					FTaskFrames[i].Unprepare;
-
 	            FTaskFrames[i].Visible:= False;
+
+				if  FTaskFrames[i].Prepared then
+					FTaskFrames[i].Unprepare;
+
 	            FTaskFrames[i].Parent:= nil;
 
 				FFreeFrames.Add(FTaskFrames[i]);
@@ -559,9 +626,13 @@ procedure TD64ExplorerMainDMod.ClearMainForm;
 //	            FTaskFrames[i]:= nil;
 
 	            FTaskFrames.Delete(i);
-	            end;
+	            end
+            else
+            	begin
+	            FTaskFrames[i].Visible:= False;
+                end;
 
-		for i:= 0 to FD64Files.Count - 1 do
+        for i:= 0 to FD64Files.Count - 1 do
 			FD64Files[i].ActiveTask:= nil;
 
 	    if  Assigned(D64SectorViewForm) then
@@ -572,8 +643,9 @@ procedure TD64ExplorerMainDMod.ClearMainForm;
 
 	    if  Assigned(D64DirectoryViewForm) then
 	        D64DirectoryViewForm.Close;
-		finally
-//		D64ExplorerMainForm.Canvas.UnlockCanvas;
+
+        finally
+		D64ExplorerMainForm.Canvas.UnlockCanvas;
 		end;
 
 //	D64ExplorerMainForm.Invalidate;
@@ -634,6 +706,8 @@ procedure TD64ExplorerMainDMod.SetDirty(const AValue: Boolean);
 
 procedure TD64ExplorerMainDMod.SetSaveDialogTypes;
 	begin
+    SaveDialog1.Title:= 'Save D64 Image File...';
+
     if  FD64Files[FCurrD64File].D64Image.DiskType = ddt1541 then
         begin
         SaveDialog1.Filter:= 'D64 Image Files (*.d64)|*.d64';
@@ -777,7 +851,11 @@ procedure TD64ExplorerMainDMod.DoBarButtonClick(ASender: TObject);
     SetApplicationTitle;
 
 	ClearMainForm;
-	ActTaskFManager.Execute;
+
+    if  Assigned(FLastAct) then
+        FLastAct.Execute
+    else
+    	ActTaskFManager.Execute;
 	end;
 
 procedure TD64ExplorerMainDMod.DoBarButtonPaint(ASender: TObject);
@@ -788,18 +866,21 @@ procedure TD64ExplorerMainDMod.DoBarButtonPaint(ASender: TObject);
 	sz: TSize;
 //	r: TRect;
 	cl1,
-	cl2: TColor;
+	cl2,
+    cl3: TColor;
 
     begin
     sb:= ASender as TSpeedButton;
 
-    sb.Canvas.Font.Style:= [fsBold];
+//  sb.Canvas.Font.Style:= [fsBold];
+    sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciListText0];
 
     if  sb.Down then
     	begin
        	cl1:= ARR_D64_CLR_IDX[dciItmActvGrad0];
 		cl2:= ARR_D64_CLR_IDX[dciItmActvGrad1];
-	    sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciItmText1];
+        cl3:= cl2;
+//	    sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciItmText1];
 
 		//pt.x:= 4;
 		//pt.y:= 4;
@@ -811,13 +892,15 @@ procedure TD64ExplorerMainDMod.DoBarButtonPaint(ASender: TObject);
 			begin
        		cl1:= ARR_D64_CLR_IDX[dciItmHotGrad0];
 			cl2:= ARR_D64_CLR_IDX[dciItmHotGrad1];
-			sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciItmText1];
+            cl3:= cl2;
+//			sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciItmText1];
 			end
 		else
 			begin
        		cl1:= ARR_D64_CLR_IDX[dciItmGrad0];
 			cl2:= ARR_D64_CLR_IDX[dciItmGrad1];
-			sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciItmText0];
+            cl3:= cl1;
+//			sb.Canvas.Font.Color:= ARR_D64_CLR_IDX[dciItmText0];
 			end;
 
 		//pt.x:= 2;
@@ -829,12 +912,18 @@ procedure TD64ExplorerMainDMod.DoBarButtonPaint(ASender: TObject);
 	//else
 	//	de:= gdeNormal;
 
-	sb.Canvas.Pen.Color:= clBtnShadow;
-	sb.Canvas.Pen.Style:= psSolid;
+//	sb.Canvas.Pen.Color:= clBtnShadow;
+//	sb.Canvas.Pen.Style:= psSolid;
 
 	sb.Canvas.Brush.Style:= bsSolid;
 
 	sb.Canvas.GradientFill(sb.ClientRect, cl1, cl2, gdHorizontal);
+
+    sb.Canvas.Pen.Color:= cl3;
+    sb.Canvas.Pen.Style:= psSolid;
+    sb.Canvas.Brush.Style:= bsClear;
+    sb.Canvas.Rectangle(sb.ClientRect);
+
 //	sb.Canvas.FillRect(sb.ClientRect);
 //	sb.Canvas.RoundRect(sb.ClientRect, 4, 4);
 
@@ -1038,7 +1127,7 @@ procedure TD64ExplorerMainDMod.EnableFileDrop(const AEnable: Boolean);
 procedure TD64ExplorerMainDMod.CreateActivateTask(
     	const ATaskClass: TD64ExplorerTaskFrameClass; const AInst: TD64FileInst);
     var
-//  i: Integer;
+  i: Integer;
     f: TD64ExplorerTaskFrame;
     c: Boolean;
 
@@ -1048,20 +1137,21 @@ procedure TD64ExplorerMainDMod.CreateActivateTask(
 
 	ClearMainForm;
 
-   // for i:= 0 to FTaskFrames.Count - 1 do
-   //     if  (FTaskFrames[i] is ATaskClass)
- 		//and (FTaskFrames[i].D64File = AInst) then
-   //         begin
-   //         f:= FTaskFrames[i];
-			//if  f.Prepared then
-			//	f.Unprepare;
-   //
-   //         Break;
-   //         end;
+    for i:= 0 to FTaskFrames.Count - 1 do
+        if  (FTaskFrames[i] is ATaskClass) then
+// 		and (FTaskFrames[i].D64File = AInst) then
+            begin
+            f:= FTaskFrames[i];
+			if  f.Prepared then
+			   	f.Unprepare;
+
+            Break;
+            end;
 
     if  not Assigned(f) then
         begin
     	f:= ATaskClass.Create(Application);
+
         f.ParentDoubleBuffered:= False;
         f.DoubleBuffered:= True;
         f.ParentColor:= False;
@@ -1082,29 +1172,34 @@ procedure TD64ExplorerMainDMod.CreateActivateTask(
 
 //  D64ExplorerMainForm.Update;
 
-    D64ExplorerMainForm.CoolBar1.BeginUpdate;
+//  D64ExplorerMainForm.CoolBar1.BeginUpdate;
+//	D64ExplorerMainForm.Canvas.Lock;
     try
 		if  not f.Prepared then
 	    	f.Prepare(AInst);
 
+        D64ExplorerMainForm.CoolBar1.Invalidate;
+        D64ExplorerMainForm.CoolBar1.Repaint;
+
+        if  c then
+            begin
+            FTaskFrames.Add(f);
+            end;
+
+        f.Parent:= D64ExplorerMainForm.Panel3;
+        f.Align:= alClient;
+        f.Visible:= True;
+        f.BringToFront;
+//  	f.Invalidate;
+
+	   	f.Initialise;
+
+	    D64ExplorerMainForm.Label1.Caption:= f.GetDescription;
+
     	finally
-        D64ExplorerMainForm.CoolBar1.EndUpdate;
-        end;
-
-    if  c then
-        begin
-        FTaskFrames.Add(f);
-        end;
-
-    f.Parent:= D64ExplorerMainForm.Panel3;
-    f.Align:= alClient;
-    f.Visible:= True;
-    f.BringToFront;
-//  f.Invalidate;
-
-   	f.Initialise;
-
-    D64ExplorerMainForm.Label1.Caption:= f.GetDescription;
+//     	D64ExplorerMainForm.Canvas.Unlock;
+//      D64ExplorerMainForm.CoolBar1.EndUpdate;
+    	end;
 
 	if  Assigned(AInst) then
 	   	AInst.ActiveTask:= f;
@@ -1254,7 +1349,11 @@ procedure TD64ExplorerMainDMod.ActFileNewExecute(Sender: TObject);
 
 //      InitialiseMainForm;
 		ClearMainForm;
-		ActTaskFManager.Execute;
+
+        if  Assigned(FLastAct) then
+        	FLastAct.Execute
+        else
+        	ActTaskFManager.Execute;
 
         //SetApplicationTitle('Untitled');
 		end;

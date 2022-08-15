@@ -9,7 +9,8 @@ uses
     Classes, SysUtils, C64D64Image, StdCtrls, Graphics;
 
 
-procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox);
+procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox;
+		const AIdxWidth: Integer = 3);
 
 procedure DirectoryDrawComboItem(ACombo: TComboBox; AIndex: Integer;
         ARect: TRect; AState: TOwnerDrawState; ADirs: TD64DirPartitions);
@@ -273,21 +274,32 @@ procedure InitC64Chargen;
 	end;
 
 
-procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox);
+procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox;
+        const AIdxWidth: Integer);
     var
     i,
     j,
     l: Integer;
-    s: string;
+    s,
+    f: string;
     b: Byte;
     d: array[0..$0F] of Byte;
 
     begin
+    case AIdxWidth of
+    	1:
+        	f:= '%2.2x   ';
+        2:
+            f:= '%4.4x   ';
+        else
+          	f:= '%6.6x   ';
+    	end;
+
     i:= 0;
     l:= 0;
 //dengland      Stop the compiler complaining
     d[0]:= $00;
-    s:= Format('%6.6x   ', [l]);
+    s:= Format(f, [l]);
     while AStream.Position < AStream.Size do
         begin
         if  (i > 0)
@@ -303,7 +315,7 @@ procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox);
 
             Inc(l, i);
             i:= 0;
-            s:= Format('%6.6x   ', [l]);
+            s:= Format(f, [l]);
             end
         else if (i > 0)
         and (i mod 4 = 0) then

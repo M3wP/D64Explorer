@@ -10,6 +10,7 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnDropFiles = FormDropFiles
   OnResize = FormResize
   Position = poDefaultPosOnly
@@ -36,15 +37,15 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
     object Panel1: TPanel
       AnchorSideLeft.Control = CoolBar2
       AnchorSideTop.Control = CoolBar2
-      Left = 2
-      Height = 448
+      Left = 12
+      Height = 536
       Top = 20
       Width = 52
       AutoSize = True
       BorderSpacing.Left = 10
       BorderSpacing.Top = 20
       BevelOuter = bvNone
-      ClientHeight = 448
+      ClientHeight = 536
       ClientWidth = 52
       TabOrder = 0
       OnPaint = Panel1Paint
@@ -103,13 +104,64 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
       end
       object Panel5: TPanel
         Left = 0
-        Height = 292
-        Top = 156
+        Height = 224
+        Top = 312
         Width = 52
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         OnPaint = Panel5Paint
+      end
+      object SpeedButton9: TSpeedButton
+        Left = 0
+        Height = 52
+        Top = 156
+        Width = 52
+        Action = D64ExplorerMainDMod.ActTaskSectView
+        Align = alTop
+        AllowAllUp = True
+        Flat = True
+        GroupIndex = 1
+        Images = D64ExplorerMainDMod.ImgLstTasks
+        ImageIndex = 5
+        OnPaint = SpeedButton1Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object SpeedButton10: TSpeedButton
+        Left = 0
+        Height = 52
+        Top = 208
+        Width = 52
+        Action = D64ExplorerMainDMod.ActViewBAMView
+        Align = alTop
+        AllowAllUp = True
+        Flat = True
+        GroupIndex = 1
+        Images = D64ExplorerMainDMod.ImgLstTasks
+        ImageIndex = 7
+        OnPaint = SpeedButton1Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object SpeedButton11: TSpeedButton
+        Left = 0
+        Height = 52
+        Top = 260
+        Width = 52
+        Action = D64ExplorerMainDMod.ActViewDirView
+        Align = alTop
+        AllowAllUp = True
+        Flat = True
+        GroupIndex = 1
+        Images = D64ExplorerMainDMod.ImgLstTasks
+        ImageIndex = 6
+        OnPaint = SpeedButton1Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
       end
     end
   end
@@ -181,8 +233,7 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
         Bands = <        
           item
             Control = Panel2
-            MinHeight = 28
-            MinWidth = 80
+            Width = 150
           end>
         Color = clMenuBar
         HorizontalSpacing = 2
@@ -194,13 +245,14 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
           Left = 18
           Height = 28
           Top = 4
-          Width = 160
+          Width = 130
           BorderSpacing.Left = 16
           BorderSpacing.Top = 2
           BevelOuter = bvNone
           ClientHeight = 28
-          ClientWidth = 160
+          ClientWidth = 130
           Constraints.MaxHeight = 28
+          Constraints.MaxWidth = 130
           TabOrder = 0
           object SpeedButton3: TSpeedButton
             Left = 0
@@ -212,6 +264,7 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
             Flat = True
             Images = D64ExplorerMainDMod.ImgLstActionsMed
             ImageIndex = 0
+            OnPaint = SpeedButton3Paint
             ShowCaption = False
             ShowHint = True
             ParentShowHint = False
@@ -262,6 +315,7 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
             }
             Images = D64ExplorerMainDMod.ImgLstActionsMed
             ImageIndex = 1
+            OnPaint = SpeedButton3Paint
             ShowCaption = False
             ShowHint = True
             ParentShowHint = False
@@ -276,6 +330,7 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
             Flat = True
             Images = D64ExplorerMainDMod.ImgLstActionsMed
             ImageIndex = 2
+            OnPaint = SpeedButton3Paint
             ShowCaption = False
             ShowHint = True
             ParentShowHint = False
@@ -290,20 +345,7 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
             Flat = True
             Images = D64ExplorerMainDMod.ImgLstActionsMed
             ImageIndex = 3
-            ShowCaption = False
-            ShowHint = True
-            ParentShowHint = False
-          end
-          object SpeedButton8: TSpeedButton
-            Left = 128
-            Height = 28
-            Top = 0
-            Width = 29
-            Action = D64ExplorerMainDMod.ActFileClose
-            Align = alLeft
-            Flat = True
-            Images = D64ExplorerMainDMod.ImgLstActionsMed
-            ImageIndex = 4
+            OnPaint = SpeedButton3Paint
             ShowCaption = False
             ShowHint = True
             ParentShowHint = False
@@ -326,32 +368,53 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
             BorderSpacing.Left = 2
             Shape = bsLeftLine
           end
-          object Bevel3: TBevel
-            Left = 126
-            Height = 28
-            Top = 0
-            Width = 2
-            Align = alLeft
-            BorderSpacing.Left = 2
-            Shape = bsLeftLine
-          end
         end
       end
     end
   end
-  object CoolBar3: TCoolBar
+  object Panel7: TPanel
     Left = 0
     Height = 32
     Top = 0
     Width = 1026
+    Align = alTop
     AutoSize = True
-    BandBorderStyle = bsNone
-    Bands = <>
-    Constraints.MaxHeight = 32
-    Constraints.MinHeight = 32
-    EdgeBorders = [ebLeft, ebTop, ebRight]
-    FixedSize = True
-    FixedOrder = True
-    OnResize = CoolBar3Resize
+    BevelOuter = bvNone
+    ClientHeight = 32
+    ClientWidth = 1026
+    TabOrder = 2
+    object CoolBar3: TCoolBar
+      Left = 0
+      Height = 32
+      Top = 0
+      Width = 997
+      Align = alClient
+      AutoSize = True
+      BandBorderStyle = bsNone
+      Bands = <>
+      Constraints.MaxHeight = 32
+      Constraints.MinHeight = 32
+      EdgeBorders = [ebLeft, ebTop, ebRight]
+      FixedSize = True
+      FixedOrder = True
+      OnResize = CoolBar3Resize
+    end
+    object SpeedButton8: TSpeedButton
+      Left = 997
+      Height = 28
+      Top = 2
+      Width = 29
+      Action = D64ExplorerMainDMod.ActFileClose
+      Align = alRight
+      BorderSpacing.Top = 2
+      BorderSpacing.Bottom = 2
+      Flat = True
+      Images = D64ExplorerMainDMod.ImgLstActionsMed
+      ImageIndex = 19
+      OnPaint = SpeedButton3Paint
+      ShowCaption = False
+      ShowHint = True
+      ParentShowHint = False
+    end
   end
 end

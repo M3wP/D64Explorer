@@ -24,8 +24,8 @@ const
     		clActiveCaption, clBtnFace, clHighlightText,
             clBtnFace, clBtnShadow,
             clWindowText,
-            clBtnShadow, clBtnFace, clActiveCaption, clBtnFace,
-            clHighlight, clActiveCaption,
+            clBtnShadow, clBtnFace, clBtnFace, clActiveCaption,
+            clActiveCaption, clHighlight,
             clBtnFace, clHighlightText,
             clHighlight, clActiveCaption,
             clHighlightText);

@@ -1,106 +1,62 @@
 object D64SectorViewForm: TD64SectorViewForm
-  Left = 587
-  Height = 458
-  Top = 377
+  Left = 563
+  Height = 362
+  Top = 260
   Width = 755
   BorderIcons = [biSystemMenu]
   BorderStyle = bsToolWindow
   Caption = 'Sector Viewer'
-  ClientHeight = 458
+  ClientHeight = 362
   ClientWidth = 755
   FormStyle = fsStayOnTop
   OnClose = FormClose
   OnShow = FormShow
-  LCLVersion = '2.2.0.4'
+  LCLVersion = '2.0.10.0'
   object Label1: TLabel
     Left = 8
-    Height = 17
+    Height = 15
     Top = 11
-    Width = 41
+    Width = 30
     Caption = 'Track:'
+    ParentColor = False
   end
   object CmbTrack: TComboBox
     Left = 64
-    Height = 33
+    Height = 23
     Top = 8
     Width = 100
-    ItemHeight = 0
+    ItemHeight = 15
     OnChange = CmbTrackChange
     Style = csDropDownList
     TabOrder = 0
   end
   object Label2: TLabel
     Left = 205
-    Height = 17
+    Height = 15
     Top = 11
-    Width = 48
+    Width = 36
     Caption = 'Sector:'
+    ParentColor = False
   end
   object CmbSector: TComboBox
     Left = 264
-    Height = 33
+    Height = 23
     Top = 8
     Width = 100
-    ItemHeight = 0
+    ItemHeight = 15
     OnChange = CmbSectorChange
     Style = csDropDownList
     TabOrder = 1
   end
-  object LstBxOffset: TListBox
+  object LstBxHex: TListBox
     Left = 8
-    Height = 344
-    Top = 104
-    Width = 64
+    Height = 306
+    Top = 48
+    Width = 739
     Font.Height = -13
     Font.Name = 'Courier New'
     ItemHeight = 0
     ParentFont = False
     TabOrder = 2
-    TopIndex = -1
-  end
-  object Label3: TLabel
-    Left = 8
-    Height = 17
-    Top = 80
-    Width = 47
-    Caption = 'Offset:'
-  end
-  object LstBxHex: TListBox
-    Left = 80
-    Height = 344
-    Top = 104
-    Width = 472
-    Font.Height = -13
-    Font.Name = 'Courier New'
-    ItemHeight = 0
-    ParentFont = False
-    TabOrder = 3
-    TopIndex = -1
-  end
-  object Label4: TLabel
-    Left = 80
-    Height = 17
-    Top = 80
-    Width = 74
-    Caption = 'Data (Hex):'
-  end
-  object LstBxAscii: TListBox
-    Left = 560
-    Height = 344
-    Top = 104
-    Width = 188
-    Font.Height = -13
-    Font.Name = 'Courier New'
-    ItemHeight = 0
-    ParentFont = False
-    TabOrder = 4
-    TopIndex = -1
-  end
-  object Label5: TLabel
-    Left = 560
-    Height = 17
-    Top = 80
-    Width = 84
-    Caption = 'Data (ASCII):'
   end
 end

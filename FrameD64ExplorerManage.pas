@@ -21,7 +21,9 @@ type
     { TD64ExplorerManageFrame }
 
     TD64ExplorerManageFrame = class(TD64ExplorerTaskFrame)
-		Action1: TAction;
+        ActManageMvDn: TAction;
+        ActManageMvUp: TAction;
+		ActManageExport: TAction;
 		ActManagePaste: TAction;
 		ActManageCopy: TAction;
         ActManageAllPrg: TAction;
@@ -39,6 +41,7 @@ type
         Bevel4: TBevel;
         Bevel5: TBevel;
         Bevel6: TBevel;
+        Bevel7: TBevel;
         ImageList1: TImageList;
         MenuItem1: TMenuItem;
         MenuItem10: TMenuItem;
@@ -59,6 +62,9 @@ type
         PopupMenu1: TPopupMenu;
         SpeedButton1: TSpeedButton;
 		SpeedButton10: TSpeedButton;
+        SpeedButton11: TSpeedButton;
+        SpeedButton12: TSpeedButton;
+        SpeedButton13: TSpeedButton;
         SpeedButton2: TSpeedButton;
         SpeedButton3: TSpeedButton;
         SpeedButton4: TSpeedButton;
@@ -75,7 +81,13 @@ type
         procedure ActManageAllPrgExecute(Sender: TObject);
 		procedure ActManageCopyExecute(Sender: TObject);
 		procedure ActManageCopyUpdate(Sender: TObject);
+        procedure ActManageExportExecute(Sender: TObject);
+        procedure ActManageExportUpdate(Sender: TObject);
         procedure ActManageImportExecute(Sender: TObject);
+        procedure ActManageMvDnExecute(Sender: TObject);
+        procedure ActManageMvDnUpdate(Sender: TObject);
+        procedure ActManageMvUpExecute(Sender: TObject);
+        procedure ActManageMvUpUpdate(Sender: TObject);
 		procedure ActManagePasteExecute(Sender: TObject);
 		procedure ActManagePasteUpdate(Sender: TObject);
         procedure ActManageScratchExecute(Sender: TObject);
@@ -346,19 +358,46 @@ procedure TD64ExplorerManageFrame.SpeedButton3Paint(Sender: TObject);
     begin
     sb:= Sender as TSpeedButton;
 
-    if  sb.Down then
-    	begin
-        if  sb.Enabled then
-        	sb.Canvas.Brush.Color:= clMenuHighlight
+    if  sb.MouseInClient then
+        begin
+        sb.Canvas.GradientFill(sb.ClientRect,
+        		ARR_D64_CLR_IDX[dciItmHotGrad0], ARR_D64_CLR_IDX[dciItmHotGrad1],
+                gdVertical);
+
+        if  sb.Down then
+        	sb.Canvas.Pen.Color:= ARR_D64_CLR_IDX[dciItmActvGrad1]
         else
-            sb.Canvas.Brush.Color:= clBtnShadow;
+        	sb.Canvas.Pen.Color:= ARR_D64_CLR_IDX[dciItmHotGrad1];
 
-        sb.Canvas.Brush.Style:= bsSolid;
+        sb.Canvas.Pen.Style:= psSolid;
+        sb.Canvas.Brush.Style:= bsClear;
+        sb.Canvas.Rectangle(sb.ClientRect);
+        end
+    else if  sb.Down then
+    	begin
+        //if  sb.Enabled then
+        //	sb.Canvas.Brush.Color:= clMenuHighlight
+        //else
+        //    sb.Canvas.Brush.Color:= clBtnShadow;
+        //
+        //sb.Canvas.Brush.Style:= bsSolid;
+        //
+        //sb.Canvas.FillRect(sb.ClientRect);
 
-        sb.Canvas.FillRect(sb.ClientRect);
+        sb.Canvas.GradientFill(sb.ClientRect,
+        		ARR_D64_CLR_IDX[dciItmActvGrad0], ARR_D64_CLR_IDX[dciItmActvGrad1],
+                gdVertical);
 
-        sb.Images.Draw(sb.Canvas, 3, 3, sb.ImageIndex, sb.Enabled);
+        sb.Canvas.Pen.Color:= ARR_D64_CLR_IDX[dciItmActvGrad1];
+        sb.Canvas.Pen.Style:= psSolid;
+        sb.Canvas.Brush.Style:= bsClear;
+        sb.Canvas.Rectangle(sb.ClientRect);
         end;
+
+    if sb.Down then
+    	sb.Images.Draw(sb.Canvas, 3, 3, sb.ImageIndex, sb.Enabled)
+    else if  sb.MouseInClient then
+    	sb.Images.Draw(sb.Canvas, 2, 2, sb.ImageIndex, sb.Enabled);
     end;
 
 procedure TD64ExplorerManageFrame.VirtualDrawTree1AdvancedHeaderDraw(
@@ -468,6 +507,185 @@ procedure TD64ExplorerManageFrame.ActManageImportExecute(Sender: TObject);
     if  D64ExplorerMainDMod.OpenDialog2.Execute then
         D64ExplorerMainDMod.AddDropFiles(D64ExplorerMainDMod.OpenDialog2.Files);
     end;
+
+procedure TD64ExplorerManageFrame.ActManageMvDnExecute(Sender: TObject);
+	var
+	x: TEntryExtra;
+	e: TD64DirEntry;
+
+	i: Integer;
+	n,
+	p: PVirtualNode;
+
+	begin
+	i:= -1;
+	n:= VirtualDrawTree1.GetFirst;
+//	p:= n;
+	while  Assigned(n) do
+		begin
+		if  VirtualDrawTree1.Selected[n] then
+			begin
+			i:= n^.Index;
+            p:= VirtualDrawTree1.GetNext(n);
+			Break;
+			end;
+
+		n:= VirtualDrawTree1.GetNext(n);
+//		p:= n;
+		end;
+
+	Move(FEntries[i + 1].EntryData[2], e.EntryData[2], SizeOf(TD64EntryData) - 2);
+	e.Track:= FEntries[i + 1].Track;
+	e.Sector:= FEntries[i + 1].Sector;
+//	e.EntryNum:= FEntries[i + 1].EntryNum;
+
+	x.fileSize:= FExtras[i + 1].fileSize;
+	x.isDir:= FExtras[i + 1].isDir;
+
+	Move(FEntries[i].EntryData[2], FEntries[i + 1].EntryData[2], SizeOf(TD64EntryData) - 2);
+	FEntries[i + 1].Track:= FEntries[i].Track;
+	FEntries[i + 1].Sector:= FEntries[i].Sector;
+//	FEntries[i + 1].EntryNum:= FEntries[i].EntryNum;
+
+	FExtras[i + 1].fileSize:= FExtras[i].fileSize;
+	FExtras[i + 1].isDir:= FExtras[i].isDir;
+
+	Move(e.EntryData[2], FEntries[i].EntryData[2], SizeOf(TD64EntryData) - 2);
+	FEntries[i].Track:= e.Track;
+	FEntries[i].Sector:= e.Sector;
+//	FEntries[i].EntryNum:= e.EntryNum;
+
+	FExtras[i].fileSize:= x.fileSize;
+	FExtras[i].isDir:= x.isDir;
+
+	//e.EntryNum:= FEntries[i - 1].EntryNum;
+	//FEntries[i + 1].EntryNum:= FEntries[i].EntryNum;
+	//FEntries[i].EntryNum:= e.EntryNum;
+
+	FD64File.D64Image.ReplaceFileEntry(FEntries[i + 1].Track,
+			FEntries[i + 1].Sector, FEntries[i + 1].EntryNum,
+			FEntries[i + 1].EntryData);
+
+	FD64File.D64Image.ReplaceFileEntry(FEntries[i].Track,
+			FEntries[i].Sector, FEntries[i].EntryNum,
+			FEntries[i].EntryData);
+
+	DoInitialiseFiles;
+
+	VirtualDrawTree1.Selected[p]:= True;
+	end;
+
+procedure TD64ExplorerManageFrame.ActManageMvDnUpdate(Sender: TObject);
+	var
+	i: Integer;
+	n: PVirtualNode;
+
+	begin
+	i:= -1;
+	n:= VirtualDrawTree1.GetFirst;
+	while  Assigned(n) do
+		begin
+		if  VirtualDrawTree1.Selected[n] then
+			begin
+			i:= n^.Index;
+			Break;
+			end;
+
+		n:= VirtualDrawTree1.GetNext(n);
+		end;
+
+	ActManageMvDn.Enabled:= (VirtualDrawTree1.SelectedCount = 1) and
+			(i < (VirtualDrawTree1.RootNodeCount - 1)) and FShowDirs and FScratched;
+	end;
+
+procedure TD64ExplorerManageFrame.ActManageMvUpExecute(Sender: TObject);
+	var
+	x: TEntryExtra;
+	e: TD64DirEntry;
+
+	i: Integer;
+	n,
+	p: PVirtualNode;
+
+	begin
+	i:= -1;
+	p:= nil;
+	n:= VirtualDrawTree1.GetFirst;
+	while  Assigned(n) do
+		begin
+		if  VirtualDrawTree1.Selected[n] then
+			begin
+			i:= n^.Index;
+			Break;
+			end;
+
+		p:= n;
+		n:= VirtualDrawTree1.GetNext(n);
+		end;
+
+	Move(FEntries[i - 1].EntryData[2], e.EntryData[2], SizeOf(TD64EntryData) - 2);
+	e.Track:= FEntries[i - 1].Track;
+	e.Sector:= FEntries[i - 1].Sector;
+//	e.EntryNum:= FEntries[i - 1].EntryNum;
+
+	x.fileSize:= FExtras[i - 1].fileSize;
+	x.isDir:= FExtras[i - 1].isDir;
+
+	Move(FEntries[i].EntryData[2], FEntries[i - 1].EntryData[2], SizeOf(TD64EntryData) - 2);
+	FEntries[i - 1].Track:= FEntries[i].Track;
+	FEntries[i - 1].Sector:= FEntries[i].Sector;
+//	FEntries[i - 1].EntryNum:= FEntries[i].EntryNum;
+
+	FExtras[i - 1].fileSize:= FExtras[i].fileSize;
+	FExtras[i - 1].isDir:= FExtras[i].isDir;
+
+	Move(e.EntryData[2], FEntries[i].EntryData[2], SizeOf(TD64EntryData) - 2);
+	FEntries[i].Track:= e.Track;
+	FEntries[i].Sector:= e.Sector;
+//	FEntries[i].EntryNum:= e.EntryNum;
+
+	FExtras[i].fileSize:= x.fileSize;
+	FExtras[i].isDir:= x.isDir;
+
+	//e.EntryNum:= FEntries[i - 1].EntryNum;
+	//FEntries[i - 1].EntryNum:= FEntries[i].EntryNum;
+	//FEntries[i].EntryNum:= e.EntryNum;
+
+	FD64File.D64Image.ReplaceFileEntry(FEntries[i - 1].Track,
+			FEntries[i - 1].Sector, FEntries[i - 1].EntryNum,
+			FEntries[i - 1].EntryData);
+
+	FD64File.D64Image.ReplaceFileEntry(FEntries[i].Track,
+			FEntries[i].Sector, FEntries[i].EntryNum,
+			FEntries[i].EntryData);
+
+	DoInitialiseFiles;
+
+	VirtualDrawTree1.Selected[p]:= True;
+	end;
+
+procedure TD64ExplorerManageFrame.ActManageMvUpUpdate(Sender: TObject);
+	var
+	i: Integer;
+	n: PVirtualNode;
+
+	begin
+	i:= -1;
+	n:= VirtualDrawTree1.GetFirst;
+	while  Assigned(n) do
+		begin
+		if  VirtualDrawTree1.Selected[n] then
+			begin
+			i:= n^.Index;
+			Break;
+			end;
+
+		n:= VirtualDrawTree1.GetNext(n);
+		end;
+
+	ActManageMvUp.Enabled:= (VirtualDrawTree1.SelectedCount = 1) and (i > 0)
+    		and FShowDirs and FScratched;
+	end;
 
 procedure TD64ExplorerManageFrame.ActManagePasteExecute(Sender: TObject);
     var
@@ -649,6 +867,96 @@ procedure TD64ExplorerManageFrame.ActManageCopyUpdate(Sender: TObject);
 		end;
 	end;
 
+procedure TD64ExplorerManageFrame.ActManageExportExecute(Sender: TObject);
+    var
+    f: TMemoryStream;
+    sz: Cardinal;
+    i: Integer;
+	n: PVirtualNode;
+
+    begin
+	i:= -1;
+    n:= VirtualDrawTree1.GetFirst;
+    while Assigned(n) do
+        begin
+        if  vsSelected in n^.States then
+            begin
+            i:= n^.Index;
+			Break;
+            end;
+
+        n:= VirtualDrawTree1.GetNext(n);
+        end;
+
+    if  i = -1 then
+        Exit;
+
+    D64ExplorerMainDMod.SaveDialog1.Title:= 'Export File...';
+    D64ExplorerMainDMod.SaveDialog1.Filter:= 'All Files (*.*)|*.*';
+    D64ExplorerMainDMod.SaveDialog1.DefaultExt:= '';
+    if  D64ExplorerMainDMod.SaveDialog1.Execute then
+        begin
+        f:= TMemoryStream.Create;
+        try
+		    FD64File.D64Image.GetDataChain(
+        		    FEntries[i].EntryData[$03],
+                    FEntries[i].EntryData[$04], f, sz);
+
+            f.Position:= 0;
+            f.SetSize(sz);
+            f.SaveToFile(D64ExplorerMainDMod.SaveDialog1.FileName);
+
+        	finally
+            f.Free;
+            end;
+        end;
+    end;
+
+procedure TD64ExplorerManageFrame.ActManageExportUpdate(Sender: TObject);
+	var
+    i: Integer;
+    n: PVirtualNode;
+
+    begin
+	if  not Prepared then
+		Exit;
+
+    ActManageExport.Enabled:= False;
+
+	if  Length(FEntries) = 0 then
+		Exit;
+
+    if  (VirtualDrawTree1.SelectedCount = 0)
+    or  (VirtualDrawTree1.SelectedCount > 1) then
+        Exit;
+
+    i:= -1;
+    n:= VirtualDrawTree1.GetFirst;
+    while Assigned(n) do
+        begin
+        if  vsSelected in n^.States then
+            begin
+            i:= n^.Index;
+		    Break;
+            end;
+
+        n:= VirtualDrawTree1.GetNext(n);
+        end;
+
+    if  i = -1 then
+        Exit;
+
+	if  FD64File.D64Image.GEOSDisk
+    and ((FEntries[i].FileType and $07) in [1..3])
+    and (FEntries[i].EntryData[$18] <> 0) then
+        Exit;
+
+    if  (FEntries[i].EntryData[$03] <> 0)
+    and ((FEntries[i].FileType and $7) > 0)
+    and ((FEntries[i].FileType and $7) <> 5) then
+    	ActManageExport.Enabled:= True;
+	end;
+
 procedure TD64ExplorerManageFrame.ActManageScratchUpdate(Sender: TObject);
 	begin
 	if  not Prepared then
@@ -668,7 +976,7 @@ procedure TD64ExplorerManageFrame.ActTestExecute(Sender: TObject);
 
 procedure TD64ExplorerManageFrame.ActTestUpdate(Sender: TObject);
 	begin
-    Action1.Enabled:= Clipboard.HasFormat(FClipFormat);
+    ActManageExport.Enabled:= Clipboard.HasFormat(FClipFormat);
 	end;
 
 procedure TD64ExplorerManageFrame.DoInitialiseFiles;

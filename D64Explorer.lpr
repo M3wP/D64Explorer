@@ -19,7 +19,7 @@ uses
 {$R *.res}
 
 begin
-	Application.Title:= 'D64 Explorer';
+    Application.Title:='D64 Explorer';
 RequireDerivedFormResource:= True;
 Application.Initialize;
 Application.CreateForm(TD64ExplorerMainForm, D64ExplorerMainForm);
