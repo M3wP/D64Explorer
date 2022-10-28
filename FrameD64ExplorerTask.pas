@@ -5,8 +5,7 @@ unit FrameD64ExplorerTask;
 interface
 
 uses
-    Generics.Collections, Classes, SysUtils, Forms, Controls, IniFiles,
-	D64ExplorerTypes;
+    Generics.Collections, Classes, SysUtils, Forms, Controls, IniFiles;
 
 type
 
@@ -14,16 +13,12 @@ type
 
     TD64ExplorerTaskFrame = class(TFrame)
     private
-    	FPrepared: Boolean;
-
-	protected
-		FD64File: TD64File;
 
     public
     	class function GetDescription: string; virtual; abstract;
 
-    	procedure Prepare(const AD64File: TD64File); virtual;
-	    procedure Unprepare; virtual;
+    	procedure Prepare; virtual; abstract;
+	    procedure Unprepare; virtual; abstract;
 
 	    procedure Initialise; virtual; abstract;
 
@@ -32,30 +27,17 @@ type
         procedure UpdateDisplay; virtual;
 
         function  AcceptFile(const AFile: string): Boolean; virtual;
-
-		property  D64File: TD64File read FD64File;
-		property  Prepared: Boolean read FPrepared;
     end;
 
     TD64ExplorerTaskFrameClass = class of TD64ExplorerTaskFrame;
 
-	TTaskFramesList = TObjectList<TD64ExplorerTaskFrame>;
+	TTaskFramesList = TList<TD64ExplorerTaskFrame>;
 
 implementation
 
 {$R *.lfm}
 
 { TD64ExplorerTaskFrame }
-
-procedure TD64ExplorerTaskFrame.Prepare(const AD64File: TD64File);
-	begin
-    FPrepared:= True;
-	end;
-
-procedure TD64ExplorerTaskFrame.Unprepare;
-	begin
-    FPrepared:= False;
-	end;
 
 procedure TD64ExplorerTaskFrame.LoadData(const AIniFile: TIniFile);
 	begin

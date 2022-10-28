@@ -76,7 +76,6 @@
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
-              <SyntaxMode Value="Delphi"/>
               <CStyleOperator Value="False"/>
             </SyntaxOptions>
           </Parsing>
@@ -88,7 +87,7 @@
           </CodeGeneration>
           <Linking>
             <Debugging>
-              <DebugInfoType Value="dsDwarf2Set"/>
+              <GenerateDebugInfo Value="False"/>
             </Debugging>
             <LinkSmart Value="True"/>
             <Options>
@@ -125,7 +124,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="17">
+    <Units Count="15">
       <Unit0>
         <Filename Value="D64Explorer.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -192,41 +191,33 @@
         <IsPartOfProject Value="True"/>
       </Unit10>
       <Unit11>
+        <Filename Value="framed64explorermanage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="D64ExplorerManageFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="FrameD64ExplorerManage"/>
+      </Unit11>
+      <Unit12>
         <Filename Value="FrameD64ExplorerTask.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="D64ExplorerTaskFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-      </Unit11>
-      <Unit12>
+      </Unit12>
+      <Unit13>
         <Filename Value="FrameD64ExplorerLibrary.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="D64ExplorerLibraryFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-      </Unit12>
-      <Unit13>
+      </Unit13>
+      <Unit14>
         <Filename Value="FormD64ExplorerNewDisk.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="D64ExplorerNewDiskForm"/>
-        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="FrameD64ExplorerManage.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="D64ExplorerManageFrame"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
       </Unit14>
-      <Unit15>
-        <Filename Value="D64ExplorerTypes.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit15>
-      <Unit16>
-        <Filename Value="D64ExplorerConsts.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit16>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

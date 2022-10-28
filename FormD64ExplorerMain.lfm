@@ -1,54 +1,47 @@
 object D64ExplorerMainForm: TD64ExplorerMainForm
-  Left = 421
-  Height = 749
-  Top = 200
-  Width = 1026
+  Left = 475
+  Height = 700
+  Top = 192
+  Width = 1000
   Caption = 'D64 Explorer'
-  ClientHeight = 729
-  ClientWidth = 1026
+  ClientHeight = 675
+  ClientWidth = 1000
+  DesignTimePPI = 120
   Menu = D64ExplorerMainDMod.MainMenu1
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnDropFiles = FormDropFiles
-  OnResize = FormResize
   Position = poDefaultPosOnly
   LCLVersion = '2.0.10.0'
   object CoolBar2: TCoolBar
     Left = 0
-    Height = 697
-    Top = 32
+    Height = 675
+    Top = 0
     Width = 56
     Align = alLeft
+    AutoSize = True
+    BandBorderStyle = bsNone
     Bands = <    
       item
         Control = Panel1
-        FixedSize = True
-        ParentColor = False
         Width = 196
       end>
-    Color = clMenuBar
-    EdgeBorders = [ebLeft, ebRight, ebBottom]
     HorizontalSpacing = 4
-    ParentColor = False
     Vertical = True
     VerticalSpacing = 0
     object Panel1: TPanel
       AnchorSideLeft.Control = CoolBar2
       AnchorSideTop.Control = CoolBar2
-      Left = 12
-      Height = 536
-      Top = 20
+      Left = 2
+      Height = 170
+      Top = 22
       Width = 52
-      AutoSize = True
-      BorderSpacing.Left = 10
       BorderSpacing.Top = 20
       BevelOuter = bvNone
-      ClientHeight = 536
+      ClientHeight = 170
       ClientWidth = 52
+      ParentColor = False
       TabOrder = 0
-      OnPaint = Panel1Paint
       object SpeedButton1: TSpeedButton
         Left = 0
         Height = 52
@@ -56,16 +49,14 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
         Width = 52
         Action = D64ExplorerMainDMod.ActTaskLibrary
         Align = alTop
-        AllowAllUp = True
+        Down = True
         Flat = True
-        Font.Color = clAqua
         GroupIndex = 1
         Images = D64ExplorerMainDMod.ImgLstTasks
         ImageIndex = 4
         OnPaint = SpeedButton1Paint
         ShowCaption = False
         ShowHint = True
-        ParentFont = False
         ParentShowHint = False
       end
       object SpeedButton2: TSpeedButton
@@ -75,7 +66,6 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
         Width = 52
         Action = D64ExplorerMainDMod.ActTaskFManager
         Align = alTop
-        AllowAllUp = True
         Flat = True
         GroupIndex = 1
         Images = D64ExplorerMainDMod.ImgLstTasks
@@ -92,7 +82,6 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
         Width = 52
         Action = D64ExplorerMainDMod.ActTaskFInspector
         Align = alTop
-        AllowAllUp = True
         Flat = True
         GroupIndex = 1
         Images = D64ExplorerMainDMod.ImgLstTasks
@@ -102,319 +91,214 @@ object D64ExplorerMainForm: TD64ExplorerMainForm
         ShowHint = True
         ParentShowHint = False
       end
-      object Panel5: TPanel
-        Left = 0
-        Height = 224
-        Top = 312
-        Width = 52
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 0
-        OnPaint = Panel5Paint
-      end
-      object SpeedButton9: TSpeedButton
-        Left = 0
-        Height = 52
-        Top = 156
-        Width = 52
-        Action = D64ExplorerMainDMod.ActTaskSectView
-        Align = alTop
-        AllowAllUp = True
-        Flat = True
-        GroupIndex = 1
-        Images = D64ExplorerMainDMod.ImgLstTasks
-        ImageIndex = 5
-        OnPaint = SpeedButton1Paint
-        ShowCaption = False
-        ShowHint = True
-        ParentShowHint = False
-      end
-      object SpeedButton10: TSpeedButton
-        Left = 0
-        Height = 52
-        Top = 208
-        Width = 52
-        Action = D64ExplorerMainDMod.ActViewBAMView
-        Align = alTop
-        AllowAllUp = True
-        Flat = True
-        GroupIndex = 1
-        Images = D64ExplorerMainDMod.ImgLstTasks
-        ImageIndex = 7
-        OnPaint = SpeedButton1Paint
-        ShowCaption = False
-        ShowHint = True
-        ParentShowHint = False
-      end
-      object SpeedButton11: TSpeedButton
-        Left = 0
-        Height = 52
-        Top = 260
-        Width = 52
-        Action = D64ExplorerMainDMod.ActViewDirView
-        Align = alTop
-        AllowAllUp = True
-        Flat = True
-        GroupIndex = 1
-        Images = D64ExplorerMainDMod.ImgLstTasks
-        ImageIndex = 6
-        OnPaint = SpeedButton1Paint
-        ShowCaption = False
-        ShowHint = True
-        ParentShowHint = False
-      end
     end
   end
   object Panel3: TPanel
     Left = 56
-    Height = 697
-    Top = 32
-    Width = 970
+    Height = 675
+    Top = 0
+    Width = 944
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 697
-    ClientWidth = 970
+    ClientHeight = 675
+    ClientWidth = 944
     ParentBackground = False
     ParentColor = False
     TabOrder = 1
+    object CoolBar1: TCoolBar
+      Left = 0
+      Height = 34
+      Top = 28
+      Width = 944
+      AutoSize = True
+      BandMaximize = bmDblClick
+      Bands = <      
+        item
+          Control = Panel2
+          MinHeight = 28
+          MinWidth = 80
+        end>
+      HorizontalSpacing = 4
+      VerticalSpacing = 2
+      object Panel2: TPanel
+        AnchorSideLeft.Control = CoolBar1
+        AnchorSideTop.Control = CoolBar1
+        Left = 22
+        Height = 26
+        Top = 4
+        Width = 154
+        BorderSpacing.Left = 20
+        BorderSpacing.Top = 2
+        BevelOuter = bvNone
+        ClientHeight = 26
+        ClientWidth = 154
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        object SpeedButton3: TSpeedButton
+          Left = 0
+          Height = 26
+          Top = 0
+          Width = 29
+          Action = D64ExplorerMainDMod.ActFileNew
+          Align = alLeft
+          Flat = True
+          Images = D64ExplorerMainDMod.ImgLstActionsMed
+          ImageIndex = 0
+          ShowCaption = False
+          ShowHint = True
+          ParentShowHint = False
+        end
+        object SpeedButton4: TSpeedButton
+          Left = 33
+          Height = 26
+          Top = 0
+          Width = 29
+          Action = D64ExplorerMainDMod.ActFileOpen
+          Align = alLeft
+          Flat = True
+          Glyph.Data = {
+            36040000424D3604000000000000360000002800000010000000100000000100
+            2000000000000004000064000000640000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000010000000100000001000000010000000100000001000000010000
+            00010000000100000001000000010000000100000001000000000000000D0000
+            005700000099000000A0000000A0000000A0000000A0000000A0000000A00000
+            00A0000000A0000000A0000000A00000009E000000540000000200000066084B
+            53FE0B9BA4FF06161DFE0B98A2FF084850FE08444DFE0B96A0FF06161CFE0A84
+            8CFF09525AFE07323AFE0A8C95FF051015FE000000C000000004000000660930
+            37FD0C828AFF44B7BCFF5F7279FF61D3D6FF5E8289FF5E9DA3FF5DC1C7FF5969
+            70FF5ABFC4FF3C7179FF095B64FF0A969FFF000000C000000004000000660FC3
+            C5FF0A4950FF9CBFC4FFE4E0E4FFE1DEE1FFCBC9D9FFB1AFD4FFC6C4D5FFD6D3
+            D6FFD1CDD1FF8CC3C8FF09555DFF083D45FE000000C00000000400000066092A
+            32FD0FDADCFFA0AEB4FFE8E5E8FF9B99DDFF5252E1FF5150E2FF4D4DD9FF9594
+            D1FFD6D3D6FF8D949AFF0CBAC3FF09555DFE000000C000000004000000660E91
+            96FE0A2F37FFA6DFE2FFC7C4DEFF5959EDFF5857EBFF5555E7FF5252E4FF4D4D
+            DAFFC4C2D6FF91C7CCFF08262FFF0B929BFF000000C000000004000000660E96
+            9AFE0FA7ABFFA9B4B9FFADABE8FF5E5DF3FF5C5CEFFF5A5AECFF5555E7FF5150
+            E2FFA7A6D7FF93B5BAFF0DB1B9FF071820FD000000C000000004000000660A29
+            33FD0E9A9FFFAED8DBFFC3C1E3FF6262F9FF6060F4FF5C5CEFFF5857EBFF5353
+            E4FFC1BEDCFF94A6ACFF0A747FFF0C9DA7FF000000C0000000040000006612C4
+            C7FF0C4048FFB1D9DCFFF9F5F9FF9290EFFF6262F9FF5E5DF3FF5959EFFF8B89
+            E3FFE1DDE1FF97D5D9FF094A53FF094F58FE000000C000000004000000660B38
+            40FD12DEE0FFB0BFC2FFFFFDFFFFF9F6F9FFBFBCE5FFADABE8FFBCB9E1FFE6E2
+            E6FFE4E0E4FF97A0A5FF0DCDD8FF094952FE000000C000000004000000660F7E
+            85FE0C3842FF5FD8DAFF869EA3FF87C4C7FF86C6CBFF819399FF80D3D7FF7A93
+            99FF77AAAFFF50AEB5FF092B35FF0CA5AFFF000000AE00000003000000630E77
+            7BFE0C4A51FD0A353CFD0F9094FE070F17FC0D7E82FE0B4D52FD08282EFD0D94
+            97FE06131AFC0B7176FE0A5B5FFE050F14FD0000006900000000000000060000
+            002F0000002F0000002F0000002F0000002F0000002F0000002F0000002F0000
+            002F0000002F0000002F0000002F0000002F0000000600000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000
+          }
+          Images = D64ExplorerMainDMod.ImgLstActionsMed
+          ImageIndex = 1
+          ShowCaption = False
+          ShowHint = True
+          ParentShowHint = False
+        end
+        object SpeedButton5: TSpeedButton
+          Left = 66
+          Height = 26
+          Top = 0
+          Width = 29
+          Action = D64ExplorerMainDMod.ActFileSave
+          Align = alLeft
+          Flat = True
+          Images = D64ExplorerMainDMod.ImgLstActionsMed
+          ImageIndex = 2
+          ShowCaption = False
+          ShowHint = True
+          ParentShowHint = False
+        end
+        object SpeedButton6: TSpeedButton
+          Left = 95
+          Height = 26
+          Top = 0
+          Width = 29
+          Action = D64ExplorerMainDMod.ActFileSaveAs
+          Align = alLeft
+          Flat = True
+          Images = D64ExplorerMainDMod.ImgLstActionsMed
+          ImageIndex = 3
+          ShowCaption = False
+          ShowHint = True
+          ParentShowHint = False
+        end
+        object SpeedButton8: TSpeedButton
+          Left = 128
+          Height = 26
+          Top = 0
+          Width = 29
+          Action = D64ExplorerMainDMod.ActFileClose
+          Align = alLeft
+          Flat = True
+          Images = D64ExplorerMainDMod.ImgLstActionsMed
+          ImageIndex = 4
+          ShowCaption = False
+          ShowHint = True
+          ParentShowHint = False
+        end
+        object Bevel1: TBevel
+          Left = 31
+          Height = 26
+          Top = 0
+          Width = 2
+          Align = alLeft
+          BorderSpacing.Left = 2
+          Shape = bsLeftLine
+        end
+        object Bevel2: TBevel
+          Left = 64
+          Height = 26
+          Top = 0
+          Width = 2
+          Align = alLeft
+          BorderSpacing.Left = 2
+          Shape = bsLeftLine
+        end
+        object Bevel3: TBevel
+          Left = 126
+          Height = 26
+          Top = 0
+          Width = 2
+          Align = alLeft
+          BorderSpacing.Left = 2
+          Shape = bsLeftLine
+        end
+      end
+    end
     object Panel4: TPanel
       Left = 0
       Height = 28
       Top = 0
-      Width = 970
+      Width = 944
       Align = alTop
       BevelOuter = bvNone
       ClientHeight = 28
-      ClientWidth = 970
-      TabOrder = 0
+      ClientWidth = 944
+      TabOrder = 1
       object PaintBox1: TPaintBox
         Left = 0
         Height = 28
         Top = 0
-        Width = 970
+        Width = 944
         Align = alClient
-        Color = clBackground
-        ParentColor = False
         OnPaint = PaintBox1Paint
       end
       object Label1: TLabel
         Left = 8
-        Height = 15
-        Top = 5
-        Width = 34
-        BorderSpacing.Left = 8
+        Height = 20
+        Top = 6
+        Width = 46
         Caption = 'Label1'
-        Font.Color = clCaptionText
-        Layout = tlCenter
+        Font.Color = clHighlightText
+        Font.Style = [fsBold]
         ParentColor = False
         ParentFont = False
       end
-    end
-    object Panel6: TPanel
-      Left = 4
-      Height = 36
-      Top = 28
-      Width = 966
-      Align = alTop
-      AutoSize = True
-      BorderSpacing.Left = 4
-      BevelOuter = bvNone
-      ClientHeight = 36
-      ClientWidth = 966
-      TabOrder = 1
-      object CoolBar1: TCoolBar
-        Left = 0
-        Height = 36
-        Top = 0
-        Width = 966
-        AutoSize = True
-        BandBorderStyle = bsNone
-        BandMaximize = bmDblClick
-        Bands = <        
-          item
-            Control = Panel2
-            Width = 150
-          end>
-        Color = clMenuBar
-        HorizontalSpacing = 2
-        ParentColor = False
-        VerticalSpacing = 2
-        object Panel2: TPanel
-          AnchorSideLeft.Control = CoolBar1
-          AnchorSideTop.Control = CoolBar1
-          Left = 18
-          Height = 28
-          Top = 4
-          Width = 130
-          BorderSpacing.Left = 16
-          BorderSpacing.Top = 2
-          BevelOuter = bvNone
-          ClientHeight = 28
-          ClientWidth = 130
-          Constraints.MaxHeight = 28
-          Constraints.MaxWidth = 130
-          TabOrder = 0
-          object SpeedButton3: TSpeedButton
-            Left = 0
-            Height = 28
-            Top = 0
-            Width = 29
-            Action = D64ExplorerMainDMod.ActFileNew
-            Align = alLeft
-            Flat = True
-            Images = D64ExplorerMainDMod.ImgLstActionsMed
-            ImageIndex = 0
-            OnPaint = SpeedButton3Paint
-            ShowCaption = False
-            ShowHint = True
-            ParentShowHint = False
-          end
-          object SpeedButton4: TSpeedButton
-            Left = 33
-            Height = 28
-            Top = 0
-            Width = 29
-            Action = D64ExplorerMainDMod.ActFileOpen
-            Align = alLeft
-            Flat = True
-            Glyph.Data = {
-              36040000424D3604000000000000360000002800000010000000100000000100
-              2000000000000004000064000000640000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000010000000100000001000000010000000100000001000000010000
-              00010000000100000001000000010000000100000001000000000000000D0000
-              005700000099000000A0000000A0000000A0000000A0000000A0000000A00000
-              00A0000000A0000000A0000000A00000009E000000540000000200000066084B
-              53FE0B9BA4FF06161DFE0B98A2FF084850FE08444DFE0B96A0FF06161CFE0A84
-              8CFF09525AFE07323AFE0A8C95FF051015FE000000C000000004000000660930
-              37FD0C828AFF44B7BCFF5F7279FF61D3D6FF5E8289FF5E9DA3FF5DC1C7FF5969
-              70FF5ABFC4FF3C7179FF095B64FF0A969FFF000000C000000004000000660FC3
-              C5FF0A4950FF9CBFC4FFE4E0E4FFE1DEE1FFCBC9D9FFB1AFD4FFC6C4D5FFD6D3
-              D6FFD1CDD1FF8CC3C8FF09555DFF083D45FE000000C00000000400000066092A
-              32FD0FDADCFFA0AEB4FFE8E5E8FF9B99DDFF5252E1FF5150E2FF4D4DD9FF9594
-              D1FFD6D3D6FF8D949AFF0CBAC3FF09555DFE000000C000000004000000660E91
-              96FE0A2F37FFA6DFE2FFC7C4DEFF5959EDFF5857EBFF5555E7FF5252E4FF4D4D
-              DAFFC4C2D6FF91C7CCFF08262FFF0B929BFF000000C000000004000000660E96
-              9AFE0FA7ABFFA9B4B9FFADABE8FF5E5DF3FF5C5CEFFF5A5AECFF5555E7FF5150
-              E2FFA7A6D7FF93B5BAFF0DB1B9FF071820FD000000C000000004000000660A29
-              33FD0E9A9FFFAED8DBFFC3C1E3FF6262F9FF6060F4FF5C5CEFFF5857EBFF5353
-              E4FFC1BEDCFF94A6ACFF0A747FFF0C9DA7FF000000C0000000040000006612C4
-              C7FF0C4048FFB1D9DCFFF9F5F9FF9290EFFF6262F9FF5E5DF3FF5959EFFF8B89
-              E3FFE1DDE1FF97D5D9FF094A53FF094F58FE000000C000000004000000660B38
-              40FD12DEE0FFB0BFC2FFFFFDFFFFF9F6F9FFBFBCE5FFADABE8FFBCB9E1FFE6E2
-              E6FFE4E0E4FF97A0A5FF0DCDD8FF094952FE000000C000000004000000660F7E
-              85FE0C3842FF5FD8DAFF869EA3FF87C4C7FF86C6CBFF819399FF80D3D7FF7A93
-              99FF77AAAFFF50AEB5FF092B35FF0CA5AFFF000000AE00000003000000630E77
-              7BFE0C4A51FD0A353CFD0F9094FE070F17FC0D7E82FE0B4D52FD08282EFD0D94
-              97FE06131AFC0B7176FE0A5B5FFE050F14FD0000006900000000000000060000
-              002F0000002F0000002F0000002F0000002F0000002F0000002F0000002F0000
-              002F0000002F0000002F0000002F0000002F0000000600000000000000000000
-              0000000000000000000000000000000000000000000000000000000000000000
-              0000000000000000000000000000000000000000000000000000
-            }
-            Images = D64ExplorerMainDMod.ImgLstActionsMed
-            ImageIndex = 1
-            OnPaint = SpeedButton3Paint
-            ShowCaption = False
-            ShowHint = True
-            ParentShowHint = False
-          end
-          object SpeedButton5: TSpeedButton
-            Left = 66
-            Height = 28
-            Top = 0
-            Width = 29
-            Action = D64ExplorerMainDMod.ActFileSave
-            Align = alLeft
-            Flat = True
-            Images = D64ExplorerMainDMod.ImgLstActionsMed
-            ImageIndex = 2
-            OnPaint = SpeedButton3Paint
-            ShowCaption = False
-            ShowHint = True
-            ParentShowHint = False
-          end
-          object SpeedButton6: TSpeedButton
-            Left = 95
-            Height = 28
-            Top = 0
-            Width = 29
-            Action = D64ExplorerMainDMod.ActFileSaveAs
-            Align = alLeft
-            Flat = True
-            Images = D64ExplorerMainDMod.ImgLstActionsMed
-            ImageIndex = 3
-            OnPaint = SpeedButton3Paint
-            ShowCaption = False
-            ShowHint = True
-            ParentShowHint = False
-          end
-          object Bevel1: TBevel
-            Left = 31
-            Height = 28
-            Top = 0
-            Width = 2
-            Align = alLeft
-            BorderSpacing.Left = 2
-            Shape = bsLeftLine
-          end
-          object Bevel2: TBevel
-            Left = 64
-            Height = 28
-            Top = 0
-            Width = 2
-            Align = alLeft
-            BorderSpacing.Left = 2
-            Shape = bsLeftLine
-          end
-        end
-      end
-    end
-  end
-  object Panel7: TPanel
-    Left = 0
-    Height = 32
-    Top = 0
-    Width = 1026
-    Align = alTop
-    AutoSize = True
-    BevelOuter = bvNone
-    ClientHeight = 32
-    ClientWidth = 1026
-    TabOrder = 2
-    object CoolBar3: TCoolBar
-      Left = 0
-      Height = 32
-      Top = 0
-      Width = 997
-      Align = alClient
-      AutoSize = True
-      BandBorderStyle = bsNone
-      Bands = <>
-      Constraints.MaxHeight = 32
-      Constraints.MinHeight = 32
-      EdgeBorders = [ebLeft, ebTop, ebRight]
-      FixedSize = True
-      FixedOrder = True
-      OnResize = CoolBar3Resize
-    end
-    object SpeedButton8: TSpeedButton
-      Left = 997
-      Height = 28
-      Top = 2
-      Width = 29
-      Action = D64ExplorerMainDMod.ActFileClose
-      Align = alRight
-      BorderSpacing.Top = 2
-      BorderSpacing.Bottom = 2
-      Flat = True
-      Images = D64ExplorerMainDMod.ImgLstActionsMed
-      ImageIndex = 19
-      OnPaint = SpeedButton3Paint
-      ShowCaption = False
-      ShowHint = True
-      ParentShowHint = False
     end
   end
 end

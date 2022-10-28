@@ -1,7 +1,6 @@
 unit FormD64ExplorerNewDisk;
 
-{$mode Delphi}
-{$H+}
+{$mode objfpc}{$H+}
 
 interface
 
@@ -28,7 +27,6 @@ type
         Label4: TLabel;
         Label5: TLabel;
         Panel1: TPanel;
-		procedure Panel1Paint(Sender: TObject);
     private
     public
         procedure Initialise;
@@ -41,20 +39,8 @@ implementation
 
 {$R *.lfm}
 
-uses
-    D64ExplorerConsts;
-
 { TD64ExplorerNewDiskForm }
 
-procedure TD64ExplorerNewDiskForm.Panel1Paint(Sender: TObject);
-	begin
-    Panel1.Canvas.GradientFill(Panel1.ClientRect,
-    		ARR_D64_CLR_IDX[dciBnrGrad0], ARR_D64_CLR_IDX[dciBnrGrad1],
-            gdVertical);
-
-    Label1.Font.Color:= ARR_D64_CLR_IDX[dciBnrText0];
-    Label1.Font.Style:= [fsBold];
-	end;
 
 procedure TD64ExplorerNewDiskForm.Initialise;
 	begin

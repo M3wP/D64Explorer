@@ -4,14 +4,14 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Release"/>
-    <Units Count="17">
+    <Units Count="24">
       <Unit0>
         <Filename Value="D64Explorer.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="11" Y="3"/>
+        <TopLine Value="5"/>
+        <CursorPos Y="27"/>
         <UsageCount Value="200"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
         <Filename Value="FormD64ExplorerMain.pas"/>
@@ -19,23 +19,18 @@
         <ComponentName Value="D64ExplorerMainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="236"/>
-        <CursorPos X="92" Y="252"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="99"/>
+        <CursorPos X="46" Y="112"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
         <Filename Value="C64D64Image.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="1954"/>
-        <CursorPos Y="1975"/>
+        <TopLine Value="365"/>
+        <CursorPos X="11" Y="372"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
         <Filename Value="DModD64ExplorerMain.pas"/>
@@ -43,13 +38,10 @@
         <ComponentName Value="D64ExplorerMainDMod"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="1122"/>
-        <CursorPos X="30" Y="1133"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="141"/>
+        <CursorPos X="18" Y="142"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
         <Filename Value="FormD64SectorView.pas"/>
@@ -57,13 +49,9 @@
         <ComponentName Value="D64SectorViewForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="38"/>
-        <CursorPos X="29" Y="63"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="81" Y="5"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
       <Unit5>
         <Filename Value="FormD64BAMView.pas"/>
@@ -72,10 +60,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="7"/>
-        <CursorPos X="14" Y="25"/>
+        <TopLine Value="34"/>
+        <CursorPos X="5" Y="67"/>
         <UsageCount Value="200"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
         <Filename Value="FormD64DirectoryView.pas"/>
@@ -84,10 +71,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="17"/>
-        <CursorPos X="14" Y="35"/>
+        <TopLine Value="67"/>
+        <CursorPos X="24" Y="73"/>
         <UsageCount Value="200"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit6>
       <Unit7>
         <Filename Value="FrameD64ExplorerMain.pas"/>
@@ -95,22 +81,17 @@
         <ComponentName Value="D64ExplorerMainFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="12"/>
-        <TopLine Value="42"/>
-        <CursorPos X="55" Y="51"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="678"/>
+        <CursorPos X="33" Y="678"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit7>
       <Unit8>
         <Filename Value="C64D64ImageStrs.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="13"/>
-        <CursorPos X="18" Y="26"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="4" Y="2"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit8>
       <Unit9>
         <Filename Value="FormD64ExplorerAbout.pas"/>
@@ -118,223 +99,148 @@
         <ComponentName Value="D64ExplorerAboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="7"/>
-        <CursorPos X="62" Y="7"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="46" Y="9"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit9>
       <Unit10>
         <Filename Value="D64ExplorerUtils.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="276"/>
-        <CursorPos X="19" Y="295"/>
+        <TopLine Value="14"/>
+        <CursorPos X="63" Y="40"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit10>
       <Unit11>
+        <Filename Value="framed64explorermanage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="D64ExplorerManageFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <UnitName Value="FrameD64ExplorerManage"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="220"/>
+        <CursorPos Y="243"/>
+        <UsageCount Value="263"/>
+      </Unit11>
+      <Unit12>
         <Filename Value="FrameD64ExplorerTask.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="D64ExplorerTaskFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="13"/>
-        <CursorPos X="21" Y="26"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="6"/>
+        <CursorPos X="65" Y="11"/>
         <UsageCount Value="236"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit11>
-      <Unit12>
+      </Unit12>
+      <Unit13>
         <Filename Value="FrameD64ExplorerLibrary.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="D64ExplorerLibraryFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="11"/>
-        <TopLine Value="77"/>
-        <CursorPos X="5" Y="82"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="114"/>
+        <CursorPos X="31" Y="117"/>
         <UsageCount Value="236"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit12>
-      <Unit13>
+      </Unit13>
+      <Unit14>
         <Filename Value="FormD64ExplorerNewDisk.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="D64ExplorerNewDiskForm"/>
-        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="10"/>
-        <TopLine Value="29"/>
-        <CursorPos X="79" Y="39"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="15"/>
+        <CursorPos X="26" Y="23"/>
         <UsageCount Value="200"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="FrameD64ExplorerManage.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="D64ExplorerManageFrame"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Frame"/>
-        <EditorIndex Value="9"/>
-        <TopLine Value="352"/>
-        <CursorPos X="67" Y="368"/>
-        <UsageCount Value="255"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit14>
       <Unit15>
-        <Filename Value="D64ExplorerTypes.pas"/>
-        <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="5" Y="14"/>
-        <UsageCount Value="240"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
+        <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
+        <UnitName Value="Dialogs"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="688"/>
+        <CursorPos X="10" Y="699"/>
+        <UsageCount Value="12"/>
       </Unit15>
       <Unit16>
-        <Filename Value="D64ExplorerConsts.pas"/>
-        <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="10"/>
-        <CursorPos X="25" Y="14"/>
-        <UsageCount Value="265"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
+        <Filename Value="C:\lazarus\lcl\include\messagedialogs.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="130"/>
+        <CursorPos X="33" Y="135"/>
+        <UsageCount Value="9"/>
       </Unit16>
+      <Unit17>
+        <Filename Value="C:\lazarus\components\lazutils\laztracer.pas"/>
+        <UnitName Value="LazTracer"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="36"/>
+        <CursorPos Y="50"/>
+        <UsageCount Value="5"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="C:\lazarus\lcl\include\menuitem.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="824"/>
+        <CursorPos X="16" Y="835"/>
+        <UsageCount Value="5"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="C:\lazarus\lcl\menus.pp"/>
+        <UnitName Value="Menus"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="259"/>
+        <CursorPos X="3" Y="120"/>
+        <UsageCount Value="5"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="C:\lazarus\components\virtualtreeview\VirtualTrees.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="25383"/>
+        <CursorPos Y="25399"/>
+        <UsageCount Value="10"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="C:\lazarus\lcl\graphics.pp"/>
+        <UnitName Value="Graphics"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2525"/>
+        <CursorPos X="3" Y="2529"/>
+        <UsageCount Value="1"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="C:\lazarus\components\lazutils\graphtype.pp"/>
+        <UnitName Value="GraphType"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="31"/>
+        <CursorPos X="3" Y="35"/>
+        <UsageCount Value="1"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="C:\lazarus\lcl\include\winapih.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="133"/>
+        <CursorPos X="10" Y="145"/>
+        <UsageCount Value="1"/>
+      </Unit23>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
-      <Position1>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="614" Column="26" TopLine="601"/>
-      </Position1>
-      <Position2>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="123" Column="19" TopLine="113"/>
-      </Position2>
-      <Position3>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="504" Column="5" TopLine="501"/>
-      </Position3>
-      <Position4>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="193" Column="19" TopLine="178"/>
-      </Position4>
-      <Position5>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="1201" Column="2" TopLine="1181"/>
-      </Position5>
-      <Position6>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="147" Column="16" TopLine="134"/>
-      </Position6>
-      <Position7>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="618" TopLine="607"/>
-      </Position7>
-      <Position8>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="623" TopLine="607"/>
-      </Position8>
-      <Position9>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="504" Column="5" TopLine="501"/>
-      </Position9>
-      <Position10>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="193" Column="19" TopLine="178"/>
-      </Position10>
-      <Position11>
-        <Filename Value="DModD64ExplorerMain.pas"/>
-        <Caret Line="1140" TopLine="1131"/>
-      </Position11>
-      <Position12>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="225" Column="15" TopLine="222"/>
-      </Position12>
-      <Position13>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="308" Column="31" TopLine="295"/>
-      </Position13>
-      <Position14>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="217" TopLine="204"/>
-      </Position14>
-      <Position15>
-        <Filename Value="FrameD64ExplorerManage.pas"/>
-        <Caret Line="368" Column="64" TopLine="352"/>
-      </Position15>
-      <Position16>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="311" Column="64" TopLine="295"/>
-      </Position16>
-      <Position17>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="312" Column="64" TopLine="296"/>
-      </Position17>
-      <Position18>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="313" Column="64" TopLine="297"/>
-      </Position18>
-      <Position19>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="314" Column="64" TopLine="298"/>
-      </Position19>
-      <Position20>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="315" Column="64" TopLine="299"/>
-      </Position20>
-      <Position21>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="314" Column="64" TopLine="298"/>
-      </Position21>
-      <Position22>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="313" Column="64" TopLine="297"/>
-      </Position22>
-      <Position23>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="312" Column="64" TopLine="296"/>
-      </Position23>
-      <Position24>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="311" Column="64" TopLine="295"/>
-      </Position24>
-      <Position25>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="312" Column="64" TopLine="296"/>
-      </Position25>
-      <Position26>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="311" Column="64" TopLine="295"/>
-      </Position26>
-      <Position27>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="312" Column="64" TopLine="296"/>
-      </Position27>
-      <Position28>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="311" Column="64" TopLine="295"/>
-      </Position28>
-      <Position29>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="308" Column="28" TopLine="295"/>
-      </Position29>
-      <Position30>
-        <Filename Value="FormD64ExplorerMain.pas"/>
-        <Caret Line="280" Column="4" TopLine="256"/>
-      </Position30>
-    </JumpHistory>
+    <JumpHistory HistoryIndex="-1"/>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes Count="0" ActiveMode="default"/>
     </RunParams>
   </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="C64D64Image.pas"/>
+        <Line Value="1850"/>
+      </Item1>
+    </BreakPoints>
+  </Debugging>
 </CONFIG>

@@ -1,7 +1,6 @@
 program D64Explorer;
 
-{$mode Delphi}
-{$H+}
+{$mode objfpc}{$H+}
 
 {$DEFINE UseCThreads}
 
@@ -13,8 +12,8 @@ uses
     Forms, lazcontrols, FormD64ExplorerMain, C64D64Image, DModD64ExplorerMain,
     FormD64SectorView, FormD64BAMView, FormD64DirectoryView,
     FrameD64ExplorerMain, FormD64ExplorerAbout, D64ExplorerUtils,
-    FrameD64ExplorerTask, FrameD64ExplorerLibrary,
-    FormD64ExplorerNewDisk, FrameD64ExplorerManage, D64ExplorerTypes, D64ExplorerConsts;
+    FrameD64ExplorerManage, FrameD64ExplorerTask, FrameD64ExplorerLibrary,
+    FormD64ExplorerNewDisk;
 
 {$R *.res}
 

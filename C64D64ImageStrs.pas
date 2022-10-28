@@ -23,7 +23,7 @@
 unit C64D64ImageStrs;
 
 {$IFDEF FPC}
-    {$MODE DELPHI}
+    {$MODE OBJFPC}
 {$ENDIF}
 {$H+}
 

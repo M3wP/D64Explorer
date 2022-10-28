@@ -8,121 +8,137 @@ object D64DirectoryViewForm: TD64DirectoryViewForm
   Caption = 'Directory View'
   ClientHeight = 536
   ClientWidth = 836
-  FormStyle = fsStayOnTop
   OnClose = FormClose
   OnShow = FormShow
-  LCLVersion = '2.2.0.4'
+  LCLVersion = '1.6.0.4'
+  Visible = True
   object Label1: TLabel
     Left = 328
-    Height = 17
+    Height = 15
     Top = 8
-    Width = 112
+    Width = 91
     Caption = 'Dir. Location T/S:'
+    ParentColor = False
   end
   object Label2: TLabel
     Left = 328
-    Height = 17
+    Height = 15
     Top = 32
-    Width = 63
+    Width = 50
     Caption = 'File Type:'
+    ParentColor = False
   end
   object Label3: TLabel
     Left = 328
-    Height = 17
+    Height = 15
     Top = 56
-    Width = 113
+    Width = 91
     Caption = 'File Location T/S:'
+    ParentColor = False
   end
   object Label4: TLabel
     Left = 328
-    Height = 17
+    Height = 15
     Top = 80
-    Width = 71
+    Width = 56
     Caption = 'File Name:'
+    ParentColor = False
   end
   object Label5: TLabel
     Left = 328
-    Height = 17
+    Height = 15
     Top = 104
-    Width = 93
+    Width = 74
     Caption = 'Side Sect. T/S:'
+    ParentColor = False
   end
   object Label6: TLabel
     Left = 328
-    Height = 17
+    Height = 15
     Top = 128
-    Width = 90
+    Width = 70
     Caption = 'REL Rec. Size:'
+    ParentColor = False
   end
   object Label7: TLabel
     Left = 328
-    Height = 17
+    Height = 15
     Top = 152
-    Width = 36
+    Width = 27
     Caption = 'Data:'
+    ParentColor = False
   end
   object Label8: TLabel
     Left = 328
-    Height = 17
+    Height = 15
     Top = 176
-    Width = 58
+    Width = 44
     Caption = 'File Size:'
+    ParentColor = False
   end
   object LblDirLoc: TLabel
     Left = 440
-    Height = 17
+    Height = 15
     Top = 8
-    Width = 64
+    Width = 50
     Caption = 'LblDirLoc'
+    ParentColor = False
   end
   object LblFileType: TLabel
     Left = 440
-    Height = 17
+    Height = 15
     Top = 32
-    Width = 77
+    Width = 60
     Caption = 'LblFileType'
+    ParentColor = False
   end
   object LblFileLoc: TLabel
     Left = 440
-    Height = 17
+    Height = 15
     Top = 56
-    Width = 68
+    Width = 53
     Caption = 'LblFileLoc'
+    ParentColor = False
   end
   object LblFileName: TLabel
     Left = 440
-    Height = 17
+    Height = 15
     Top = 80
-    Width = 85
+    Width = 66
     Caption = 'LblFileName'
+    ParentColor = False
   end
   object LblSideSect: TLabel
     Left = 440
-    Height = 17
+    Height = 15
     Top = 104
-    Width = 79
+    Width = 60
     Caption = 'LblSideSect'
+    ParentColor = False
   end
   object LblRELRecSz: TLabel
     Left = 440
-    Height = 17
+    Height = 15
     Top = 128
-    Width = 85
+    Width = 65
     Caption = 'LblRELRecSz'
+    ParentColor = False
   end
   object LblData: TLabel
     Left = 440
-    Height = 17
+    Height = 15
     Top = 152
-    Width = 53
+    Width = 40
     Caption = 'LblData'
+    ParentColor = False
   end
   object LblFileSz: TLabel
     Left = 440
-    Height = 17
+    Height = 15
     Top = 176
-    Width = 60
+    Width = 45
     Caption = 'LblFileSz'
+    ParentColor = False
   end
   object Panel1: TPanel
     Left = 0
@@ -147,7 +163,6 @@ object D64DirectoryViewForm: TD64DirectoryViewForm
       OnSelectionChange = LstBxDirectorySelectionChange
       ParentFont = False
       TabOrder = 0
-      TopIndex = -1
     end
     object PnlDirectories: TPanel
       Left = 8
@@ -162,17 +177,18 @@ object D64DirectoryViewForm: TD64DirectoryViewForm
       TabOrder = 1
       object Label32: TLabel
         Left = 0
-        Height = 17
+        Height = 15
         Top = 0
         Width = 296
         Align = alTop
         BorderSpacing.Bottom = 8
         Caption = 'Directories:'
+        ParentColor = False
       end
       object CmbDirectory: TComboBox
         Left = 0
-        Height = 33
-        Top = 25
+        Height = 21
+        Top = 23
         Width = 296
         Align = alTop
         ItemHeight = 15
@@ -184,10 +200,11 @@ object D64DirectoryViewForm: TD64DirectoryViewForm
       end
       object Label9: TLabel
         Left = 0
-        Height = 17
+        Height = 15
         Top = 56
-        Width = 49
+        Width = 38
         Caption = 'Listing:'
+        ParentColor = False
       end
     end
   end
