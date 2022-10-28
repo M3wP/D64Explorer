@@ -1,22 +1,22 @@
 object D64SectorViewForm: TD64SectorViewForm
-  Left = 587
-  Height = 458
-  Top = 377
+  Left = 563
+  Height = 362
+  Top = 260
   Width = 755
   BorderIcons = [biSystemMenu]
   BorderStyle = bsToolWindow
   Caption = 'Sector Viewer'
-  ClientHeight = 458
+  ClientHeight = 362
   ClientWidth = 755
+  FormStyle = fsStayOnTop
   OnClose = FormClose
   OnShow = FormShow
-  LCLVersion = '1.6.0.4'
-  Visible = True
+  LCLVersion = '2.0.10.0'
   object Label1: TLabel
     Left = 8
     Height = 15
     Top = 11
-    Width = 32
+    Width = 30
     Caption = 'Track:'
     ParentColor = False
   end
@@ -48,61 +48,15 @@ object D64SectorViewForm: TD64SectorViewForm
     Style = csDropDownList
     TabOrder = 1
   end
-  object LstBxOffset: TListBox
+  object LstBxHex: TListBox
     Left = 8
-    Height = 344
-    Top = 104
-    Width = 64
+    Height = 306
+    Top = 48
+    Width = 739
     Font.Height = -13
     Font.Name = 'Courier New'
     ItemHeight = 0
     ParentFont = False
     TabOrder = 2
-  end
-  object Label3: TLabel
-    Left = 8
-    Height = 15
-    Top = 80
-    Width = 35
-    Caption = 'Offset:'
-    ParentColor = False
-  end
-  object LstBxHex: TListBox
-    Left = 80
-    Height = 344
-    Top = 104
-    Width = 472
-    Font.Height = -13
-    Font.Name = 'Courier New'
-    ItemHeight = 0
-    ParentFont = False
-    TabOrder = 3
-  end
-  object Label4: TLabel
-    Left = 80
-    Height = 15
-    Top = 80
-    Width = 58
-    Caption = 'Data (Hex):'
-    ParentColor = False
-  end
-  object LstBxAscii: TListBox
-    Left = 560
-    Height = 344
-    Top = 104
-    Width = 188
-    Font.Height = -13
-    Font.Name = 'Courier New'
-    ItemHeight = 0
-    ParentFont = False
-    TabOrder = 4
-  end
-  object Label5: TLabel
-    Left = 560
-    Height = 15
-    Top = 80
-    Width = 66
-    Caption = 'Data (ASCII):'
-    ParentColor = False
   end
 end

@@ -32,13 +32,14 @@
 //------------------------------------------------------------------------------
 unit FormD64DirectoryView;
 
-{$mode objfpc}{$H+}
+{$mode Delphi}
+{$H+}
 
 interface
 
 uses
     Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-    ExtCtrls, C64D64Image, Types;
+    ExtCtrls, C64D64Image, D64ExplorerTypes, Types;
 
 type
 
@@ -78,6 +79,8 @@ type
         FEntryTrkSectrs: array of Word;
         FDirectories: TD64DirPartitions;
 
+		FD64File: TD64File;
+
         procedure DoIntitialiseFiles;
 
         procedure ClearDisplay;
@@ -85,7 +88,7 @@ type
         procedure InitialiseDisplay;
         procedure InitialiseView(const ATrack, ASector, AEntry: Byte);
     public
-        { public declarations }
+        property  D64File: TD64File read FD64File write FD64File;
     end;
 
 var
@@ -156,9 +159,9 @@ procedure TD64DirectoryViewForm.DoIntitialiseFiles;
     try
         LstBxDirectory.Clear;
 
-        if  D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
+        if  FD64File.D64Image.DiskType = ddt1581 then
             begin
-            D64ExplorerMainDMod.D64Image.SetCurrentPartition(
+            FD64File.D64Image.SetCurrentPartition(
                     FDirectories[CmbDirectory.ItemIndex].Info, info);
             try
                 LstBxDirectory.Items.Add(Format('0 %-18s %s %s', [
@@ -166,20 +169,20 @@ procedure TD64DirectoryViewForm.DoIntitialiseFiles;
                         FDirectories[CmbDirectory.ItemIndex].PartDiskID,
                         FDirectories[CmbDirectory.ItemIndex].PartDOSType]));
 
-                D64ExplorerMainDMod.D64Image.GetPartitionFiles(e);
+                FD64File.D64Image.GetPartitionFiles(e);
 
                 finally
-                D64ExplorerMainDMod.D64Image.SetCurrentPartition(info);
+                FD64File.D64Image.SetCurrentPartition(info);
                 end;
             end
         else
             begin;
             LstBxDirectory.Items.Add(Format('0 %-18s %s %s', [
-                    '"' + D64ExplorerMainDMod.D64Image.DiskName + '"',
-                    D64ExplorerMainDMod.D64Image.DiskID,
-                    D64ExplorerMainDMod.D64Image.DOSType]));
+                    '"' + FD64File.D64Image.DiskName + '"',
+                    FD64File.D64Image.DiskID,
+                    FD64File.D64Image.DOSType]));
 
-            D64ExplorerMainDMod.D64Image.GetFileEntries(e);
+            FD64File.D64Image.GetFileEntries(e);
             end;
 
         SetLength(FEntryTrkSectrs, Length(e));
@@ -222,9 +225,9 @@ procedure TD64DirectoryViewForm.InitialiseDisplay;
     begin
     FChanging:= True;
     try
-        if  D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
+        if  FD64File.D64Image.DiskType = ddt1581 then
             begin
-            D64ExplorerMainDMod.D64Image.GetDirPartitions(FDirectories);
+            FD64File.D64Image.GetDirPartitions(FDirectories);
 
             CmbDirectory.Items.BeginUpdate;
             try
@@ -262,7 +265,7 @@ procedure TD64DirectoryViewForm.InitialiseView(const ATrack, ASector,
     begin
     m:= TMemoryStream.Create;
     try
-        D64ExplorerMainDMod.D64Image.GetRawSector(ATrack, ASector, m);
+        FD64File.D64Image.GetRawSector(ATrack, ASector, m);
 
         m.Position:= $20 * AEntry;
 

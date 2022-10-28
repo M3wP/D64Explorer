@@ -1,22 +1,26 @@
 unit FrameD64ExplorerLibrary;
 
-{$mode objfpc}{$H+}
+{$mode Delphi}
+{$H+}
 
 interface
 
 uses
     Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
-    IniFiles, FrameD64ExplorerTask, VirtualTrees;
+    IniFiles, D64ExplorerTypes, FrameD64ExplorerTask, VirtualTrees;
 
 type
 
     { TD64ExplorerLibraryFrame }
 
     TD64ExplorerLibraryFrame = class(TD64ExplorerTaskFrame)
-        Label1: TLabel;
+		Label1: TLabel;
+		PaintBox1: TPaintBox;
         Panel1: TPanel;
         Panel2: TPanel;
+		Panel3: TPanel;
         VirtualStringTree1: TVirtualStringTree;
+		procedure PaintBox1Paint(Sender: TObject);
         procedure VirtualStringTree1DblClick(Sender: TObject);
         procedure VirtualStringTree1GetImageIndex(Sender: TBaseVirtualTree;
             Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
@@ -35,7 +39,7 @@ type
 
         class function GetDescription: string; override;
 
-        procedure Prepare; override;
+        procedure Prepare(const AD64File: TD64File); override;
         procedure Unprepare; override;
         procedure Initialise; override;
 
@@ -52,7 +56,7 @@ implementation
 {$R *.lfm}
 
 uses
-    DModD64ExplorerMain;
+    D64ExplorerConsts, DModD64ExplorerMain;
 
 { TD64ExplorerLibraryFrame }
 
@@ -89,6 +93,19 @@ procedure TD64ExplorerLibraryFrame.VirtualStringTree1DblClick(Sender: TObject);
         end;
     end;
 
+procedure TD64ExplorerLibraryFrame.PaintBox1Paint(Sender: TObject);
+	begin
+    PaintBox1.Canvas.GradientFill(PaintBox1.ClientRect,
+    		ARR_D64_CLR_IDX[dciHdrGrad0], ARR_D64_CLR_IDX[dciHdrGrad1],
+            gdHorizontal);
+
+    PaintBox1.Canvas.Brush.Color:= ARR_D64_CLR_IDX[dciHdrGrad1];
+    PaintBox1.Canvas.FillRect(Rect(0, 0, 8, PaintBox1.ClientRect.Bottom));
+
+    Label1.Font.Color:= ARR_D64_CLR_IDX[dciHdrText0];
+    Label1.Font.Style:= [fsBold];
+	end;
+
 procedure TD64ExplorerLibraryFrame.RebuildRecentUsed;
 	begin
 	D64ExplorerMainDMod.RequestSaveDataCallback(Self);
@@ -117,14 +134,21 @@ class function TD64ExplorerLibraryFrame.GetDescription: string;
     Result:= 'Disk Librarian';
 	end;
 
-procedure TD64ExplorerLibraryFrame.Prepare;
+procedure TD64ExplorerLibraryFrame.Prepare(const AD64File: TD64File);
 	begin
     D64ExplorerMainDMod.EnableFileDrop(True);
+
+    inherited;
 	end;
 
 procedure TD64ExplorerLibraryFrame.Unprepare;
 	begin
+	if  not Prepared then
+		Exit;
+
     D64ExplorerMainDMod.EnableFileDrop(False);
+
+	inherited;
 	end;
 
 procedure TD64ExplorerLibraryFrame.Initialise;

@@ -28,13 +28,14 @@
 //------------------------------------------------------------------------------
 unit FormD64SectorView;
 
-{$mode objfpc}{$H+}
+{$mode Delphi}
+{$H+}
 
 interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  StdCtrls, C64D64Image;
+  StdCtrls, C64D64Image, D64ExplorerTypes;
 
 type
 
@@ -45,18 +46,15 @@ type
         CmbSector: TComboBox;
         Label1: TLabel;
         Label2: TLabel;
-        Label3: TLabel;
-        Label4: TLabel;
-        Label5: TLabel;
-        LstBxOffset: TListBox;
         LstBxHex: TListBox;
-        LstBxAscii: TListBox;
         procedure CmbSectorChange(Sender: TObject);
         procedure CmbTrackChange(Sender: TObject);
         procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
         procedure FormShow(Sender: TObject);
 	private
         FChanging: Boolean;
+
+		FD64File: TD64File;
 
         procedure ClearDisplay;
         procedure InitialiseTracks;
@@ -66,7 +64,7 @@ type
         		const ASector: TD64SectorNum);
 
   	public
-    	{ public declarations }
+    	property  D64File: TD64File read FD64File write FD64File;
   	end;
 
 var
@@ -77,7 +75,7 @@ implementation
 {$R *.lfm}
 
 uses
-  	DModD64ExplorerMain;
+  	D64ExplorerUtils, DModD64ExplorerMain;
 
 { TD64SectorViewForm }
 
@@ -109,7 +107,7 @@ procedure TD64SectorViewForm.FormShow(Sender: TObject);
 	begin
     ClearDisplay;
     InitialiseTracks;
-    if  D64ExplorerMainDMod.D64Image.DiskType = ddt1581 then
+    if  FD64File.D64Image.DiskType = ddt1581 then
         CmbTrack.ItemIndex:= 39
     else
         CmbTrack.ItemIndex:= 17;
@@ -122,9 +120,7 @@ procedure TD64SectorViewForm.FormShow(Sender: TObject);
 
 procedure TD64SectorViewForm.ClearDisplay;
 	begin
-    LstBxOffset.Clear;
     LstBxHex.Clear;
-    LstBxAscii.Clear;
 	end;
 
 procedure TD64SectorViewForm.InitialiseTracks;
@@ -139,7 +135,7 @@ procedure TD64SectorViewForm.InitialiseTracks;
         CmbTrack.Clear;
         CmbSector.Clear;
 
-        for t:= 1 to D64ExplorerMainDMod.D64Image.TrackCount do
+        for t:= 1 to FD64File.D64Image.TrackCount do
         	CmbTrack.Items.Add(IntToStr(t));
 
     	finally
@@ -159,7 +155,7 @@ procedure TD64SectorViewForm.InitialiseSectors;
     try
         CmbSector.Clear;
 
-        for s:= 0 to D64ExplorerMainDMod.D64Image.GetSectorsForTrack(
+        for s:= 0 to FD64File.D64Image.GetSectorsForTrack(
                 TD64TrackNum(CmbTrack.ItemIndex + 1)) - 1 do
         	CmbSector.Items.Add(IntToStr(s));
 
@@ -184,47 +180,14 @@ procedure TD64SectorViewForm.DisplayTrackSector(const ATrack: TD64TrackNum;
     try
        	ClearDisplay;
 
-        LstBxOffset.Items.BeginUpdate;
-        try
-        	for i:= 0 to 15 do
-            	LstBxOffset.Items.Add(Format('%x0', [i]));
-
-            finally
-            LstBxOffset.Items.EndUpdate;
-            end;
-
-        D64ExplorerMainDMod.D64Image.GetRawSector(ATrack, ASector, m);
+        FD64File.D64Image.GetRawSector(ATrack, ASector, m);
         m.Position:= 0;
 
         LstBxHex.Items.BeginUpdate;
-        LstBxAscii.Items.BeginUpdate;
         try
-            for i:= 0 to 15 do
-                begin
-            	sh:= EmptyStr;
-            	sa:= EmptyStr;
-
-                for  j:= 0 to 15 do
-                	begin
-                    b:= m.ReadByte;
-                    sh:= sh + Format('%2.2x ', [b]);
-                    if  (j > 1)
-                    and ((j + 1) mod 4 = 0) then
-                        sh:= sh + ' ';
-
-                    if  (b >= $20)
-                    and (b <= $7F) then
-                    	sa:= sa + string(AnsiChar(b))
-                    else
-                      	sa:= sa + ' ';
-                    end;
-
-                LstBxHex.Items.Add(sh);
-                LstBxAscii.Items.Add(sa);
-                end;
+            HexDumpStreamToLstBx(m, LstBxHex, 1);
 
         	finally
-            LstBxAscii.Items.EndUpdate;
             LstBxHex.Items.EndUpdate;
             end;
 

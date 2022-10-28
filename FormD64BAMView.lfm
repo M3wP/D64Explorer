@@ -8,10 +8,10 @@ object D64BAMViewForm: TD64BAMViewForm
   Caption = 'BAM Viewer'
   ClientHeight = 577
   ClientWidth = 1053
+  FormStyle = fsStayOnTop
   OnClose = FormClose
   OnShow = FormShow
-  LCLVersion = '1.6.0.4'
-  Visible = True
+  LCLVersion = '2.2.0.4'
   object LstBxBAM: TListBox
     Left = 8
     Height = 481
@@ -24,6 +24,7 @@ object D64BAMViewForm: TD64BAMViewForm
     ItemHeight = 0
     ParentFont = False
     TabOrder = 0
+    TopIndex = -1
   end
   object PnlDirectories: TPanel
     Left = 8
@@ -38,18 +39,17 @@ object D64BAMViewForm: TD64BAMViewForm
     TabOrder = 1
     object Label32: TLabel
       Left = 0
-      Height = 15
+      Height = 17
       Top = 0
       Width = 1037
       Align = alTop
       BorderSpacing.Bottom = 8
       Caption = 'Directories:'
-      ParentColor = False
     end
     object CmbDirectory: TComboBox
       Left = 0
-      Height = 21
-      Top = 23
+      Height = 33
+      Top = 25
       Width = 1037
       Align = alTop
       ItemHeight = 15
@@ -61,11 +61,10 @@ object D64BAMViewForm: TD64BAMViewForm
     end
     object Label9: TLabel
       Left = 0
-      Height = 15
+      Height = 17
       Top = 56
-      Width = 29
+      Width = 36
       Caption = 'BAM:'
-      ParentColor = False
     end
   end
 end

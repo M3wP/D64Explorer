@@ -3,8 +3,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
   Width = 890
   ClientHeight = 493
   ClientWidth = 890
-  DesignLeft = 595
-  DesignTop = 240
+  DesignLeft = 523
+  DesignTop = 264
   object Panel1: TPanel[0]
     Left = 0
     Height = 40
@@ -18,20 +18,18 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
     Visible = False
     object Panel3: TPanel
       Left = 8
-      Height = 26
+      Height = 28
       Top = 8
-      Width = 264
+      Width = 416
       BorderSpacing.Left = 200
       BorderSpacing.Top = 2
       BevelOuter = bvNone
-      ClientHeight = 26
-      ClientWidth = 264
-      ParentBackground = False
-      ParentColor = False
+      ClientHeight = 28
+      ClientWidth = 416
       TabOrder = 0
       object SpeedButton1: TSpeedButton
-        Left = 128
-        Height = 26
+        Left = 281
+        Height = 28
         Top = 0
         Width = 29
         Action = ActViewToggleChars
@@ -47,8 +45,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object SpeedButton2: TSpeedButton
-        Left = 190
-        Height = 26
+        Left = 343
+        Height = 28
         Top = 0
         Width = 29
         Action = ActViewScratched
@@ -65,7 +63,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
       end
       object SpeedButton3: TSpeedButton
         Left = 0
-        Height = 26
+        Height = 28
         Top = 0
         Width = 29
         Action = ActManageImport
@@ -79,8 +77,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object SpeedButton4: TSpeedButton
-        Left = 33
-        Height = 26
+        Left = 124
+        Height = 28
         Top = 0
         Width = 29
         Action = ActManageScratch
@@ -94,8 +92,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object Bevel1: TBevel
-        Left = 64
-        Height = 26
+        Left = 217
+        Height = 28
         Top = 0
         Width = 2
         Align = alLeft
@@ -103,8 +101,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         Shape = bsLeftLine
       end
       object Bevel2: TBevel
-        Left = 31
-        Height = 26
+        Left = 122
+        Height = 28
         Top = 0
         Width = 2
         Align = alLeft
@@ -112,8 +110,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         Shape = bsLeftLine
       end
       object SpeedButton5: TSpeedButton
-        Left = 66
-        Height = 26
+        Left = 219
+        Height = 28
         Top = 0
         Width = 29
         Action = ActManageUpCase
@@ -129,8 +127,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object Bevel4: TBevel
-        Left = 159
-        Height = 26
+        Left = 312
+        Height = 28
         Top = 0
         Width = 2
         Align = alLeft
@@ -138,8 +136,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         Shape = bsLeftLine
       end
       object SpeedButton6: TSpeedButton
-        Left = 161
-        Height = 26
+        Left = 314
+        Height = 28
         Top = 0
         Width = 29
         Action = ActViewToggleDirs
@@ -155,8 +153,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object Bevel5: TBevel
-        Left = 221
-        Height = 26
+        Left = 374
+        Height = 28
         Top = 0
         Width = 2
         Align = alLeft
@@ -164,8 +162,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         Shape = bsLeftLine
       end
       object SpeedButton7: TSpeedButton
-        Left = 223
-        Height = 26
+        Left = 376
+        Height = 28
         Top = 0
         Width = 29
         Action = ActViewToggleTree
@@ -181,8 +179,8 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object SpeedButton8: TSpeedButton
-        Left = 95
-        Height = 26
+        Left = 248
+        Height = 28
         Top = 0
         Width = 29
         Action = ActManageAllPrg
@@ -198,8 +196,102 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         ParentShowHint = False
       end
       object Bevel6: TBevel
-        Left = 126
-        Height = 26
+        Left = 155
+        Height = 28
+        Top = 0
+        Width = 2
+        Align = alLeft
+        BorderSpacing.Left = 2
+        Shape = bsLeftLine
+      end
+      object SpeedButton9: TSpeedButton
+        Left = 186
+        Height = 28
+        Top = 0
+        Width = 29
+        Action = ActManagePaste
+        Align = alLeft
+        AllowAllUp = True
+        Flat = True
+        Images = D64ExplorerMainDMod.ImgLstActionsMed
+        ImageIndex = 15
+        OnPaint = SpeedButton3Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object SpeedButton10: TSpeedButton
+        Left = 157
+        Height = 28
+        Top = 0
+        Width = 29
+        Action = ActManageCopy
+        Align = alLeft
+        Flat = True
+        Images = D64ExplorerMainDMod.ImgLstActionsMed
+        ImageIndex = 14
+        OnPaint = SpeedButton3Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object Bevel3: TBevel
+        Left = 279
+        Height = 28
+        Top = 0
+        Width = 2
+        Align = alLeft
+        BorderSpacing.Left = 2
+        Shape = bsLeftLine
+      end
+      object SpeedButton11: TSpeedButton
+        Left = 29
+        Height = 28
+        Top = 0
+        Width = 29
+        Action = ActManageExport
+        Align = alLeft
+        Flat = True
+        Images = D64ExplorerMainDMod.ImgLstActionsMed
+        ImageIndex = 16
+        OnPaint = SpeedButton3Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object SpeedButton12: TSpeedButton
+        Left = 91
+        Height = 28
+        Top = 0
+        Width = 29
+        Action = ActManageMvDn
+        Align = alLeft
+        Flat = True
+        Images = D64ExplorerMainDMod.ImgLstActionsMed
+        ImageIndex = 18
+        OnPaint = SpeedButton3Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object SpeedButton13: TSpeedButton
+        Left = 62
+        Height = 28
+        Top = 0
+        Width = 29
+        Action = ActManageMvUp
+        Align = alLeft
+        Flat = True
+        Images = D64ExplorerMainDMod.ImgLstActionsMed
+        ImageIndex = 17
+        OnPaint = SpeedButton3Paint
+        ShowCaption = False
+        ShowHint = True
+        ParentShowHint = False
+      end
+      object Bevel7: TBevel
+        Left = 60
+        Height = 28
         Top = 0
         Width = 2
         Align = alLeft
@@ -210,25 +302,27 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
   end
   object Panel2: TPanel[1]
     Left = 0
-    Height = 453
-    Top = 40
+    Height = 445
+    Top = 48
     Width = 890
     Align = alClient
+    BorderSpacing.Top = 8
     BevelOuter = bvNone
-    ClientHeight = 453
+    ClientHeight = 445
     ClientWidth = 890
     DoubleBuffered = True
     ParentDoubleBuffered = False
     TabOrder = 1
     object VirtualDrawTree1: TVirtualDrawTree
+      Cursor = 63
       Left = 256
       Height = 437
-      Top = 8
+      Top = 0
       Width = 626
       Align = alClient
-      BorderSpacing.Top = 8
       BorderSpacing.Right = 8
       BorderSpacing.Bottom = 8
+      Colors.HeaderHotColor = clInactiveCaption
       DefaultNodeHeight = 48
       DrawSelectionMode = smBlendedRectangle
       Header.AutoSizeIndex = 0
@@ -236,53 +330,59 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
         item
           CheckType = ctNone
           CheckBox = True
+          Color = clWindow
           Margin = 0
           MaxWidth = 308
           MinWidth = 180
-          Options = [coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus]
+          Options = [coEnabled, coParentBidiMode, coResizable, coShowDropMark, coVisible, coAllowFocus]
           Position = 0
+          Spacing = 8
           Style = vsOwnerDraw
           Text = 'File'
           Width = 308
         end      
         item
+          Color = clWindow
           MaxWidth = 180
           MinWidth = 60
-          Options = [coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAllowFocus]
+          Options = [coDraggable, coEnabled, coParentBidiMode, coResizable, coShowDropMark, coVisible, coAllowFocus]
           Position = 1
           Text = 'Size'
           Width = 100
         end      
         item
           BiDiMode = bdLeftToRight
+          Color = clWindow
           MaxWidth = 180
           MinWidth = 60
-          Options = [coDraggable, coEnabled, coParentColor, coResizable, coVisible, coAllowFocus]
+          Options = [coDraggable, coEnabled, coResizable, coVisible, coAllowFocus]
           Position = 2
           Text = 'Data Fork'
           Width = 100
         end>
-      Header.Options = [hoColumnResize, hoShowSortGlyphs, hoVisible]
+      Header.Font.Color = clCaptionText
+      Header.Height = 29
+      Header.Options = [hoColumnResize, hoOwnerDraw, hoShowSortGlyphs, hoVisible]
       Header.Style = hsPlates
       Images = ImageList1
       Indent = 0
       Margin = 0
-      RootNodeCount = 8
       TabOrder = 0
       TreeOptions.AutoOptions = [toAutoScrollOnExpand, toAutoSort, toAutoTristateTracking, toAutoChangeScale]
       TreeOptions.MiscOptions = [toFullRepaintOnResize, toGridExtensions, toInitOnSave, toReportMode, toToggleOnDblClick, toWheelPanning]
       TreeOptions.PaintOptions = [toShowHorzGridLines, toShowVertGridLines, toThemeAware, toUseBlendedImages]
       TreeOptions.SelectionOptions = [toFullRowSelect, toMultiSelect]
+      OnAdvancedHeaderDraw = VirtualDrawTree1AdvancedHeaderDraw
       OnDrawNode = VirtualDrawTree1DrawNode
+      OnHeaderDrawQueryElements = VirtualDrawTree1HeaderDrawQueryElements
     end
     object VirtualStringTree1: TVirtualStringTree
       Left = 8
       Height = 437
-      Top = 8
+      Top = 0
       Width = 240
       Align = alLeft
       BorderSpacing.Left = 8
-      BorderSpacing.Top = 8
       BorderSpacing.Bottom = 8
       DefaultNodeHeight = 26
       DefaultText = ' '
@@ -299,7 +399,7 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
     end
     object Splitter1: TSplitter
       Left = 248
-      Height = 453
+      Height = 445
       Top = 0
       Width = 8
     end
@@ -2662,8 +2762,9 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
     end
   end
   object ActionList1: TActionList[4]
-    Left = 377
-    Top = 131
+    OnUpdate = ActionList1Update
+    Left = 376
+    Top = 128
     object ActViewToggleChars: TAction
       Category = 'View'
       Caption = 'Char Set Select'
@@ -2728,6 +2829,46 @@ inherited D64ExplorerManageFrame: TD64ExplorerManageFrame
       Hint = 'Always Import Files as PRG Files'
       ImageIndex = 13
       OnExecute = ActManageAllPrgExecute
+    end
+    object ActManageCopy: TAction
+      Category = 'Manage'
+      Caption = 'Copy'
+      Hint = 'Copy Selected Files to Clipboard'
+      ImageIndex = 14
+      OnExecute = ActManageCopyExecute
+      OnUpdate = ActManageCopyUpdate
+    end
+    object ActManagePaste: TAction
+      Category = 'Manage'
+      Caption = 'Paste'
+      Hint = 'Paste Files From Clipboard'
+      ImageIndex = 15
+      OnExecute = ActManagePasteExecute
+      OnUpdate = ActManagePasteUpdate
+    end
+    object ActManageExport: TAction
+      Category = 'Manage'
+      Caption = 'Export File...'
+      Hint = 'Export Selected File to Host'
+      ImageIndex = 16
+      OnExecute = ActManageExportExecute
+      OnUpdate = ActManageExportUpdate
+    end
+    object ActManageMvUp: TAction
+      Category = 'Manage'
+      Caption = 'Move File Up'
+      Hint = 'Move the Selected File Up'
+      ImageIndex = 17
+      OnExecute = ActManageMvUpExecute
+      OnUpdate = ActManageMvUpUpdate
+    end
+    object ActManageMvDn: TAction
+      Category = 'Manage'
+      Caption = 'Move File Down'
+      Hint = 'Move the Selected File Down'
+      ImageIndex = 18
+      OnExecute = ActManageMvDnExecute
+      OnUpdate = ActManageMvDnUpdate
     end
   end
 end

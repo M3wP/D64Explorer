@@ -1,6 +1,7 @@
 unit D64ExplorerUtils;
 
-{$mode objfpc}{$H+}
+{$mode Delphi}
+{$H+}
 
 interface
 
@@ -8,7 +9,8 @@ uses
     Classes, SysUtils, C64D64Image, StdCtrls, Graphics;
 
 
-procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox);
+procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox;
+		const AIdxWidth: Integer = 3);
 
 procedure DirectoryDrawComboItem(ACombo: TComboBox; AIndex: Integer;
         ARect: TRect; AState: TOwnerDrawState; ADirs: TD64DirPartitions);
@@ -54,14 +56,14 @@ const
         (range: [#$C0..#$DF]; offset: -128),
         (range: [#$E0..#$Fe]; offset: -128));
 
-    ARR_TOK_ASCIITOSCRN: array[0..7] of AnsiChar = (
-		'\', '^', '_', '`', '{', '|', '}', '~');
-	ARR_DAT_ASCIITOSCRN: array[0..7] of Byte = (
-		$4D, $71, $64, $4A, $73, $42, $6B, $45);
-	ARR_DAT_ASCIITOPETSCII0: array[0..7] of Byte = (
-		$6D, $B1, $A4, $6A, $B3, $62, $AB, $65);
-	ARR_DAT_ASCIITOPETSCII1: array[0..7] of Byte = (
-		$BA, $B1, $A4, $AD, $B3, $AA, $AB, $B7);
+    ARR_TOK_ASCIITOSCRN: array[0..8] of AnsiChar = (
+		'\', '^', '_', '`', '{', '|', '}', '~', ' ');
+	ARR_DAT_ASCIITOSCRN: array[0..8] of Byte = (
+		$4D, $71, $64, $4A, $73, $42, $6B, $45, $20);
+	ARR_DAT_ASCIITOPETSCII0: array[0..8] of Byte = (
+		$6D, $B1, $A4, $6A, $B3, $62, $AB, $65, $A0);
+	ARR_DAT_ASCIITOPETSCII1: array[0..8] of Byte = (
+		$BA, $B1, $A4, $AD, $B3, $AA, $AB, $B7, $A0);
 
     ARR_XLT_ASCIITOPETSCII: array[0..1] of TPetsciiConvert = (
 		(range: [#$41..#$5A]; offset: 32),
@@ -272,21 +274,32 @@ procedure InitC64Chargen;
 	end;
 
 
-procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox);
+procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox;
+        const AIdxWidth: Integer);
     var
     i,
     j,
     l: Integer;
-    s: string;
+    s,
+    f: string;
     b: Byte;
     d: array[0..$0F] of Byte;
 
     begin
+    case AIdxWidth of
+    	1:
+        	f:= '%2.2x   ';
+        2:
+            f:= '%4.4x   ';
+        else
+          	f:= '%6.6x   ';
+    	end;
+
     i:= 0;
     l:= 0;
 //dengland      Stop the compiler complaining
     d[0]:= $00;
-    s:= Format('%6.6x   ', [l]);
+    s:= Format(f, [l]);
     while AStream.Position < AStream.Size do
         begin
         if  (i > 0)
@@ -302,7 +315,7 @@ procedure HexDumpStreamToLstBx(const AStream: TStream; const ALstBx: TListBox);
 
             Inc(l, i);
             i:= 0;
-            s:= Format('%6.6x   ', [l]);
+            s:= Format(f, [l]);
             end
         else if (i > 0)
         and (i mod 4 = 0) then
